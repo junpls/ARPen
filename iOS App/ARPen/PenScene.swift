@@ -26,10 +26,21 @@ class PenScene: SCNScene {
     
     //Node that carries all the drawing operations
     let drawingNode: SCNNode
+    
+    var penTrackingDelegate: PenTrackingDelegate?
+    
     /**
      If a marker was found in the current frame the var is true
      */
-    var markerFound = true
+    var markerFound = true {
+        didSet {
+            if(markerFound && !oldValue){
+                penTrackingDelegate?.onFoundMarker()
+            } else if (!markerFound && oldValue){
+                penTrackingDelegate?.onAllMarkerLost()
+            }
+        }
+    }
     
     /**
      Calling this method will convert the whole scene with every nodes in it to an stl file
@@ -50,6 +61,8 @@ class PenScene: SCNScene {
         self.pencilPoint = SCNNode()
         self.drawingNode = SCNNode()
         super.init()
+        
+        setupPencilPoint()
     }
     
     /**
@@ -63,7 +76,7 @@ class PenScene: SCNScene {
         setupPencilPoint()
     }
     
-    func setupPencilPoint() {
+    private func setupPencilPoint() {
         self.pencilPoint.geometry = SCNSphere(radius: 0.002)
         self.pencilPoint.name = "PencilPoint"
         self.pencilPoint.geometry?.materials.first?.diffuse.contents = UIColor.red
@@ -72,4 +85,34 @@ class PenScene: SCNScene {
         self.rootNode.addChildNode(self.drawingNode)
     }
     
+    var tipRadius: CGFloat = 0.002 {
+        didSet {
+            (self.pencilPoint.geometry as! SCNSphere).radius = tipRadius
+        }
+    }
+    
+    var hiddenTip: Bool = false {
+        didSet {
+            self.pencilPoint.isHidden = hiddenTip
+        }
+    }
+    
+    var tipColor = UIColor.red {
+        didSet {
+            self.pencilPoint.geometry?.materials.first?.diffuse.contents = tipColor
+        }
+    }
+    
+}
+
+protocol PenTrackingDelegate {
+    /**
+     This method is called when no marker is found the first time
+    */
+    func onAllMarkerLost()
+    
+    /**
+     This method is called when at least one marker is detected after no marker was found
+    */
+    func onFoundMarker()
 }

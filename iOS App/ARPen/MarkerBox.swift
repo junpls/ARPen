@@ -53,7 +53,7 @@ class MarkerBox: SCNNode {
         }
     }
     
-    func calculatePenTip(length: Double){
+    private func calculatePenTip(length: Double){
         
         let a: Double = length
         var xs, ys, zs, xl, yl, zl: Double
@@ -117,7 +117,7 @@ class MarkerBox: SCNNode {
     /**
      Sets the position and rotation (in euler angles) for a specific ID.
      */
-    func set(position: SCNVector3, rotation: SCNVector3, forID id: Int) {
+    func setMarker(position: SCNVector3, rotation: SCNVector3, forID id: Int) {
         self.markerArray[id-1].position = position
         self.markerArray[id-1].eulerAngles = rotation
         
@@ -135,7 +135,7 @@ class MarkerBox: SCNNode {
      Determine the position of the pin point by ONLY considering the specified IDs
      - parameter ids: A list of marker IDs that are used to determine the position
      */
-    func posititonWith(ids: [Int]) -> SCNVector3 {
+    func tipPositionFor(ids: [Int]) -> SCNVector3 {
         var vector = SCNVector3Zero
         var mutableIds = ids
         

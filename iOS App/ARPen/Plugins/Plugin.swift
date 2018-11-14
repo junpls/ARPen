@@ -15,12 +15,13 @@ protocol Plugin {
     
     var pluginImage : UIImage? { get }
     var pluginIdentifier : String { get }
-    /**
-     This method must be implemented by all protocols.
-     Params:
-     - scene: The current PenScene instance. There you can find a lot state information about the pen.
-     - buttons: An array of all buttons and there state. If buttons[.Button1] is true, then the buttons is pressed at the moment.
-     */
-    func didUpdateFrame(scene: PenScene, buttons: [Button: Bool])
+    var scene: PenScene { get set }
     
+}
+
+protocol PenDelegate {
+    func onIdleMovement(to position: SCNVector3)
+    func onPenClickStarted(at position: SCNVector3, startedButton: Button)
+    func onPenMoved(to position: SCNVector3, clickedButtons: [Button])
+    func onPenClickEnded(at position: SCNVector3, releasedButton: Button)
 }

@@ -22,26 +22,53 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
     var arManager: ARManager
     var arPenManager: PenManager
     var buttons: [Button: Bool] = [.Button1: false, .Button2: false, .Button3: false]
-    var plugins: [Plugin] = [PaintPlugin(), CubeByDraggingPlugin(), CubeByExtractionPlugin()]
-    var activePlugin: Plugin?
+    var plugins: [Plugin]
+    var activePlugin: Plugin? {
+        didSet {
+            if activePlugin is PenTrackingDelegate {
+                arManager.scene?.penTrackingDelegate = activePlugin as? PenTrackingDelegate
+            }
+        }
+    }
     var delegate: PluginManagerDelegate?
+    private var penClicked = false
     
     /**
      inits every plugin
      */
     init(scene: PenScene) {
         self.arManager = ARManager(scene: scene)
+        self.plugins  = [PieMenuPlugin(scene: scene)]
         self.arPenManager = PenManager()
         self.activePlugin = plugins.first
         self.arManager.delegate = self
         self.arPenManager.delegate = self
+        
     }
     
     /**
      Callback from PenManager
      */
     func button(_ button: Button, pressed: Bool) {
+        let started = self.buttons[button] != pressed && pressed
+        let released = self.buttons[button] != pressed && !pressed
         self.buttons[button] = pressed
+        if let plugin = self.activePlugin {
+            if plugin is PenDelegate {
+                if started {
+                    (plugin as! PenDelegate).onPenClickStarted(at: (arManager.scene?.pencilPoint.position)!, startedButton: button)
+                } else if released {
+                    (plugin as! PenDelegate).onPenClickEnded(at: (arManager.scene?.pencilPoint.position)!, releasedButton: button)
+                }
+            }
+        }
+        var oneButtonClicked = false
+        for (_, clicked) in buttons {
+            if clicked {
+                oneButtonClicked = true
+            }
+        }
+        penClicked = oneButtonClicked
     }
     
     /**
@@ -71,8 +98,13 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
      This is the callback from ARManager.
      */
     func finishedCalculation() {
-        if let plugin = self.activePlugin {
-            plugin.didUpdateFrame(scene: self.arManager.scene!, buttons: buttons)
+        if let plugin = self.activePlugin, plugin is PenDelegate {
+            if penClicked {
+                (plugin as! PenDelegate).onPenMoved(to: (arManager.scene?.pencilPoint.position)!, clickedButtons: Array(self.buttons.filter { $0.value == true }.keys))
+            } else {
+                (plugin as! PenDelegate).onIdleMovement(to: (arManager.scene?.pencilPoint.position)!)
+            }
         }
     }
 }
+

@@ -45,7 +45,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         super.viewDidLoad()
         
         // Create a new scene
-        let scene = PenScene(named: "art.scnassets/ship.scn")!
+        let scene = PenScene()
         scene.markerBox = MarkerBox()
         self.arSceneView.pointOfView?.addChildNode(scene.markerBox)
         
@@ -175,7 +175,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
                 return
                 
             }
-            destinationSettingsController.scene = self.arSceneView.scene as! PenScene
+            destinationSettingsController.scene = self.arSceneView.scene as? PenScene
             //pass reference to the record manager (to show active user ID and export data)
             destinationSettingsController.userStudyRecordManager = self.userStudyRecordManager
         }
@@ -208,7 +208,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         self.arPenImage.isHidden = false
         checkVisualEffectView()
     }
-    
+
     func penFailed() {
         guard let arPenActivity = self.arPenActivity else {
             return
@@ -224,13 +224,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
      */
     func checkVisualEffectView() {
         if self.arPenActivity.isHidden && self.arKitActivity.isHidden {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1), execute: {
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.visualEffectView.alpha = 0.0
-                }, completion: { (completion) in
-                    self.visualEffectView.removeFromSuperview()
-                })
-            })
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1), execute: {
+//                UIView.animate(withDuration: 0.5, animations: {
+//                    self.visualEffectView.alpha = 0.0
+//                }, completion: { (completion) in
+//                    self.visualEffectView.removeFromSuperview()
+//                })
+//            })
+            self.visualEffectView.removeFromSuperview()
         }
     }
     

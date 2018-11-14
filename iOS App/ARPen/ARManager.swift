@@ -55,7 +55,8 @@ class ARManager: NSObject, ARSessionDelegate, ARSessionObserver, OpenCVWrapperDe
     
     // MARK: - OpenCVWrapperDelegate
     /**
-     Callback of the OpenCVWrapper
+     Callback of the OpenCVWrapper. 
+     Updates the position and the rotation of the recognized markers in the PenScene's Markerbox.
      */
     func markerTranslation(_ translation: [NSValue]!, rotation: [NSValue]!, ids: [NSNumber]!) {
         guard let scene = self.scene else {
@@ -67,11 +68,11 @@ class ARManager: NSObject, ARSessionDelegate, ARSessionObserver, OpenCVWrapperDe
         
         for (position, (eulerAngle, id)) in zip(positions, zip(eulerAngles, ids)) {
             //self.scene.markerBox.setPosition(position, rotation: eulerAngle, forId: Int32(id))
-            scene.markerBox.set(position: position, rotation: eulerAngle, forID: id)
+            scene.markerBox.setMarker(position: position, rotation: eulerAngle, forID: id)
         }
         scene.markerFound = true
         //self.scene.pencilPoint.position = self.scene.markerBox.position(withIds: UnsafeMutablePointer(mutating: ids), count: Int32(ids.count))
-        scene.pencilPoint.position = scene.markerBox.posititonWith(ids: ids)
+        scene.pencilPoint.position = scene.markerBox.tipPositionFor(ids: ids)
         
         self.delegate?.finishedCalculation()
     }
