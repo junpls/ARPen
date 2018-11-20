@@ -34,9 +34,9 @@ class PieMenuPlugin: Plugin, PenDelegate, PenTrackingDelegate {
         //let geometry = SCNShape(path: drawMenu(item: itemNumber, itemCount: 7, itemDistance: 5.degreesToRadians, innerRadius: 0.01, outerRadius: 0.05), extrusionDepth: 0.005)
         
         //geometry.firstMaterial?.diffuse.contents = UIColor.blue
-            let node = drawMenu(item: itemNumber, itemCount: 8, itemDistance: 10, innerRadius: 0.01, outerRadius:   0.05)//SCNNode(geometry: geometry)
-            node.position = scene.pencilPoint.position
-            scene.drawingNode.addChildNode(node)
+        let node = drawMenu(itemCount: 8, itemDistance: 0.001, innerRadius: 0.01, outerRadius:   0.05)//SCNNode(geometry: geometry)
+        node.position = scene.pencilPoint.position
+        scene.drawingNode.addChildNode(node)
         itemNumber = (itemNumber + 1) % 8
         
         
@@ -50,42 +50,53 @@ class PieMenuPlugin: Plugin, PenDelegate, PenTrackingDelegate {
         scene.hiddenTip = false
     }
     
-    func drawMenu(item: Int, itemCount: Int, itemDistance: CGFloat, innerRadius: CGFloat, outerRadius: CGFloat) -> SCNNode {
+    func drawMenu(itemCount: Int, itemDistance: CGFloat, innerRadius: CGFloat, outerRadius: CGFloat) -> SCNNode {
         let normalizedInnerRadius: CGFloat = innerRadius * 10000
         let normalizedOuterRadius: CGFloat = outerRadius * 10000
+        let menuNode = SCNNode(geometry: SCNSphere(radius: 0.005))
         
-        let itemAngle: CGFloat = 2 * CGFloat.pi / CGFloat(itemCount)
-        
-        let path = UIBezierPath()
-        path.lineWidth = 1
-        
-        let startAngle = CGFloat(item) * itemAngle
-        let endAngle = startAngle + itemAngle
-        
-        path.move(to: CGPoint.zero)
-        path.addArc(withCenter: CGPoint.zero, radius: normalizedInnerRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
-        path.addArc(withCenter: CGPoint.zero, radius: normalizedOuterRadius, startAngle: endAngle, endAngle: startAngle, clockwise: false)
-        path.close()
+        for item in 0 ..< itemCount {
+            let itemAngle: CGFloat = 2 * CGFloat.pi / CGFloat(itemCount)
+            
+            let path = UIBezierPath()
+            path.lineWidth = 1
+            
+            let startAngle = CGFloat(item) * itemAngle
+            let endAngle = startAngle + itemAngle
+            let innerSpaceAngle = innerRadius != 0 ? atan(itemDistance / 2 / innerRadius ) : 0
+            let outerSpaceAngle = outerRadius != 0 ? atan(itemDistance / 2 / outerRadius) : 0
+            let startingPoint = CGPoint(x: normalizedInnerRadius * cos(startAngle + innerSpaceAngle), y: normalizedInnerRadius * sin(startAngle + innerSpaceAngle))
+            
+            path.move(to: startingPoint)
+            path.addArc(withCenter: CGPoint.zero, radius: normalizedInnerRadius, startAngle: startAngle + innerSpaceAngle, endAngle: endAngle - innerSpaceAngle, clockwise: true)
+            path.addArc(withCenter: CGPoint.zero, radius: normalizedOuterRadius, startAngle: endAngle - outerSpaceAngle, endAngle: startAngle + outerSpaceAngle, clockwise: false)
+            path.close()
 
-        
-        let shape = SKShapeNode(path: path.cgPath)
-        shape.fillColor = #colorLiteral(red: 0.2175237018, green: 0.5705535949, blue: 1, alpha: 0.8038622359)
-        shape.strokeColor = UIColor.clear
-        
-        let skScene = SKScene(size: path.bounds.size)
-        skScene.backgroundColor = #colorLiteral(red: 1, green: 0.9510218243, blue: 0, alpha: 0.8038622359)
-        shape.position = CGPoint(x: -path.bounds.minX, y: -path.bounds.minY)
-        
-        skScene.addChild(shape)
-        
-        
-        let plane = SCNPlane(width: skScene.size.width / 10000, height: skScene.size.height / 10000)
-        let material = SCNMaterial()
-        material.isDoubleSided = true
-        material.diffuse.contents = skScene
-        plane.materials = [material]
-        let node = SCNNode(geometry: plane)
-        return node
+            
+            let shape = SKShapeNode(path: path.cgPath)
+            shape.fillColor = UIColor(red: 0.218, green: 0.571, blue: 1, alpha: 0.8)
+            shape.strokeColor = UIColor(red: 0.218, green: 0.571, blue: 1, alpha: 1)
+            shape.lineWidth = 5
+            
+            let skScene = SKScene(size: path.bounds.size)
+            skScene.backgroundColor = UIColor.clear
+            shape.position = CGPoint(x: -path.bounds.minX, y: -path.bounds.minY)
+            
+            skScene.addChild(shape)
+            
+            let plane = SCNPlane(width: skScene.size.width / 10000, height: skScene.size.height / 10000)
+            let material = SCNMaterial()
+            material.isDoubleSided = true
+            material.diffuse.contents = skScene
+            plane.materials = [material]
+            let node = SCNNode(geometry: plane)
+
+            node.position.x = Float(0.5 * plane.width + plane.width * (path.bounds.minX / path.bounds.width))
+            node.position.y = Float(-0.5 * plane.height - plane.height * (path.bounds.minY / path.bounds.height))
+            
+            menuNode.addChildNode(node)
+        }
+        return menuNode
         
     }
 
