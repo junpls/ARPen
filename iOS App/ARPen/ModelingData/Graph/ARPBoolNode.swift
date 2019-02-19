@@ -41,7 +41,7 @@ class ARPBoolNode: ARPGeomNode {
         self.addChildNode(b)
         
         // build function moved the node. Apply change to OCCT and child nodes
-        super.applyTransform_()
+        self.applyTransform_()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,7 +62,7 @@ class ARPBoolNode: ARPGeomNode {
         if let handle = ref {
             // Generated shape has its origin at 0,0,0. Shift it s.t. the new origin is in the center of its AABB.
             let center = OCCTAPI.shared.center(handle: handle)
-            self.worldPosition = center
+            self.position = self.position + center
         }
         
         return ref ?? ""

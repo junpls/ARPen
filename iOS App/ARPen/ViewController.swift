@@ -62,9 +62,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
 
             if let bool = try? ARPBoolNode(a: sphere1, b: box, operation: BooleanOperation.cut) {
                 scene.rootNode.addChildNode(bool)
-                bool.position.y = 0.1;
+                bool.position.y = -0.2;
                 bool.scale = SCNVector3(1.5, 1.5, 1.5)
+                bool.rotation = SCNVector4(0,0,1,Double.pi/2)
                 bool.applyTransform()
+                try? bool.rebuild()
                 s = box
             } else {
                 print("lol, error")
@@ -272,12 +274,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
         count += 1;
-        if count % 1 == 0 {
+        if count % 5 == 0 {
             s?.rotation = SCNVector4(0, 0, 1, time/3)
             //let scale = sin(time/3) + 1
             //s?.scale = SCNVector3(scale, scale, scale)
             s?.applyTransform()
             try? s?.rebuild()
         }
+ 
     }
 }
