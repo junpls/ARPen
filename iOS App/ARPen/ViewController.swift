@@ -37,6 +37,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     //Manager for user study data
     let userStudyRecordManager = UserStudyRecordManager()
     
+    var s:ARPGeomNode?
     
     /**
      A quite standard viewDidLoad
@@ -49,6 +50,30 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         scene.markerBox = MarkerBox()
         self.arSceneView.pointOfView?.addChildNode(scene.markerBox)
         
+        if let sphere1 = try? ARPSphere(radius: 0.05), let box = try? ARPBox(width: 0.1, height: 0.2, length: 0.1) {
+            scene.rootNode.addChildNode(sphere1)
+            scene.rootNode.addChildNode(box)
+            
+            box.position.y = 0.05
+            box.scale = SCNVector3(0.5, 0.5, 0.5)
+            box.rotation = SCNVector4(0,0,1,Double.pi/4)
+            box.applyTransform()
+            //sphere2.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 1, y: 0, z: 0, duration: 1)))
+
+            if let bool = try? ARPBoolNode(a: sphere1, b: box, operation: BooleanOperation.cut) {
+                scene.rootNode.addChildNode(bool)
+                bool.position.y = 0.1;
+                bool.scale = SCNVector3(1.5, 1.5, 1.5)
+                bool.applyTransform()
+                s = box
+            } else {
+                print("lol, error")
+            }
+            
+        }
+        
+        arSceneView.delegate = self
+
         self.pluginManager = PluginManager(scene: scene)
         self.pluginManager.delegate = self
         self.arSceneView.session.delegate = self.pluginManager.arManager
@@ -242,5 +267,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         self.pluginManager.button(.Button1, pressed: false)
     }
     
+    var count:Int = 0;
     
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        
+        count += 1;
+        if count % 1 == 0 {
+            s?.rotation = SCNVector4(0, 0, 1, time/3)
+            //let scale = sin(time/3) + 1
+            //s?.scale = SCNVector3(scale, scale, scale)
+            s?.applyTransform()
+            try? s?.rebuild()
+        }
+    }
 }
