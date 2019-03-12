@@ -272,7 +272,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     var count:Int = 0;
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        
+        /*
         count += 1;
         if count % 5 == 0 {
             s?.rotation = SCNVector4(0, 0, 1, time/3)
@@ -281,6 +281,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             s?.applyTransform()
             try? s?.rebuild()
         }
- 
+ */
     }
 }

@@ -74,9 +74,15 @@ class OCCTAPI {
         return occt.center(handle);
     }
     
+    
     func triangulate(handle: OCCTReference) -> SCNGeometry {
         return occt.sceneKitMesh(of: handle)
     }
+    
+    func wireframe(handle: OCCTReference) -> SCNGeometry {
+        return occt.sceneKitLines(of: handle)
+    }
+    
     
     func free(handle: OCCTReference) {
         occt.freeShape(handle)
