@@ -24,18 +24,21 @@ class ARPGeomNode: ARPNode {
     }
 
     final func updateView() {
-        geometryNode.removeFromParentNode()
-        isoLinesNode.removeFromParentNode()
         let geom  = OCCTAPI.shared.triangulate(handle: occtReference!)
         let lines = OCCTAPI.shared.wireframe(handle: occtReference!)
-        geometryNode = SCNNode(geometry: geom)
-        isoLinesNode = SCNNode(geometry: lines)
-        isoLinesNode.geometry?.firstMaterial?.readsFromDepthBuffer = false
-        geometryNode.renderingOrder = -1
-        self.addChildNode(geometryNode)
-        self.addChildNode(isoLinesNode)
-        /// This was necessary for world coordinates
-        //geometryNode.setWorldTransform(SCNMatrix4(m11: 1, m12: 0, m13: 0, m14: 0, m21: 0, m22: 1, m23: 0, m24: 0, m31: 0, m32: 0, m33: 1, m34: 0, m41: 0, m42: 0, m43: 0, m44: 1))
+        
+        DispatchQueue.main.async {
+            self.geometryNode.removeFromParentNode()
+            self.isoLinesNode.removeFromParentNode()
+            self.geometryNode = SCNNode(geometry: geom)
+            self.isoLinesNode = SCNNode(geometry: lines)
+            self.isoLinesNode.geometry?.firstMaterial?.readsFromDepthBuffer = false
+            self.geometryNode.renderingOrder = -1
+            self.addChildNode(self.geometryNode)
+            self.addChildNode(self.isoLinesNode)
+            /// This was necessary for world coordinates
+            //geometryNode.setWorldTransform(SCNMatrix4(m11: 1, m12: 0, m13: 0, m14: 0, m21: 0, m22: 1, m23: 0, m24: 0, m31: 0, m32: 0, m33: 1, m34: 0, m41: 0, m42: 0, m43: 0, m44: 1))
+        }
     }
     
     /// Call to apply changes in translation, rotation or scale to OCCT.

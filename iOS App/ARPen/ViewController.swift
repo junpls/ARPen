@@ -38,6 +38,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     let userStudyRecordManager = UserStudyRecordManager()
     
     var s:ARPGeomNode?
+    var p:ARPPath?
     
     /**
      A quite standard viewDidLoad
@@ -62,7 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
 
             if let bool = try? ARPBoolNode(a: sphere1, b: box, operation: BooleanOperation.cut) {
                 scene.rootNode.addChildNode(bool)
-                bool.position.y = -0.2;
+                bool.position.y = -0.1;
                 bool.scale = SCNVector3(1.5, 1.5, 1.5)
                 bool.rotation = SCNVector4(0,0,1,Double.pi/2)
                 bool.applyTransform()
@@ -72,6 +73,26 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
                 print("lol, error")
             }
             
+        }
+        
+        var ppoints = [SCNVector3]()
+        ppoints.append(SCNVector3(-0.03, 0, -0.03))
+        ppoints.append(SCNVector3(0.03, 0, -0.03))
+        ppoints.append(SCNVector3(0.03, 0, 0.03))
+        ppoints.append(SCNVector3(-0.03, 0, 0.03))
+        
+        var profile = ARPPath(points: ppoints, closed: true)
+        
+        var epoints = [SCNVector3]()
+        epoints.append(SCNVector3(-0.03, 0, -0.03))
+        epoints.append(SCNVector3(-0.03, 1, -0.03))
+        
+        var extrusion = ARPPath(points: epoints, closed: false)
+        p = extrusion
+
+        if let pipe = try? ARPSweep(profile: profile, path: extrusion) {
+            scene.rootNode.addChildNode(pipe)
+            //try? extrusion.rebuild()
         }
         
         arSceneView.delegate = self
@@ -269,18 +290,25 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         self.pluginManager.button(.Button1, pressed: false)
     }
     
-    var count:Int = 0;
+    var count:Int = 0
+    var busy = false
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        /*
-        count += 1;
-        if count % 5 == 0 {
-            s?.rotation = SCNVector4(0, 0, 1, time/3)
-            //let scale = sin(time/3) + 1
-            //s?.scale = SCNVector3(scale, scale, scale)
-            s?.applyTransform()
-            try? s?.rebuild()
-        }
+        //return
+        if !busy {
+            busy = true
+            DispatchQueue.global(qos: .userInitiated).async {
+/*
+                self.s?.rotation = SCNVector4(0, 0, 1, time/3)
+                self.s?.applyTransform()
+                try? self.s?.rebuild()
+                self.busy = false
  */
+                self.p?.points[1].y = Float(abs(sin(time/3)))*0.1 + 0.01
+                try? self.p?.rebuild()
+                self.busy = false
+            }
+        }
+
     }
 }

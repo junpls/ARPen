@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
+		3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48674A224A527200EABD23 /* ARPSweep.swift */; };
 		3D61FCF82201EFB200183AEA /* libTKMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE82201EFB200183AEA /* libTKMath.a */; };
 		3D61FCF92201EFB200183AEA /* libTKTopAlgo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE92201EFB200183AEA /* libTKTopAlgo.a */; };
 		3D61FCFA2201EFB200183AEA /* libTKXMesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCEA2201EFB200183AEA /* libTKXMesh.a */; };
@@ -79,6 +81,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
+		3D48674A224A527200EABD23 /* ARPSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPSweep.swift; sourceTree = "<group>"; };
 		3D61FCE82201EFB200183AEA /* libTKMath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKMath.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKMath.a"; sourceTree = "<group>"; };
 		3D61FCE92201EFB200183AEA /* libTKTopAlgo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKTopAlgo.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKTopAlgo.a"; sourceTree = "<group>"; };
 		3D61FCEA2201EFB200183AEA /* libTKXMesh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKXMesh.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKXMesh.a"; sourceTree = "<group>"; };
@@ -191,6 +195,8 @@
 				3D883659221AD84300672CEB /* ARPGeomNode.swift */,
 				3D88365A221AD84300672CEB /* ARPNode.swift */,
 				3D88365B221AD84300672CEB /* ARPBoolNode.swift */,
+				3D486748224959F200EABD23 /* ARPPath.swift */,
+				3D48674A224A527200EABD23 /* ARPSweep.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -405,6 +411,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D486749224959F200EABD23 /* ARPPath.swift in Sources */,
 				DC28B461200E46DC008B77AB /* Plugin.swift in Sources */,
 				4A56953B20581B9000C8065E /* UserStudyRecordPluginProtocol.swift in Sources */,
 				3D883669221B457C00672CEB /* ARPBox.swift in Sources */,
@@ -428,6 +435,7 @@
 				4A895F0C2052D46000CC2C8E /* CubeByExtractionPlugin.swift in Sources */,
 				DC28B454200E4389008B77AB /* ARManager.swift in Sources */,
 				4A5695322058192B00C8065E /* UserStudyIDListTableViewController.swift in Sources */,
+				3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */,
 				4A56953720581B4500C8065E /* UserStudyRecord.swift in Sources */,
 				DC28B475200E64B7008B77AB /* ObjectCreationPlugin.swift in Sources */,
 				DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */,

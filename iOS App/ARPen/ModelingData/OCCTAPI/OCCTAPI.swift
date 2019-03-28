@@ -39,6 +39,15 @@ class OCCTAPI {
         }
     }
     
+    func createPath(points:[SCNVector3], closed:Bool) throws -> OCCTReference {
+        if let cString = occt.createPath(points, length:Int32(points.count), closed:closed) {
+            let ref = OCCTReference(cString: cString)
+            return ref
+        } else {
+            throw OCCTError.couldNotCreateGeometry
+        }
+    }
+    
     func boolean(from a: OCCTReference, cut b: OCCTReference) throws -> OCCTReference {
         if let difference = occt.booleanCut(a, subtract: b) {
             let ref = OCCTReference(cString: difference)
@@ -59,6 +68,15 @@ class OCCTAPI {
     
     func boolean(intersect a: OCCTReference, with b: OCCTReference) throws -> OCCTReference {
         if let sum = occt.booleanIntersect(a, with: b) {
+            let ref = OCCTReference(cString: sum)
+            return ref
+        } else {
+            throw OCCTError.couldNotCreateGeometry
+        }
+    }
+    
+    func sweep(profile: OCCTReference, path: OCCTReference)  throws -> OCCTReference {
+        if let sum = occt.sweep(profile, along: path) {
             let ref = OCCTReference(cString: sum)
             return ref
         } else {
