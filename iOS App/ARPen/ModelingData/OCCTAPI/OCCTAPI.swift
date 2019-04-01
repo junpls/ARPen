@@ -88,6 +88,10 @@ class OCCTAPI {
         occt.setTransformOf(handle, transformation: transformation)
     }
     
+    func pivot(handle: OCCTReference, pivot: SCNMatrix4) {
+        occt.setPivotOf(handle, pivot: pivot)
+    }
+    
     func center(handle: OCCTReference) -> SCNVector3 {
         return occt.center(handle);
     }

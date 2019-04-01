@@ -30,18 +30,17 @@ class ARPBoolNode: ARPGeomNode {
         self.b = b
         self.operation = op
         
-        a.isHidden = true
-        b.isHidden = true
-        a.removeFromParentNode()
-        b.removeFromParentNode()
+        //a.isHidden = true
+        //b.isHidden = true
+        //a.removeFromParentNode()
+        //b.removeFromParentNode()
+
+        super.init(pivotChild: a)
         
-        super.init()
+        self.content.addChildNode(a)
+        self.content.addChildNode(b)
         
-        self.addChildNode(a)
-        self.addChildNode(b)
-        
-        // build function moved the node. Apply change to OCCT and child nodes
-        self.applyTransform_()
+        //self.pivotToChild(a)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,6 +48,7 @@ class ARPBoolNode: ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
+        
         let ref: OCCTReference?
         switch self.operation {
         case .cut:
@@ -59,10 +59,8 @@ class ARPBoolNode: ARPGeomNode {
             ref = try? OCCTAPI.shared.boolean(intersect: a.occtReference!, with: b.occtReference!)
         }
         
-        if let handle = ref {
-            // Generated shape has its origin at 0,0,0. Shift it s.t. the new origin is in the center of its AABB.
-            let center = OCCTAPI.shared.center(handle: handle)
-            self.position = self.position + center
+        if let r = ref {
+            OCCTAPI.shared.pivot(handle: r, pivot: pivotChild.worldTransform)
         }
         
         return ref ?? ""

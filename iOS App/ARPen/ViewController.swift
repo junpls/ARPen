@@ -38,7 +38,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     let userStudyRecordManager = UserStudyRecordManager()
     
     var s:ARPGeomNode?
-    var p:ARPPath?
+    var p:ARPGeomNode?
     
     /**
      A quite standard viewDidLoad
@@ -51,6 +51,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         scene.markerBox = MarkerBox()
         self.arSceneView.pointOfView?.addChildNode(scene.markerBox)
         
+        if let cube = try? ARPBox(width: 0.1, height: 0.1, length: 0.1) {
+            scene.rootNode.addChildNode(cube)
+            cube.position.x = -0.1
+            cube.scale = SCNVector3(2,2,2)
+            cube.applyTransform()
+            try? cube.rebuild()
+            cube.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
+            //cube.applyTransform()
+        }
+        
         if let sphere1 = try? ARPSphere(radius: 0.05), let box = try? ARPBox(width: 0.1, height: 0.2, length: 0.1) {
             scene.rootNode.addChildNode(sphere1)
             scene.rootNode.addChildNode(box)
@@ -58,15 +68,22 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             box.position.y = 0.05
             box.scale = SCNVector3(0.5, 0.5, 0.5)
             box.rotation = SCNVector4(0,0,1,Double.pi/4)
+            
+            box.position.y -= 0.05
+            sphere1.position.y -= 0.05
+
             box.applyTransform()
+            sphere1.applyTransform()
+            //box.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1)))
             //sphere2.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 1, y: 0, z: 0, duration: 1)))
 
             if let bool = try? ARPBoolNode(a: sphere1, b: box, operation: BooleanOperation.cut) {
                 scene.rootNode.addChildNode(bool)
                 bool.position.y = -0.1;
-                bool.scale = SCNVector3(1.5, 1.5, 1.5)
+                bool.scale = SCNVector3(2, 2, 2)
                 bool.rotation = SCNVector4(0,0,1,Double.pi/2)
                 bool.applyTransform()
+                bool.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
                 try? bool.rebuild()
                 s = box
             } else {
@@ -82,16 +99,23 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         ppoints.append(SCNVector3(-0.03, 0, 0.03))
         
         var profile = ARPPath(points: ppoints, closed: true)
+        profile.position = SCNVector3(0.2, 0, 0)
+        profile.applyTransform()
         
         var epoints = [SCNVector3]()
         epoints.append(SCNVector3(-0.03, 0, -0.03))
-        epoints.append(SCNVector3(-0.03, 1, -0.03))
+        epoints.append(SCNVector3(-0.5, 0.5, -0.5))
         
         var extrusion = ARPPath(points: epoints, closed: false)
-        p = extrusion
-
+        extrusion.position = SCNVector3(0.2, 0, 0)
+        extrusion.applyTransform()
+        
         if let pipe = try? ARPSweep(profile: profile, path: extrusion) {
             scene.rootNode.addChildNode(pipe)
+            pipe.position.x -= 0.1
+            pipe.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1)))
+            profile.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: -1, z: 0, duration: 1)))
+            p = pipe
             //try? extrusion.rebuild()
         }
         
@@ -301,12 +325,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
 /*
                 self.s?.rotation = SCNVector4(0, 0, 1, time/3)
                 self.s?.applyTransform()
-                try? self.s?.rebuild()
-                self.busy = false
- */
-                self.p?.points[1].y = Float(abs(sin(time/3)))*0.1 + 0.01
+                try? self.s?.rebuild()*/
+//                self.busy = false
+ 
+                
+//                self.p?.points[1].position.y = Float(abs(sin(time/3)))*0.1 + 0.01
+//                self.p?.points[1].position.x = Float(abs(sin(time/3)))*0.1 + 0.01
+                try? self.p?.applyTransform()
                 try? self.p?.rebuild()
                 self.busy = false
+ 
             }
         }
 

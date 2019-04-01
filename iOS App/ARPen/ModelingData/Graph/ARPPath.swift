@@ -10,13 +10,26 @@ import Foundation
 
 class ARPPath: ARPGeomNode {
     
-    var points:[SCNVector3] = [SCNVector3]()
+    var points:[SCNNode] = [SCNNode]()
     var closed:Bool = false
     
     init(points:[SCNVector3], closed:Bool) {
-        self.points = points
         self.closed = closed
+        
+        for point in points {
+            let node = SCNNode()
+            node.geometry = SCNSphere(radius: 0.005)
+            node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+            node.position = point
+            self.points.append(node)
+        }
+
         super.init()
+        
+        for point in self.points {
+            self.addChildNode(point)
+        }
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,6 +37,7 @@ class ARPPath: ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
-        return try OCCTAPI.shared.createPath(points: points, closed: closed)
+        let positions = points.map { $0.position }
+        return try OCCTAPI.shared.createPath(points: positions, closed: closed)
     }
 }
