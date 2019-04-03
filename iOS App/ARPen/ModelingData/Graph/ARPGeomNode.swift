@@ -37,8 +37,8 @@ class ARPGeomNode: ARPNode {
     
     private func appendVisualization() {
         self.addChildNode(content)
-        content.addChildNode(geometryNode)
-        content.addChildNode(isoLinesNode)
+        self.addChildNode(geometryNode)
+        self.addChildNode(isoLinesNode)
     }
 
     final func updateView() {
@@ -64,8 +64,8 @@ class ARPGeomNode: ARPNode {
             //self.isoLinesNode.setWorldTransform(transformDelta.worldTransform)
             //transformDelta.removeFromParentNode()
             
-            self.geometryNode.transform = SCNMatrix4Invert(self.content.transform)
-            self.isoLinesNode.transform = SCNMatrix4Invert(self.content.transform)
+            //self.geometryNode.transform = SCNMatrix4Invert(self.content.transform)
+            //self.isoLinesNode.transform = SCNMatrix4Invert(self.content.transform)
         }
     }
     
@@ -101,7 +101,7 @@ class ARPGeomNode: ARPNode {
             occtReference = ref
             pivotToChild()
             updateView()
-            (parent as? ARPGeomNode)?.rebuild()
+            (parent?.parent as? ARPGeomNode)?.rebuild()
         } else {
             print("FAILED TO REBUILD")
         }

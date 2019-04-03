@@ -30,17 +30,16 @@ class ARPBoolNode: ARPGeomNode {
         self.b = b
         self.operation = op
         
-        //a.isHidden = true
-        //b.isHidden = true
         //a.removeFromParentNode()
         //b.removeFromParentNode()
 
         super.init(pivotChild: a)
         
+        a.isHidden = true
+        b.isHidden = true
         self.content.addChildNode(a)
         self.content.addChildNode(b)
         
-        //self.pivotToChild(a)
     }
     
     required init?(coder aDecoder: NSCoder) {
