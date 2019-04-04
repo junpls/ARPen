@@ -53,11 +53,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
         if let cube = try? ARPBox(width: 0.1, height: 0.1, length: 0.1) {
             scene.rootNode.addChildNode(cube)
-            cube.position.x = -0.1
-            cube.scale = SCNVector3(2,2,2)
+            cube.position.x = -0.2
+            cube.scale = SCNVector3(1,1,1)
             cube.applyTransform()
             try? cube.rebuild()
-            cube.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
+            //cube.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
             //cube.applyTransform()
         }
         
@@ -83,7 +83,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
                 bool.scale = SCNVector3(2, 2, 2)
                 bool.rotation = SCNVector4(0,0,1,Double.pi/2)
                 bool.applyTransform()
-                bool.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
+                //bool.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
                 try? bool.rebuild()
                 s = box
             } else {
@@ -113,11 +113,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         if let pipe = try? ARPSweep(profile: profile, path: extrusion) {
             scene.rootNode.addChildNode(pipe)
             pipe.position.x -= 0.1
-            pipe.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1)))
-            profile.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: -1, z: 0, duration: 1)))
+            //pipe.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1)))
+            //profile.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
             p = pipe
             //try? extrusion.rebuild()
         }
+        
+        var ppoints2 = [SCNVector3]()
+        ppoints2.append(SCNVector3(-0.03, 0, -0.03))
+        ppoints2.append(SCNVector3(0.03, 0, -0.03))
+        ppoints2.append(SCNVector3(0.03, 0, 0.03))
+        ppoints2.append(SCNVector3(-0.03, 0, 0.03))
+        
+        var path = ARPPath(points: ppoints2, closed: true)
+        path.position = SCNVector3(0,0,-0.2)
+        scene.rootNode.addChildNode(path)
         
         arSceneView.delegate = self
 
@@ -318,7 +328,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     var busy = false
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        //return
+        
+        return
         if !busy {
             busy = true
             DispatchQueue.global(qos: .userInitiated).async {

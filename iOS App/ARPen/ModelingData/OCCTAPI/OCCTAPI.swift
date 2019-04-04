@@ -105,6 +105,10 @@ class OCCTAPI {
         return occt.sceneKitLines(of: handle)
     }
     
+    func tubeframe(handle: OCCTReference) -> SCNGeometry {
+        return occt.sceneKitTubes(of: handle)
+    }
+    
     
     func free(handle: OCCTReference) {
         occt.freeShape(handle)

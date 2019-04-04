@@ -10,6 +10,8 @@ import Foundation
 
 class ARPPath: ARPGeomNode {
     
+    let color = UIColor.red
+    
     var points:[SCNNode] = [SCNNode]()
     var closed:Bool = false
     
@@ -18,8 +20,9 @@ class ARPPath: ARPGeomNode {
         
         for point in points {
             let node = SCNNode()
-            node.geometry = SCNSphere(radius: 0.005)
-            node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+            node.geometry = SCNSphere(radius: 0.002)
+            node.geometry?.firstMaterial?.diffuse.contents = color
+            node.geometry?.firstMaterial?.lightingModel = .constant
             node.position = point
             self.points.append(node)
         }
@@ -27,9 +30,10 @@ class ARPPath: ARPGeomNode {
         super.init()
         
         for point in self.points {
-            self.addChildNode(point)
+            self.content.addChildNode(point)
         }
         
+        self.lineColor = color
     }
 
     required init?(coder aDecoder: NSCoder) {

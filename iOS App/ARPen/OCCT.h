@@ -51,6 +51,7 @@
 
 - (SCNGeometry *) sceneKitMeshOf:(const char *) label;
 - (SCNGeometry *) sceneKitLinesOf:(const char *) label;
+- (SCNGeometry *) sceneKitTubesOf:(const char *) label;
 - (void) freeShape:(const char *) label;
 
 @end

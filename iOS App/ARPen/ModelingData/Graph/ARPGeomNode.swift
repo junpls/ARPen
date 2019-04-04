@@ -18,6 +18,8 @@ class ARPGeomNode: ARPNode {
 
     var pivotChild: SCNNode
 
+    var geometryColor = UIColor.init(hue: CGFloat(Float.random(in: 0...1)), saturation: 0.3, brightness: 0.9, alpha: 1)
+    var lineColor = UIColor.black
     
     override init() {
         self.pivotChild = SCNNode()
@@ -43,10 +45,11 @@ class ARPGeomNode: ARPNode {
 
     final func updateView() {
         let geom  = OCCTAPI.shared.triangulate(handle: occtReference!)
-        let lines = OCCTAPI.shared.wireframe(handle: occtReference!)
+        let lines = OCCTAPI.shared.tubeframe(handle: occtReference!)
         
         /// The node may have been transformed between the geometry's generation and the actual attachment in DispatchQueue.main.async
         /// transformDelta is used to capture this difference
+        
         /*
         let transformDelta = SCNNode()
         self.addChildNode(transformDelta)
@@ -55,9 +58,14 @@ class ARPGeomNode: ARPNode {
         
         DispatchQueue.main.async {
             self.geometryNode.geometry = geom
+            self.geometryNode.geometry?.firstMaterial?.diffuse.contents = self.geometryColor
+            self.geometryNode.geometry?.firstMaterial?.lightingModel = .blinn
+            self.geometryNode.geometry?.firstMaterial?.diffuse.intensity = 1;
             self.isoLinesNode.geometry = lines
-            self.isoLinesNode.geometry?.firstMaterial?.readsFromDepthBuffer = false
-            self.geometryNode.renderingOrder = -1
+            self.isoLinesNode.geometry?.firstMaterial?.diffuse.contents = self.lineColor
+            self.isoLinesNode.geometry?.firstMaterial?.lightingModel = .constant
+            //self.isoLinesNode.geometry?.firstMaterial?.readsFromDepthBuffer = false
+            //self.geometryNode.renderingOrder = -1
             
             /// This is necessary for world coordinates
             //self.geometryNode.setWorldTransform(transformDelta.worldTransform)

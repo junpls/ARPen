@@ -558,6 +558,103 @@ NSDate *start;
     return [self getEdges:shape withDeflection:linearDeflection];
 }
 
+- (SCNGeometry *) sceneKitTubesOf:(const char *)label {
+    TCollection_AsciiString key = TCollection_AsciiString(label);
+    TopoDS_Shape shape = [self retrieveFromRegistry:key];
+    return [self getTube:shape withDeflection:linearDeflection/2];
+}
+
+- (SCNGeometry *) getTube:(TopoDS_Shape &)shape
+           withDeflection:(const Standard_Real)deflection
+{
+    const float radius = 0.0005;
+    const int sides = 3;
+    
+    int noOfNodes = 0;
+    int noOfSegments = 0;
+    
+    for (TopExp_Explorer exEdge(shape, TopAbs_EDGE); exEdge.More(); exEdge.Next())
+    {
+        BRepAdaptor_Curve curveAdaptor;
+        curveAdaptor.Initialize(TopoDS::Edge(exEdge.Current()));
+        
+        GCPnts_QuasiUniformDeflection uniformAbscissa;
+        uniformAbscissa.Initialize(curveAdaptor, deflection);
+        
+        if(uniformAbscissa.IsDone())
+        {
+            Standard_Integer nbr = uniformAbscissa.NbPoints();
+            noOfNodes += nbr;
+            noOfSegments += nbr - 1;
+        }
+    }
+    
+    int noOfVertices = noOfSegments*((sides+1)*2);
+    int noOfTriangles = noOfSegments * sides * 2;
+    SCNVector3 vertices[noOfVertices];
+    SCNVector3 normals[noOfVertices];
+    int indices[noOfTriangles * 3];
+    
+    int vertexIndex = 0;
+    int triIndex = 0;
+    for (TopExp_Explorer exEdge(shape, TopAbs_EDGE); exEdge.More(); exEdge.Next())
+    {
+        BRepAdaptor_Curve curveAdaptor;
+        curveAdaptor.Initialize(TopoDS::Edge(exEdge.Current()));
+        
+        GCPnts_QuasiUniformDeflection uniformAbscissa;
+        uniformAbscissa.Initialize(curveAdaptor, deflection);
+        
+        if(uniformAbscissa.IsDone())
+        {
+            Standard_Integer nbr = uniformAbscissa.NbPoints();
+            gp_Pnt prev;
+            for ( Standard_Integer i = 1 ; i <= nbr ; i++ )
+            {
+                gp_Pnt pt = curveAdaptor.Value(uniformAbscissa.Parameter(i));
+                
+                if (i >= 2) {
+                    // Create cyllinder
+                    gp_Vec vec = gp_Vec(prev, pt).Normalized();
+                    gp_Vec notParallel = gp_Vec(1, 0, 0);
+                    if (abs(notParallel.Dot(vec)) >= 0.99) {
+                        notParallel = gp_Vec(0, 1, 0);
+                    }
+                    gp_Vec perpendicular = vec.Crossed(notParallel).Normalized();
+                    gp_Ax1 rotationAxis = gp_Ax1(pt, gp_Dir(vec));
+                    
+                    for (int j = 0; j <= sides; j++) {
+                        float rotation = (M_PI*2) * (((float)j) / sides);
+                        gp_Vec dir = perpendicular.Rotated(rotationAxis, rotation);
+                        gp_Vec offset = dir.Scaled(radius);
+                        gp_Pnt v1 = prev.Translated(offset);
+                        gp_Pnt v2 =   pt.Translated(offset);
+                        vertices[vertexIndex]  = {(float)v1.X(), (float)v1.Y(), (float)v1.Z()};
+                        vertices[vertexIndex+1]= {(float)v2.X(), (float)v2.Y(), (float)v2.Z()};
+                        normals[vertexIndex]   = {(float)dir.X(), (float)dir.Y(), (float)dir.Z()};
+                        normals[vertexIndex+1] = {(float)dir.X(), (float)dir.Y(), (float)dir.Z()};
+                        if (j >= 1) {
+                            indices[(triIndex*3)+0] = vertexIndex;
+                            indices[(triIndex*3)+1] = vertexIndex+1;
+                            indices[(triIndex*3)+2] = vertexIndex-1;
+                            triIndex ++;
+                            indices[(triIndex*3)+0] = vertexIndex-1;
+                            indices[(triIndex*3)+1] = vertexIndex-2;
+                            indices[(triIndex*3)+2] = vertexIndex;
+                            triIndex ++;
+                        }
+                        vertexIndex += 2;
+                    }
+                }
+                prev = pt;
+            }
+        }
+    }
+    
+    SCNGeometry *geometry = [self convertToSCNMesh:vertices withNormals:normals withIndices:indices vertexCount:noOfVertices primitiveCount:noOfTriangles];
+    return geometry;
+}
+
 - (SCNGeometry *) getEdges:(TopoDS_Shape &)shape
             withDeflection:(const Standard_Real)deflection
 {
