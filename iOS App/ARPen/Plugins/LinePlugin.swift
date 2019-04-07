@@ -21,12 +21,17 @@ class LinePlugin: Plugin {
     
     private var activePath: ARPPath? = nil
     
+    private var freePaths: [ARPPath] = [ARPPath]()
+    
     private var currentButtonStates: [Button : Bool] = [:]
     private var previousButtonStates: [Button : Bool] = [:]
     
     private var busy: Bool = false
     
+    private var scene: PenScene?
+    
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
+        self.scene = scene
         currentButtonStates = buttons
         
         if buttonPressed(.Button1) {
@@ -48,9 +53,13 @@ class LinePlugin: Plugin {
                 path.removeLastPoint()
                 path.closed = true
             }
+            path.removeLastPoint()
             path.flatten()
             path.rebuild()
+            freePaths.append(path)
             activePath = nil
+            
+            tryToSweep()
         }
         
         if let path = activePath {
@@ -59,6 +68,16 @@ class LinePlugin: Plugin {
         }
 
         self.previousButtonStates = buttons
+    }
+    
+    func tryToSweep() {
+        if let profile = freePaths.first(where: { $0.closed }),
+            let path = freePaths.first(where: { !$0.closed }) {
+            if let sweep = try? ARPSweep(profile: profile, path: path) {
+                scene?.drawingNode.addChildNode(sweep)
+                freePaths.removeAll(where: { $0 === profile || $0 === path })
+            }
+        }
     }
     
     func buttonPressed(_ button:Button) -> Bool {
