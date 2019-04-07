@@ -50,7 +50,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         let scene = PenScene(named: "art.scnassets/ship.scn")!
         scene.markerBox = MarkerBox()
         self.arSceneView.pointOfView?.addChildNode(scene.markerBox)
-        
+        /*
         if let cube = try? ARPBox(width: 0.1, height: 0.1, length: 0.1) {
             scene.rootNode.addChildNode(cube)
             cube.position.x = -0.2
@@ -74,7 +74,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
 
             box.applyTransform()
             sphere1.applyTransform()
-            //box.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1)))
+            box.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
             //sphere2.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 1, y: 0, z: 0, duration: 1)))
 
             if let bool = try? ARPBoolNode(a: sphere1, b: box, operation: BooleanOperation.cut) {
@@ -115,7 +115,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             pipe.position.x -= 0.1
             //pipe.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1)))
             //profile.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
-            p = pipe
+            p = profile
             //try? extrusion.rebuild()
         }
         
@@ -128,7 +128,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         var path = ARPPath(points: ppoints2, closed: true)
         path.position = SCNVector3(0,0,-0.2)
         scene.rootNode.addChildNode(path)
-        
+        */
         arSceneView.delegate = self
 
         self.pluginManager = PluginManager(scene: scene)
@@ -323,6 +323,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     @IBAction func softwarePenButtonReleased(_ sender: Any) {
         self.pluginManager.button(.Button1, pressed: false)
     }
+    @IBAction func softwarePenButton2Pressed(_ sender: Any) {
+        self.pluginManager.button(.Button2, pressed: true)
+    }
+    @IBAction func softwarePenButton2Released(_ sender: Any) {
+        self.pluginManager.button(.Button2, pressed: false)
+    }
     
     var count:Int = 0
     var busy = false
@@ -334,16 +340,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             busy = true
             DispatchQueue.global(qos: .userInitiated).async {
 /*
-                self.s?.rotation = SCNVector4(0, 0, 1, time/3)
+                self.s?.rotation = SCNVector4(0, 0, 1, time/3)*/
                 self.s?.applyTransform()
-                try? self.s?.rebuild()*/
 //                self.busy = false
  
                 
 //                self.p?.points[1].position.y = Float(abs(sin(time/3)))*0.1 + 0.01
 //                self.p?.points[1].position.x = Float(abs(sin(time/3)))*0.1 + 0.01
-                try? self.p?.applyTransform()
-                try? self.p?.rebuild()
+                //try? self.p?.applyTransform()
+                //try? self.p?.rebuild()
                 self.busy = false
  
             }
