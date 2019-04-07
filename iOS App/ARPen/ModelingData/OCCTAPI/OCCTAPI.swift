@@ -96,6 +96,18 @@ class OCCTAPI {
         return occt.center(handle);
     }
     
+    func flattened(_ of: [SCNVector3]) -> [SCNVector3] {
+        var array = [SCNVector3]()
+        let res = occt.flattened(of, ofLength: Int32(of.count))
+        for i in 0..<of.count {
+            array.append(res![i])
+        }
+        return array
+    }
+    
+    func conincidentDimensions(_ of: [SCNVector3]) -> Int {
+        return Int(occt.coincidentDimensions(of: of, ofLength: Int32(of.count)))
+    }    
     
     func triangulate(handle: OCCTReference) -> SCNGeometry {
         return occt.sceneKitMesh(of: handle)

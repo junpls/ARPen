@@ -30,6 +30,12 @@
 #include <BRepAdaptor_Curve.hxx>
 #include <BRepOffsetAPI_MakePipe.hxx>
 #include <BRepBuilderAPI_MakeFace.hxx>
+#include <GProp_PEquation.hxx>
+#include <NCollection_Array1.hxx>
+#include <GeomAPI_ProjectPointOnSurf.hxx>
+#include <GeomAPI_ProjectPointOnCurve.hxx>
+#include <Geom_Line.hxx>
+#include <Geom_Plane.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -41,7 +47,6 @@
 #include <BRepBuilderAPI_Transform.hxx>
 #include <BRepFilletAPI_MakeFillet.hxx>
 #include <BRepPrimAPI_MakeCylinder.hxx>
-#include <Geom_Plane.hxx>
 #include <BRepOffsetAPI_MakeThickSolid.hxx>
 #include <Geom_CylindricalSurface.hxx>
 #include <Geom2d_Ellipse.hxx>
@@ -57,6 +62,9 @@ typedef struct {
 } MyVertex;
 
 double linearDeflection = 0.0005;
+double flatteningTolerance = 0.02;
+
+NSDate *start;
 
 NCollection_DataMap<TCollection_AsciiString, TopoDS_Shape> shapeRegistry = NCollection_DataMap<TCollection_AsciiString, TopoDS_Shape>();
 NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NCollection_DataMap<TCollection_AsciiString, gp_Trsf>();
@@ -222,6 +230,64 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     return newCenter;
 }
 
+- (const SCNVector3 *) flattened:(const SCNVector3 []) points
+                        ofLength:(int) length
+{
+    TColgp_Array1OfPnt ocPoints = TColgp_Array1OfPnt(1, length);
+    
+    for (int i = 1; i <= length; i++) {
+        ocPoints.SetValue(i, gp_Pnt(points[i-1].x, points[i-1].y, points[i-1].z));
+    }
+    
+    GProp_PEquation eq = GProp_PEquation(ocPoints, flatteningTolerance);
+    if (eq.IsPlanar()) {
+        Handle(Geom_Plane) plane = new Geom_Plane(eq.Plane());
+        for (int i = 1; i <= length; i++) {
+            GeomAPI_ProjectPointOnSurf proj = GeomAPI_ProjectPointOnSurf(ocPoints.Value(i), plane);
+            ocPoints.SetValue(i, proj.Point(1));
+        }
+    } else if (eq.IsLinear()) {
+        Handle(Geom_Line) line = new Geom_Line(eq.Line());
+        for (int i = 1; i <= length; i++) {
+            GeomAPI_ProjectPointOnCurve proj = GeomAPI_ProjectPointOnCurve(ocPoints.Value(i), line);
+            ocPoints.SetValue(i, proj.Point(1));
+        }
+    } else if (eq.IsPoint()) {
+        for (int i = 1; i <= length; i++) {
+            ocPoints.SetValue(i, eq.Point());
+        }
+    }
+    
+    SCNVector3 *res = new SCNVector3[length];
+    for (int i = 1; i <= length; i++) {
+        gp_Pnt pt = ocPoints.Value(i);
+        res[i-1] = {(float)pt.X(), (float)pt.Y(), (float)pt.Z()};
+    }
+    
+    return res;
+}
+
+- (int) coincidentDimensionsOf:(const SCNVector3 [])points
+                      ofLength:(int)length
+{
+    TColgp_Array1OfPnt ocPoints = TColgp_Array1OfPnt(1, length);
+    
+    for (int i = 1; i <= length; i++) {
+        ocPoints.SetValue(i, gp_Pnt(points[i-1].x, points[i-1].y, points[i-1].z));
+    }
+    
+    GProp_PEquation eq = GProp_PEquation(ocPoints, flatteningTolerance);
+    if (eq.IsPlanar()) {
+        return 2;
+    } else if (eq.IsLinear()) {
+        return 1;
+    } else if (eq.IsPoint()) {
+        return 0;
+    } else {
+        return 3;
+    }
+}
+
 - (void) someMethod {
     NSLog(@"SomeMethod Ran");
     
@@ -242,8 +308,6 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     TCollection_AsciiString rand = [self randomString];
     NSLog(@"%s", rand.ToCString());
 }
-
-NSDate *start;
 
 - (const char *) createCube
 {
@@ -300,8 +364,10 @@ NSDate *start;
     for (int i = 1; i < length; i++) {
         gp_Pnt aPnt1(points[i-1].x, points[i-1].y, points[i-1].z);
         gp_Pnt aPnt2(points[i].x, points[i].y, points[i].z);
-        TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(aPnt1, aPnt2);
-        makeWire.Add(edge);
+        if (!aPnt1.IsEqual(aPnt2, 0.0001)) {
+            TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(aPnt1, aPnt2);
+            makeWire.Add(edge);
+        }
     }
     
     if (closed) {
@@ -311,7 +377,12 @@ NSDate *start;
         makeWire.Add(edge);
     }
     
-    TopoDS_Wire wire = makeWire.Wire();
+    TopoDS_Wire wire;
+    if (makeWire.Edge().IsNull()) {
+        wire = TopoDS_Wire();
+    } else {
+        wire = makeWire.Wire();
+    }
     TCollection_AsciiString key = [self storeInRegistry:wire];
     
     NSTimeInterval timeInterval = [start timeIntervalSinceNow];

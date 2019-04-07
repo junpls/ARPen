@@ -9,9 +9,7 @@
 import Foundation
 
 enum BooleanOperation {
-    case join
-    case cut
-    case intersect
+    case join, cut, intersect
 }
 
 enum BooleanError: Error {

@@ -43,7 +43,12 @@
 
 
 - (SCNVector3) center:(const char *) label;
-    
+
+- (const SCNVector3 *) flattened:(const SCNVector3 []) points
+                        ofLength:(int) length;
+- (int) coincidentDimensionsOf:(const SCNVector3 []) points
+                      ofLength:(int) length;
+
 - (void) setTransformOf:(const char *) label
          transformation:(SCNMatrix4) mat;
 - (void) setPivotOf:(const char *) label

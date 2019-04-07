@@ -35,6 +35,35 @@ class ARPPath: ARPGeomNode {
         
         self.lineColor = color
     }
+    
+    func appendPoint(_ point:SCNVector3) {
+        let node = SCNNode()
+        node.geometry = SCNSphere(radius: 0.002)
+        node.geometry?.firstMaterial?.diffuse.contents = color
+        node.geometry?.firstMaterial?.lightingModel = .constant
+        node.position = point
+        self.points.append(node)
+        self.content.addChildNode(node)
+    }
+    
+    func removeLastPoint() {
+        let removed = self.points.removeLast()
+        removed.removeFromParentNode()
+    }
+    
+    func coincidentDimensions() -> Int {
+        return OCCTAPI.shared.conincidentDimensions(getPointsAsVectors())
+    }
+    
+    func flatten() {
+        for (old, new) in zip(points, OCCTAPI.shared.flattened(getPointsAsVectors())) {
+            old.position = new
+        }
+    }
+    
+    func getPointsAsVectors() -> [SCNVector3] {
+        return points.map { $0.position }
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
