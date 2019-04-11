@@ -8,23 +8,55 @@
 
 import Foundation
 
+enum CornerStyle {
+    case sharp, round
+}
+
+class ARPPathNode: ARPNode {
+    
+    let sharpColor = UIColor.red
+    let roundColor = UIColor.blue
+
+    var cornerStyle = CornerStyle.sharp {
+        didSet {
+            updateCornerStyle()
+        }
+    }
+    
+    convenience init(_ x: Float, _ y: Float, _ z: Float, cornerStyle: CornerStyle = CornerStyle.sharp) {
+        self.init(SCNVector3(x, y, z), cornerStyle: cornerStyle)
+    }
+    
+    init(_ position: SCNVector3, cornerStyle: CornerStyle = CornerStyle.sharp) {
+        super.init()
+        self.geometry = SCNSphere(radius: 0.002)
+        self.geometry?.firstMaterial?.lightingModel = .constant
+        self.cornerStyle = cornerStyle
+        updateCornerStyle()
+        self.position = position
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updateCornerStyle() {
+        self.geometry?.firstMaterial?.diffuse.contents = self.cornerStyle == .sharp ? sharpColor : roundColor
+    }
+}
+
 class ARPPath: ARPGeomNode {
     
     let color = UIColor.red
     
-    var points:[SCNNode] = [SCNNode]()
+    var points:[ARPPathNode] = [ARPPathNode]()
     var closed:Bool = false
     
-    init(points:[SCNVector3], closed:Bool) {
+    init(points:[ARPPathNode], closed:Bool) {
         self.closed = closed
         
         for point in points {
-            let node = SCNNode()
-            node.geometry = SCNSphere(radius: 0.002)
-            node.geometry?.firstMaterial?.diffuse.contents = color
-            node.geometry?.firstMaterial?.lightingModel = .constant
-            node.position = point
-            self.points.append(node)
+            self.points.append(point)
         }
 
         super.init()
@@ -36,14 +68,9 @@ class ARPPath: ARPGeomNode {
         self.lineColor = color
     }
     
-    func appendPoint(_ point:SCNVector3) {
-        let node = SCNNode()
-        node.geometry = SCNSphere(radius: 0.002)
-        node.geometry?.firstMaterial?.diffuse.contents = color
-        node.geometry?.firstMaterial?.lightingModel = .constant
-        node.position = point
-        self.points.append(node)
-        self.content.addChildNode(node)
+    func appendPoint(_ point:ARPPathNode) {
+        self.points.append(point)
+        self.content.addChildNode(point)
     }
     
     func removeLastPoint() {

@@ -34,21 +34,24 @@ class LinePlugin: Plugin {
         self.scene = scene
         currentButtonStates = buttons
         
-        if buttonPressed(.Button1) {
+        if buttonPressed(.Button2) || buttonPressed(.Button3) {
+            
+            let cornerStyle = buttonPressed(.Button2) ? CornerStyle.sharp : CornerStyle.round
             
             if activePath == nil {
-                let path = ARPPath(points: [scene.pencilPoint.position], closed: false)
+                let path = ARPPath(points: [ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle)], closed: false)
                 activePath = path
                 scene.drawingNode.addChildNode(path)
             }
             
             if let path = activePath {
-                path.appendPoint(scene.pencilPoint.position)
+                path.points.last?.cornerStyle = cornerStyle
+                path.appendPoint(ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle))
                 path.rebuild()
             }
         }
         
-        if buttonPressed(.Button2), let path = activePath {
+        if buttonPressed(.Button1), let path = activePath {
             if path.points.first!.position.distance(vector: path.points[path.points.count-2].position) < maxClosureDistance {
                 path.removeLastPoint()
                 path.closed = true

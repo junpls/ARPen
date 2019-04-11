@@ -329,6 +329,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     @IBAction func softwarePenButton2Released(_ sender: Any) {
         self.pluginManager.button(.Button2, pressed: false)
     }
+    @IBAction func softwarePenButton3Pressed(_ sender: Any) {
+        self.pluginManager.button(.Button3, pressed: true)
+    }
+    @IBAction func softwarePenButton3Released(_ sender: Any) {
+        self.pluginManager.button(.Button3, pressed: false)
+    }
     
     var count:Int = 0
     var busy = false
