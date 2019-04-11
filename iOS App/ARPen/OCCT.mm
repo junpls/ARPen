@@ -36,6 +36,7 @@
 #include <GeomAPI_ProjectPointOnCurve.hxx>
 #include <Geom_Line.hxx>
 #include <Geom_Plane.hxx>
+#include <GeomAPI_Interpolate.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -353,7 +354,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     
     return [self toHeapString:key];
 }
-
+/*
 - (const char *) createPath:(const SCNVector3 []) points
                      length:(int) length
                      closed:(bool) closed
@@ -383,6 +384,109 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     } else {
         wire = makeWire.Wire();
     }
+    TCollection_AsciiString key = [self storeInRegistry:wire];
+    
+    NSTimeInterval timeInterval = [start timeIntervalSinceNow];
+    NSLog(@"Path creation took %f", timeInterval);
+    
+    return [self toHeapString:key];
+}
+*/
+- (const char *) createPath:(const SCNVector3 []) points
+                     length:(int) length
+                    corners:(const int []) corners
+                     closed:(bool) closed
+{
+    start = [NSDate date];
+    BRepBuilderAPI_MakeWire makeWire;
+    
+    TColgp_SequenceOfPnt curvePoints;
+    
+    int startAt = 0;
+    bool onlyRoundCorners = true;
+    
+    if (closed) {
+        /// A little trick to make curvature continuity at the start/endpoint easier:
+        /// Find out if the path consists purely of round corners. In that case OCCT can handle this for us.
+        /// Otherwise, choose a sharp corner to start with, so that there is no round corner at the seam.
+        for (int i = 0; i < length; i++) {
+            if (corners[i] == 1) {
+                onlyRoundCorners = false;
+                startAt = i;
+                break;
+            }
+        }
+    }
+    
+    /// If the path is closed and there is a sharp corner at the seam, we need to make one additional step to add the closing edge.
+    /// Remember that we always start/end at a sharp corner if there is one.
+    int overshoot = (closed && !onlyRoundCorners) ? 1 : 0;
+
+    bool curveMode = false;
+    for (int i = 1; i < length + overshoot; i++) {
+        
+        int ci = (startAt + i) % length;
+        int pi = (startAt + i-1) % length;
+        gp_Pnt currPoint(points[ci].x, points[ci].y, points[ci].z);
+        gp_Pnt prevPoint(points[pi].x, points[pi].y, points[pi].z);
+        int currCorner = corners[ci];
+        int prevCorner = corners[pi];
+
+        if (currCorner == 1 && prevCorner == 1) {
+            if (!prevPoint.IsEqual(currPoint, 0.0001)) {
+                TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(prevPoint, currPoint);
+                makeWire.Add(edge);
+            }
+        }
+        
+        // A curve has started
+        if (!curveMode && (prevCorner == 2 || currCorner == 2)) {
+            curvePoints = TColgp_SequenceOfPnt();
+            curvePoints.Append(prevPoint);
+            curveMode = true;
+        }
+        
+        // A curve continues
+        if (curveMode) {
+            curvePoints.Append(currPoint);
+        }
+        
+        // A curve has ended
+        if (curveMode && (currCorner != 2 || i == length+overshoot-1)) {
+            curveMode = false;
+            
+            int segmentLength = curvePoints.Length();
+            Handle(TColgp_HArray1OfPnt) segmentPoints = new TColgp_HArray1OfPnt(1, segmentLength);
+            TColgp_SequenceOfPnt::Iterator iter = TColgp_SequenceOfPnt::Iterator(curvePoints);
+            int j = 1;
+            for (; iter.More(); iter.Next()) {
+                segmentPoints->SetValue(j++, iter.Value());
+            }
+            
+            try {
+                OCC_CATCH_SIGNALS
+                
+                GeomAPI_Interpolate interpolate = GeomAPI_Interpolate(segmentPoints, closed && onlyRoundCorners, 0.005);
+                interpolate.Perform();
+                Handle(Geom_BSplineCurve) curve = interpolate.Curve();
+                BRepBuilderAPI_MakeEdge makeEdge = BRepBuilderAPI_MakeEdge(curve);
+                TopoDS_Edge edge = makeEdge.Edge();
+                makeWire.Add(edge);
+            } catch (...) {
+                
+            }
+        }
+    }
+    
+    TopoDS_Wire wire;
+    
+    try {
+        OCC_CATCH_SIGNALS
+        wire = makeWire.Wire();
+    } catch (...) {
+        wire = TopoDS_Wire();
+    }
+
     TCollection_AsciiString key = [self storeInRegistry:wire];
     
     NSTimeInterval timeInterval = [start timeIntervalSinceNow];

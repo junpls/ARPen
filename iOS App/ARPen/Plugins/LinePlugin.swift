@@ -45,15 +45,16 @@ class LinePlugin: Plugin {
             }
             
             if let path = activePath {
-                path.points.last?.cornerStyle = cornerStyle
+                let activePoint = path.getNonFixedPoint()
+                activePoint?.cornerStyle = cornerStyle
+                activePoint?.fixed = true
                 path.appendPoint(ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle))
-                path.rebuild()
             }
         }
         
         if buttonPressed(.Button1), let path = activePath {
             if path.points.first!.position.distance(vector: path.points[path.points.count-2].position) < maxClosureDistance {
-                path.removeLastPoint()
+                path.removeNonFixedPoints()
                 path.closed = true
             }
             path.removeLastPoint()
@@ -103,6 +104,11 @@ class LinePlugin: Plugin {
         if !busy, let path = activePath {
             busy = true
             DispatchQueue.global(qos: .userInitiated).async {
+                if path.points.first!.position.distance(vector: path.points[path.points.count-1].position) < self.maxClosureDistance {
+                    path.closed = true
+                } else {
+                    path.closed = false
+                }
                 path.rebuild()
                 self.busy = false
             }

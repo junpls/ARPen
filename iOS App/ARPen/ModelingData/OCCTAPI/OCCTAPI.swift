@@ -39,8 +39,8 @@ class OCCTAPI {
         }
     }
     
-    func createPath(points:[SCNVector3], closed:Bool) throws -> OCCTReference {
-        if let cString = occt.createPath(points, length:Int32(points.count), closed:closed) {
+    func createPath(points:[SCNVector3], corners:[CornerStyle], closed:Bool) throws -> OCCTReference {
+        if let cString = occt.createPath(points, length:Int32(points.count), corners: corners.map({ $0.rawValue }), closed:closed) {
             let ref = OCCTReference(cString: cString)
             return ref
         } else {

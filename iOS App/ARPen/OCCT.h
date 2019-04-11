@@ -27,6 +27,7 @@
                     length:(double) length;
 - (const char *) createPath:(const SCNVector3 []) points
                      length:(int) length
+                    corners:(const int []) corners
                      closed:(bool) closed;
 
 - (const char *) sweep:(const char *) profile

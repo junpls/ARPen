@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum CornerStyle {
-    case sharp, round
+enum CornerStyle: Int32 {
+    case sharp = 1, round = 2
 }
 
 class ARPPathNode: ARPNode {
@@ -22,6 +22,8 @@ class ARPPathNode: ARPNode {
             updateCornerStyle()
         }
     }
+    
+    var fixed = false
     
     convenience init(_ x: Float, _ y: Float, _ z: Float, cornerStyle: CornerStyle = CornerStyle.sharp) {
         self.init(SCNVector3(x, y, z), cornerStyle: cornerStyle)
@@ -88,6 +90,14 @@ class ARPPath: ARPGeomNode {
         }
     }
     
+    func removeNonFixedPoints() {
+        points.removeAll(where: { !$0.fixed })
+    }
+    
+    func getNonFixedPoint() -> ARPPathNode? {
+        return points.last(where: { !$0.fixed })
+    }
+    
     func getPointsAsVectors() -> [SCNVector3] {
         return points.map { $0.position }
     }
@@ -97,7 +107,8 @@ class ARPPath: ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
-        let positions = points.map { $0.position }
-        return try OCCTAPI.shared.createPath(points: positions, closed: closed)
+        let positions = points.compactMap { (!closed || $0.fixed) ? $0.position : nil }
+        let corners = points.compactMap { (!closed || $0.fixed) ? $0.cornerStyle : nil }
+        return try OCCTAPI.shared.createPath(points: positions, corners: corners, closed: closed)
     }
 }
