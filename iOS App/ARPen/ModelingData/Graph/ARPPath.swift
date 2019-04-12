@@ -109,6 +109,7 @@ class ARPPath: ARPGeomNode {
     override func build() throws -> OCCTReference {
         let positions = points.compactMap { (!closed || $0.fixed) ? $0.position : nil }
         let corners = points.compactMap { (!closed || $0.fixed) ? $0.cornerStyle : nil }
+        print(positions.count)
         return try OCCTAPI.shared.createPath(points: positions, corners: corners, closed: closed)
     }
 }

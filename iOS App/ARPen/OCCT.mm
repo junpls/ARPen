@@ -62,7 +62,8 @@ typedef struct {
 //    float nx, ny, nz; // normal
 } MyVertex;
 
-double linearDeflection = 0.0005;
+double meshDeflection = 0.01;
+double lineDeflection = 0.0003;
 double flatteningTolerance = 0.02;
 
 NSDate *start;
@@ -466,7 +467,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
             try {
                 OCC_CATCH_SIGNALS
                 
-                GeomAPI_Interpolate interpolate = GeomAPI_Interpolate(segmentPoints, closed && onlyRoundCorners, 0.005);
+                GeomAPI_Interpolate interpolate = GeomAPI_Interpolate(segmentPoints, closed && onlyRoundCorners, 0.01);
                 interpolate.Perform();
                 Handle(Geom_BSplineCurve) curve = interpolate.Curve();
                 BRepBuilderAPI_MakeEdge makeEdge = BRepBuilderAPI_MakeEdge(curve);
@@ -628,7 +629,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     NSTimeInterval timeInterval = [start timeIntervalSinceNow];
     NSLog(@"Creation took %f", timeInterval);
     
-    [self triangulate:aRes withDeflection:linearDeflection];
+    [self triangulate:aRes withDeflection:meshDeflection];
     
 
     TopoDS_Shape aSphere = BRepPrimAPI_MakeSphere(1);
@@ -724,19 +725,19 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
 - (SCNGeometry *) sceneKitMeshOf:(const char *)label {
     TCollection_AsciiString key = TCollection_AsciiString(label);
     TopoDS_Shape shape = [self retrieveFromRegistry:key];
-    return [self triangulate:shape withDeflection:linearDeflection];
+    return [self triangulate:shape withDeflection:meshDeflection];
 }
 
 - (SCNGeometry *) sceneKitLinesOf:(const char *)label {
     TCollection_AsciiString key = TCollection_AsciiString(label);
     TopoDS_Shape shape = [self retrieveFromRegistry:key];
-    return [self getEdges:shape withDeflection:linearDeflection];
+    return [self getEdges:shape withDeflection:lineDeflection];
 }
 
 - (SCNGeometry *) sceneKitTubesOf:(const char *)label {
     TCollection_AsciiString key = TCollection_AsciiString(label);
     TopoDS_Shape shape = [self retrieveFromRegistry:key];
-    return [self getTube:shape withDeflection:linearDeflection/2];
+    return [self getTube:shape withDeflection:lineDeflection];
 }
 
 - (SCNGeometry *) getTube:(TopoDS_Shape &)shape
@@ -924,6 +925,10 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     /// Update the incremental mesh
     BRepMesh_IncrementalMesh mesh(shape, deflection);
 
+    NSTimeInterval timeInterval = [start timeIntervalSinceNow];
+    NSLog(@"Incremental mesh took %f", timeInterval);
+    start = [NSDate date];
+
     
     /// First count the required nodes and triangles
     int noOfNodes = 0;
@@ -1009,10 +1014,10 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
         }
     }
     
-    SCNGeometry *geometry = [self convertToSCNMesh:vertices withNormals:normals withIndices:indices vertexCount:noOfNodes primitiveCount:noOfTriangles];
-    
-    NSTimeInterval timeInterval = [start timeIntervalSinceNow];
-    NSLog(@"Triangulation took %f", timeInterval);
+    timeInterval = [start timeIntervalSinceNow];
+    NSLog(@"Meshification took %f", timeInterval);
+
+    SCNGeometry *geometry = [self convertToSCNMesh:vertices withNormals:normals withIndices:indices vertexCount:noOfNodes primitiveCount:noOfTriangles];    
     
     return geometry;
 }

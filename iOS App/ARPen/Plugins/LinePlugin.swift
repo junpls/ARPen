@@ -18,6 +18,7 @@ class LinePlugin: Plugin {
      */
     
     let maxClosureDistance: Float = 0.02
+    let minNextPointDistance: Float = 0.02
     
     private var activePath: ARPPath? = nil
     
@@ -34,9 +35,9 @@ class LinePlugin: Plugin {
         self.scene = scene
         currentButtonStates = buttons
         
-        if buttonPressed(.Button2) || buttonPressed(.Button3) {
+        if (buttons[.Button2]! || buttons[.Button3]!) && readyForNextPoint() {
             
-            let cornerStyle = buttonPressed(.Button2) ? CornerStyle.sharp : CornerStyle.round
+            let cornerStyle = buttons[.Button2]! ? CornerStyle.sharp : CornerStyle.round
             
             if activePath == nil {
                 let path = ARPPath(points: [ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle)], closed: false)
@@ -53,7 +54,7 @@ class LinePlugin: Plugin {
         }
         
         if buttonPressed(.Button1), let path = activePath {
-            if path.points.first!.position.distance(vector: path.points[path.points.count-2].position) < maxClosureDistance {
+            if path.points.first!.worldPosition.distance(vector: path.points[path.points.count-2].worldPosition) < maxClosureDistance {
                 path.removeNonFixedPoints()
                 path.closed = true
             }
@@ -100,11 +101,23 @@ class LinePlugin: Plugin {
         }
     }
     
+    func readyForNextPoint() -> Bool {
+        if let path = activePath,
+            let lastFixed = path.points.last(where: { $0.fixed }),
+            let lastFree = path.points.last(where: { !$0.fixed }),
+            let scn = scene {
+            if lastFree.position.distance(vector: lastFixed.worldPosition) < minNextPointDistance {
+                return false
+            }
+        }
+        return true
+    }
+    
     func tryRebuildPreview() {
         if !busy, let path = activePath {
             busy = true
             DispatchQueue.global(qos: .userInitiated).async {
-                if path.points.first!.position.distance(vector: path.points[path.points.count-1].position) < self.maxClosureDistance {
+                if path.points.first!.worldPosition.distance(vector: path.points[path.points.count-1].worldPosition) < self.maxClosureDistance {
                     path.closed = true
                 } else {
                     path.closed = false
