@@ -37,6 +37,7 @@
 #include <Geom_Line.hxx>
 #include <Geom_Plane.hxx>
 #include <GeomAPI_Interpolate.hxx>
+#include <BRepPrimAPI_MakeRevol.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -355,44 +356,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     
     return [self toHeapString:key];
 }
-/*
-- (const char *) createPath:(const SCNVector3 []) points
-                     length:(int) length
-                     closed:(bool) closed
-{
-    start = [NSDate date];
-    
-    BRepBuilderAPI_MakeWire makeWire;
-    for (int i = 1; i < length; i++) {
-        gp_Pnt aPnt1(points[i-1].x, points[i-1].y, points[i-1].z);
-        gp_Pnt aPnt2(points[i].x, points[i].y, points[i].z);
-        if (!aPnt1.IsEqual(aPnt2, 0.0001)) {
-            TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(aPnt1, aPnt2);
-            makeWire.Add(edge);
-        }
-    }
-    
-    if (closed) {
-        gp_Pnt aPnt1(points[length-1].x, points[length-1].y, points[length-1].z);
-        gp_Pnt aPnt2(points[0].x, points[0].y, points[0].z);
-        TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(aPnt1, aPnt2);
-        makeWire.Add(edge);
-    }
-    
-    TopoDS_Wire wire;
-    if (makeWire.Edge().IsNull()) {
-        wire = TopoDS_Wire();
-    } else {
-        wire = makeWire.Wire();
-    }
-    TCollection_AsciiString key = [self storeInRegistry:wire];
-    
-    NSTimeInterval timeInterval = [start timeIntervalSinceNow];
-    NSLog(@"Path creation took %f", timeInterval);
-    
-    return [self toHeapString:key];
-}
-*/
+
 - (const char *) createPath:(const SCNVector3 []) points
                      length:(int) length
                     corners:(const int []) corners
@@ -666,6 +630,28 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     NSLog(@"Sweeping took %f", timeInterval);
     
     return [self storeInRegistryWithCString:solid];
+}
+
+- (const char *) revolve:(const char *) profile
+              aroundAxis:(SCNVector3) axisPosition
+           withDirection:(SCNVector3) axisDirection
+{
+    start = [NSDate date];
+    
+    TCollection_AsciiString keyProfile = TCollection_AsciiString(profile);
+    
+    TopoDS_Shape shapeProfile = [self retrieveFromRegistryTransformed: keyProfile];
+    
+    gp_Ax1 axis = gp_Ax1(gp_Pnt(axisPosition.x, axisPosition.y, axisPosition.z),
+                         gp_Dir(axisDirection.x, axisDirection.y, axisDirection.z));
+    
+    TopoDS_Shape solid = BRepPrimAPI_MakeRevol(shapeProfile, axis);
+    
+    NSTimeInterval timeInterval = [start timeIntervalSinceNow];
+    NSLog(@"Sweeping took %f", timeInterval);
+    
+    return [self storeInRegistryWithCString:solid];
+    
 }
 
 - (const char *) booleanCut:(const char *) a

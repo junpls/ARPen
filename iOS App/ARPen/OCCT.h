@@ -32,13 +32,15 @@
 
 - (const char *) sweep:(const char *) profile
                  along:(const char *) path;
+- (const char *) revolve:(const char *) profile
+              aroundAxis:(SCNVector3) axisPosition
+           withDirection:(SCNVector3) axisDirection;
+
 
 - (const char *) booleanCut:(const char *) a
                    subtract:(const char *) b;
-
 - (const char *) booleanJoin:(const char *) a
                         with:(const char *) b;
-
 - (const char *) booleanIntersect:(const char *) a
                              with:(const char *) b;
 

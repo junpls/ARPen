@@ -65,6 +65,7 @@ class LinePlugin: Plugin {
             activePath = nil
             
             tryToSweep()
+            tryToRevolve()
         }
         
         if let path = activePath {
@@ -85,6 +86,15 @@ class LinePlugin: Plugin {
         }
     }
     
+    func tryToRevolve() {
+        if let profile = freePaths.first(where: { !$0.closed }) {
+            if let revolution = try? ARPRevolution(profile: profile) {
+                scene?.drawingNode.addChildNode(revolution)
+                freePaths.removeAll(where: { $0 === profile })
+            }
+        }
+    }
+
     func buttonPressed(_ button:Button) -> Bool {
         if let n = currentButtonStates[button], let p = previousButtonStates[button] {
             return n && !p

@@ -84,6 +84,15 @@ class OCCTAPI {
         }
     }
     
+    func revolve(profile: OCCTReference, aroundAxis: SCNVector3, withDirection: SCNVector3)  throws -> OCCTReference {
+        if let sum = occt.revolve(profile, aroundAxis: aroundAxis, withDirection: withDirection) {
+            let ref = OCCTReference(cString: sum)
+            return ref
+        } else {
+            throw OCCTError.couldNotCreateGeometry
+        }
+    }
+    
     func transform(handle: OCCTReference, transformation: SCNMatrix4) {
         occt.setTransformOf(handle, transformation: transformation)
     }

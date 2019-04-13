@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D26154E22569CB200D9F0F8 /* LinePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26154D22569CB200D9F0F8 /* LinePlugin.swift */; };
+		3D3450822261F5650017DB39 /* ARPRevolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3450812261F5650017DB39 /* ARPRevolution.swift */; };
 		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
 		3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48674A224A527200EABD23 /* ARPSweep.swift */; };
 		3D61FCF82201EFB200183AEA /* libTKMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE82201EFB200183AEA /* libTKMath.a */; };
@@ -94,6 +95,7 @@
 
 /* Begin PBXFileReference section */
 		3D26154D22569CB200D9F0F8 /* LinePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePlugin.swift; sourceTree = "<group>"; };
+		3D3450812261F5650017DB39 /* ARPRevolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPRevolution.swift; sourceTree = "<group>"; };
 		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
 		3D48674A224A527200EABD23 /* ARPSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPSweep.swift; sourceTree = "<group>"; };
 		3D61FCE82201EFB200183AEA /* libTKMath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKMath.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKMath.a"; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				3D88365B221AD84300672CEB /* ARPBoolNode.swift */,
 				3D486748224959F200EABD23 /* ARPPath.swift */,
 				3D48674A224A527200EABD23 /* ARPSweep.swift */,
+				3D3450812261F5650017DB39 /* ARPRevolution.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				3D883663221AD84300672CEB /* Util.swift in Sources */,
 				DC28B47A200E7E8A008B77AB /* MarkerBox.m in Sources */,
 				4A5695342058195200C8065E /* UserStudyRecordsListTableViewController.swift in Sources */,
+				3D3450822261F5650017DB39 /* ARPRevolution.swift in Sources */,
 				3D883664221AD84300672CEB /* OCCTAPI.swift in Sources */,
 				DC28B45F200E4561008B77AB /* PenManager.swift in Sources */,
 				4A56953920581B6700C8065E /* UserStudyRecordManager.swift in Sources */,
