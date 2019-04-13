@@ -7,6 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D26154E22569CB200D9F0F8 /* LinePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26154D22569CB200D9F0F8 /* LinePlugin.swift */; };
+		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
+		3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48674A224A527200EABD23 /* ARPSweep.swift */; };
+		3D61FCF82201EFB200183AEA /* libTKMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE82201EFB200183AEA /* libTKMath.a */; };
+		3D61FCF92201EFB200183AEA /* libTKTopAlgo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE92201EFB200183AEA /* libTKTopAlgo.a */; };
+		3D61FCFA2201EFB200183AEA /* libTKXMesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCEA2201EFB200183AEA /* libTKXMesh.a */; };
+		3D61FCFB2201EFB200183AEA /* libTKFillet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCEB2201EFB200183AEA /* libTKFillet.a */; };
+		3D61FCFC2201EFB200183AEA /* libTKG3d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCEC2201EFB200183AEA /* libTKG3d.a */; };
+		3D61FCFD2201EFB200183AEA /* libTKBO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCED2201EFB200183AEA /* libTKBO.a */; };
+		3D61FCFE2201EFB200183AEA /* libTKGeomBase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCEE2201EFB200183AEA /* libTKGeomBase.a */; };
+		3D61FCFF2201EFB200183AEA /* libTKG2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCEF2201EFB200183AEA /* libTKG2d.a */; };
+		3D61FD002201EFB200183AEA /* libTKernel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF02201EFB200183AEA /* libTKernel.a */; };
+		3D61FD012201EFB200183AEA /* libTKMesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF12201EFB200183AEA /* libTKMesh.a */; };
+		3D61FD022201EFB200183AEA /* libTKGeomAlgo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF22201EFB200183AEA /* libTKGeomAlgo.a */; };
+		3D61FD032201EFB200183AEA /* libTKPrim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF32201EFB200183AEA /* libTKPrim.a */; };
+		3D61FD042201EFB200183AEA /* libTKBRep.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF42201EFB200183AEA /* libTKBRep.a */; };
+		3D61FD052201EFB200183AEA /* libTKOffset.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF52201EFB200183AEA /* libTKOffset.a */; };
+		3D61FD062201EFB200183AEA /* libTKBool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF62201EFB200183AEA /* libTKBool.a */; };
+		3D61FD072201EFB200183AEA /* libTKShHealing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF72201EFB200183AEA /* libTKShHealing.a */; };
+		3D88365F221AD84300672CEB /* ARPSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D883658221AD84300672CEB /* ARPSphere.swift */; };
+		3D883660221AD84300672CEB /* ARPGeomNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D883659221AD84300672CEB /* ARPGeomNode.swift */; };
+		3D883661221AD84300672CEB /* ARPNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D88365A221AD84300672CEB /* ARPNode.swift */; };
+		3D883662221AD84300672CEB /* ARPBoolNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D88365B221AD84300672CEB /* ARPBoolNode.swift */; };
+		3D883663221AD84300672CEB /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D88365C221AD84300672CEB /* Util.swift */; };
+		3D883664221AD84300672CEB /* OCCTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D88365E221AD84300672CEB /* OCCTAPI.swift */; };
+		3D883669221B457C00672CEB /* ARPBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D883668221B457C00672CEB /* ARPBox.swift */; };
+		3DA388E32251F4CB003A8937 /* OCCT.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3DA388E22251F4CB003A8937 /* OCCT.mm */; };
+		3DA388EB2252A431003A8937 /* ARPenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA388EA2252A431003A8937 /* ARPenTests.swift */; };
 		4A56952F2058186800C8065E /* aruco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A56952D2058186800C8065E /* aruco.framework */; };
 		4A5695302058186800C8065E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A56952E2058186800C8065E /* opencv2.framework */; };
 		4A5695322058192B00C8065E /* UserStudyIDListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5695312058192B00C8065E /* UserStudyIDListTableViewController.swift */; };
@@ -41,6 +69,16 @@
 		DC28B47A200E7E8A008B77AB /* MarkerBox.m in Sources */ = {isa = PBXBuildFile; fileRef = DC28B478200E7E89008B77AB /* MarkerBox.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3DA388ED2252A431003A8937 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC28B434200E4353008B77AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC28B43B200E4353008B77AB;
+			remoteInfo = ARPen;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		4A8EF891203AE2FA00E53E85 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -55,6 +93,37 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D26154D22569CB200D9F0F8 /* LinePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePlugin.swift; sourceTree = "<group>"; };
+		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
+		3D48674A224A527200EABD23 /* ARPSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPSweep.swift; sourceTree = "<group>"; };
+		3D61FCE82201EFB200183AEA /* libTKMath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKMath.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKMath.a"; sourceTree = "<group>"; };
+		3D61FCE92201EFB200183AEA /* libTKTopAlgo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKTopAlgo.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKTopAlgo.a"; sourceTree = "<group>"; };
+		3D61FCEA2201EFB200183AEA /* libTKXMesh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKXMesh.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKXMesh.a"; sourceTree = "<group>"; };
+		3D61FCEB2201EFB200183AEA /* libTKFillet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKFillet.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKFillet.a"; sourceTree = "<group>"; };
+		3D61FCEC2201EFB200183AEA /* libTKG3d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKG3d.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKG3d.a"; sourceTree = "<group>"; };
+		3D61FCED2201EFB200183AEA /* libTKBO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKBO.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKBO.a"; sourceTree = "<group>"; };
+		3D61FCEE2201EFB200183AEA /* libTKGeomBase.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKGeomBase.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKGeomBase.a"; sourceTree = "<group>"; };
+		3D61FCEF2201EFB200183AEA /* libTKG2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKG2d.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKG2d.a"; sourceTree = "<group>"; };
+		3D61FCF02201EFB200183AEA /* libTKernel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKernel.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKernel.a"; sourceTree = "<group>"; };
+		3D61FCF12201EFB200183AEA /* libTKMesh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKMesh.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKMesh.a"; sourceTree = "<group>"; };
+		3D61FCF22201EFB200183AEA /* libTKGeomAlgo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKGeomAlgo.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKGeomAlgo.a"; sourceTree = "<group>"; };
+		3D61FCF32201EFB200183AEA /* libTKPrim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKPrim.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKPrim.a"; sourceTree = "<group>"; };
+		3D61FCF42201EFB200183AEA /* libTKBRep.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKBRep.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKBRep.a"; sourceTree = "<group>"; };
+		3D61FCF52201EFB200183AEA /* libTKOffset.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKOffset.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKOffset.a"; sourceTree = "<group>"; };
+		3D61FCF62201EFB200183AEA /* libTKBool.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKBool.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKBool.a"; sourceTree = "<group>"; };
+		3D61FCF72201EFB200183AEA /* libTKShHealing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKShHealing.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKShHealing.a"; sourceTree = "<group>"; };
+		3D883658221AD84300672CEB /* ARPSphere.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPSphere.swift; sourceTree = "<group>"; };
+		3D883659221AD84300672CEB /* ARPGeomNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPGeomNode.swift; sourceTree = "<group>"; };
+		3D88365A221AD84300672CEB /* ARPNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPNode.swift; sourceTree = "<group>"; };
+		3D88365B221AD84300672CEB /* ARPBoolNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPBoolNode.swift; sourceTree = "<group>"; };
+		3D88365C221AD84300672CEB /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		3D88365E221AD84300672CEB /* OCCTAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCCTAPI.swift; sourceTree = "<group>"; };
+		3D883668221B457C00672CEB /* ARPBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPBox.swift; sourceTree = "<group>"; };
+		3DA388E12251F4CB003A8937 /* OCCT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCCT.h; sourceTree = "<group>"; };
+		3DA388E22251F4CB003A8937 /* OCCT.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OCCT.mm; sourceTree = "<group>"; };
+		3DA388E82252A431003A8937 /* ARPenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARPenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DA388EA2252A431003A8937 /* ARPenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPenTests.swift; sourceTree = "<group>"; };
+		3DA388EC2252A431003A8937 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A56952D2058186800C8065E /* aruco.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = aruco.framework; sourceTree = "<group>"; };
 		4A56952E2058186800C8065E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		4A5695312058192B00C8065E /* UserStudyIDListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyIDListTableViewController.swift; sourceTree = "<group>"; };
@@ -96,18 +165,82 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3DA388E52252A431003A8937 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC28B439200E4353008B77AB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				4A56952F2058186800C8065E /* aruco.framework in Frameworks */,
 				4A5695302058186800C8065E /* opencv2.framework in Frameworks */,
+				3D61FCF82201EFB200183AEA /* libTKMath.a in Frameworks */,
+				3D61FCF92201EFB200183AEA /* libTKTopAlgo.a in Frameworks */,
+				3D61FCFA2201EFB200183AEA /* libTKXMesh.a in Frameworks */,
+				3D61FCFB2201EFB200183AEA /* libTKFillet.a in Frameworks */,
+				3D61FCFC2201EFB200183AEA /* libTKG3d.a in Frameworks */,
+				3D61FCFD2201EFB200183AEA /* libTKBO.a in Frameworks */,
+				3D61FCFE2201EFB200183AEA /* libTKGeomBase.a in Frameworks */,
+				3D61FCFF2201EFB200183AEA /* libTKG2d.a in Frameworks */,
+				3D61FD002201EFB200183AEA /* libTKernel.a in Frameworks */,
+				3D61FD012201EFB200183AEA /* libTKMesh.a in Frameworks */,
+				3D61FD022201EFB200183AEA /* libTKGeomAlgo.a in Frameworks */,
+				3D61FD032201EFB200183AEA /* libTKPrim.a in Frameworks */,
+				3D61FD042201EFB200183AEA /* libTKBRep.a in Frameworks */,
+				3D61FD052201EFB200183AEA /* libTKOffset.a in Frameworks */,
+				3D61FD062201EFB200183AEA /* libTKBool.a in Frameworks */,
+				3D61FD072201EFB200183AEA /* libTKShHealing.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D883656221AD84300672CEB /* ModelingData */ = {
+			isa = PBXGroup;
+			children = (
+				3D883657221AD84300672CEB /* Graph */,
+				3D88365C221AD84300672CEB /* Util.swift */,
+				3D88365D221AD84300672CEB /* OCCTAPI */,
+			);
+			path = ModelingData;
+			sourceTree = "<group>";
+		};
+		3D883657221AD84300672CEB /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				3D883658221AD84300672CEB /* ARPSphere.swift */,
+				3D883668221B457C00672CEB /* ARPBox.swift */,
+				3D883659221AD84300672CEB /* ARPGeomNode.swift */,
+				3D88365A221AD84300672CEB /* ARPNode.swift */,
+				3D88365B221AD84300672CEB /* ARPBoolNode.swift */,
+				3D486748224959F200EABD23 /* ARPPath.swift */,
+				3D48674A224A527200EABD23 /* ARPSweep.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		3D88365D221AD84300672CEB /* OCCTAPI */ = {
+			isa = PBXGroup;
+			children = (
+				3D88365E221AD84300672CEB /* OCCTAPI.swift */,
+			);
+			path = OCCTAPI;
+			sourceTree = "<group>";
+		};
+		3DA388E92252A431003A8937 /* ARPenTests */ = {
+			isa = PBXGroup;
+			children = (
+				3DA388EA2252A431003A8937 /* ARPenTests.swift */,
+				3DA388EC2252A431003A8937 /* Info.plist */,
+			);
+			path = ARPenTests;
+			sourceTree = "<group>";
+		};
 		4A4B7F1B205817A200331810 /* SettingsViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +265,22 @@
 		DC18B2B820237A7200884920 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D61FCED2201EFB200183AEA /* libTKBO.a */,
+				3D61FCF62201EFB200183AEA /* libTKBool.a */,
+				3D61FCF42201EFB200183AEA /* libTKBRep.a */,
+				3D61FCF02201EFB200183AEA /* libTKernel.a */,
+				3D61FCEB2201EFB200183AEA /* libTKFillet.a */,
+				3D61FCEF2201EFB200183AEA /* libTKG2d.a */,
+				3D61FCEC2201EFB200183AEA /* libTKG3d.a */,
+				3D61FCF22201EFB200183AEA /* libTKGeomAlgo.a */,
+				3D61FCEE2201EFB200183AEA /* libTKGeomBase.a */,
+				3D61FCE82201EFB200183AEA /* libTKMath.a */,
+				3D61FCF12201EFB200183AEA /* libTKMesh.a */,
+				3D61FCF52201EFB200183AEA /* libTKOffset.a */,
+				3D61FCF32201EFB200183AEA /* libTKPrim.a */,
+				3D61FCF72201EFB200183AEA /* libTKShHealing.a */,
+				3D61FCE92201EFB200183AEA /* libTKTopAlgo.a */,
+				3D61FCEA2201EFB200183AEA /* libTKXMesh.a */,
 				4A56952D2058186800C8065E /* aruco.framework */,
 				4A56952E2058186800C8065E /* opencv2.framework */,
 			);
@@ -143,6 +292,7 @@
 			children = (
 				DCE5A37E202F504B005F4186 /* README.md */,
 				DC28B43E200E4353008B77AB /* ARPen */,
+				3DA388E92252A431003A8937 /* ARPenTests */,
 				DC28B43D200E4353008B77AB /* Products */,
 				DC18B2B820237A7200884920 /* Frameworks */,
 			);
@@ -152,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				DC28B43C200E4353008B77AB /* ARPen.app */,
+				3DA388E82252A431003A8937 /* ARPenTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,6 +310,7 @@
 		DC28B43E200E4353008B77AB /* ARPen */ = {
 			isa = PBXGroup;
 			children = (
+				3D883656221AD84300672CEB /* ModelingData */,
 				DC28B43F200E4353008B77AB /* AppDelegate.swift */,
 				DC28B443200E4353008B77AB /* ViewController.swift */,
 				4A4B7F1B205817A200331810 /* SettingsViewControllers */,
@@ -179,6 +331,8 @@
 				DC28B44A200E4353008B77AB /* LaunchScreen.storyboard */,
 				DC28B44D200E4353008B77AB /* Info.plist */,
 				DC28B459200E446F008B77AB /* ARPen-Bridging-Header.h */,
+				3DA388E12251F4CB003A8937 /* OCCT.h */,
+				3DA388E22251F4CB003A8937 /* OCCT.mm */,
 			);
 			path = ARPen;
 			sourceTree = "<group>";
@@ -202,6 +356,7 @@
 				DC28B474200E64B7008B77AB /* ObjectCreationPlugin.swift */,
 				4A895F092052791100CC2C8E /* CubeByDraggingPlugin.swift */,
 				4A895F0B2052D46000CC2C8E /* CubeByExtractionPlugin.swift */,
+				3D26154D22569CB200D9F0F8 /* LinePlugin.swift */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";
@@ -219,6 +374,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3DA388E72252A431003A8937 /* ARPenTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DA388F12252A431003A8937 /* Build configuration list for PBXNativeTarget "ARPenTests" */;
+			buildPhases = (
+				3DA388E42252A431003A8937 /* Sources */,
+				3DA388E52252A431003A8937 /* Frameworks */,
+				3DA388E62252A431003A8937 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3DA388EE2252A431003A8937 /* PBXTargetDependency */,
+			);
+			name = ARPenTests;
+			productName = ARPenTests;
+			productReference = 3DA388E82252A431003A8937 /* ARPenTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DC28B43B200E4353008B77AB /* ARPen */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC28B450200E4353008B77AB /* Build configuration list for PBXNativeTarget "ARPen" */;
@@ -243,10 +416,15 @@
 		DC28B434200E4353008B77AB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "RWTH Aachen";
 				TargetAttributes = {
+					3DA388E72252A431003A8937 = {
+						CreatedOnToolsVersion = 10.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DC28B43B200E4353008B77AB;
+					};
 					DC28B43B200E4353008B77AB = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
@@ -268,11 +446,19 @@
 			projectRoot = "";
 			targets = (
 				DC28B43B200E4353008B77AB /* ARPen */,
+				3DA388E72252A431003A8937 /* ARPenTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3DA388E62252A431003A8937 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC28B43A200E4353008B77AB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -287,27 +473,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3DA388E42252A431003A8937 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DA388EB2252A431003A8937 /* ARPenTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC28B438200E4353008B77AB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D486749224959F200EABD23 /* ARPPath.swift in Sources */,
 				DC28B461200E46DC008B77AB /* Plugin.swift in Sources */,
 				4A56953B20581B9000C8065E /* UserStudyRecordPluginProtocol.swift in Sources */,
+				3D883669221B457C00672CEB /* ARPBox.swift in Sources */,
 				4A895F0A2052791100CC2C8E /* CubeByDraggingPlugin.swift in Sources */,
+				3D883663221AD84300672CEB /* Util.swift in Sources */,
 				DC28B47A200E7E8A008B77AB /* MarkerBox.m in Sources */,
 				4A5695342058195200C8065E /* UserStudyRecordsListTableViewController.swift in Sources */,
+				3D883664221AD84300672CEB /* OCCTAPI.swift in Sources */,
 				DC28B45F200E4561008B77AB /* PenManager.swift in Sources */,
 				4A56953920581B6700C8065E /* UserStudyRecordManager.swift in Sources */,
 				DC28B465200E4825008B77AB /* PenScene.swift in Sources */,
 				4AC711C9204FDCE800CD4239 /* BluetoothDeviceListTableViewController.swift in Sources */,
 				DC18B2BC202384D700884920 /* UserDefaultsKeys.swift in Sources */,
 				DC28B45C200E4470008B77AB /* OpenCVWrapper.mm in Sources */,
+				3D883660221AD84300672CEB /* ARPGeomNode.swift in Sources */,
 				DC28B444200E4353008B77AB /* ViewController.swift in Sources */,
+				3D88365F221AD84300672CEB /* ARPSphere.swift in Sources */,
 				DC28B46D200E4E6E008B77AB /* MarkerBox.swift in Sources */,
 				DC28B469200E4C43008B77AB /* CylinderLine.swift in Sources */,
+				3D883662221AD84300672CEB /* ARPBoolNode.swift in Sources */,
 				4A895F0C2052D46000CC2C8E /* CubeByExtractionPlugin.swift in Sources */,
 				DC28B454200E4389008B77AB /* ARManager.swift in Sources */,
 				4A5695322058192B00C8065E /* UserStudyIDListTableViewController.swift in Sources */,
+				3DA388E32251F4CB003A8937 /* OCCT.mm in Sources */,
+				3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */,
 				4A56953720581B4500C8065E /* UserStudyRecord.swift in Sources */,
 				DC28B475200E64B7008B77AB /* ObjectCreationPlugin.swift in Sources */,
 				DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */,
@@ -315,12 +518,22 @@
 				DC28B463200E471F008B77AB /* PluginManager.swift in Sources */,
 				DC28B467200E4BF1008B77AB /* PaintPlugin.swift in Sources */,
 				4AC711C7204EDCBE00CD4239 /* SettingsTableViewController.swift in Sources */,
+				3D26154E22569CB200D9F0F8 /* LinePlugin.swift in Sources */,
 				DC28B46B200E4C78008B77AB /* Button.swift in Sources */,
+				3D883661221AD84300672CEB /* ARPNode.swift in Sources */,
 				DC28B471200E592C008B77AB /* DegreesToRadians.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3DA388EE2252A431003A8937 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC28B43B200E4353008B77AB /* ARPen */;
+			targetProxy = 3DA388ED2252A431003A8937 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DC28B445200E4353008B77AB /* Main.storyboard */ = {
@@ -342,6 +555,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3DA388EF2252A431003A8937 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H2V346B9W5;
+				INFOPLIST_FILE = ARPenTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.komm.ARPenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARPen.app/ARPen";
+			};
+			name = Debug;
+		};
+		3DA388F02252A431003A8937 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H2V346B9W5;
+				INFOPLIST_FILE = ARPenTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.komm.ARPenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARPen.app/ARPen";
+			};
+			name = Release;
+		};
 		DC28B44E200E4353008B77AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -455,15 +711,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 286L2EXR23;
+				DEVELOPMENT_TEAM = H2V346B9W5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ARPen",
 					"$(PROJECT_DIR)",
 				);
+				HEADER_SEARCH_PATHS = "/Users/jan/opencascade-7.3.0/inc";
 				INFOPLIST_FILE = ARPen/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.rwth-aachen.hci.arpen";
+				LIBRARY_SEARCH_PATHS = "/Users/jan/opencascade-7.3.0/samples/ios/occt/lib";
+				PRODUCT_BUNDLE_IDENTIFIER = com.komm.ARPen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ARPen/ARPen-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -478,15 +736,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 286L2EXR23;
+				DEVELOPMENT_TEAM = H2V346B9W5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ARPen",
 					"$(PROJECT_DIR)",
 				);
+				HEADER_SEARCH_PATHS = "/Users/jan/opencascade-7.3.0/inc";
 				INFOPLIST_FILE = ARPen/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.rwth-aachen.hci.arpen";
+				LIBRARY_SEARCH_PATHS = "/Users/jan/opencascade-7.3.0/samples/ios/occt/lib";
+				PRODUCT_BUNDLE_IDENTIFIER = com.komm.ARPen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ARPen/ARPen-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
@@ -497,6 +757,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3DA388F12252A431003A8937 /* Build configuration list for PBXNativeTarget "ARPenTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DA388EF2252A431003A8937 /* Debug */,
+				3DA388F02252A431003A8937 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DC28B437200E4353008B77AB /* Build configuration list for PBXProject "ARPen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
