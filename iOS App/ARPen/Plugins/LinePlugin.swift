@@ -17,8 +17,8 @@ class LinePlugin: Plugin {
      If this var is nil, there was no last point
      */
     
-    let maxClosureDistance: Float = 0.02
-    let minNextPointDistance: Float = 0.02
+    let maxClosureDistance: Float = 0.01
+    let minNextPointDistance: Float = 0.03
     
     private var activePath: ARPPath? = nil
     
@@ -35,7 +35,8 @@ class LinePlugin: Plugin {
         self.scene = scene
         currentButtonStates = buttons
         
-        if (buttons[.Button2]! || buttons[.Button3]!) && readyForNextPoint() {
+        if ((buttons[.Button2]! || buttons[.Button3]!) && readyForNextPoint())
+            || buttonPressed(.Button2) || buttonPressed(.Button3) {
             
             let cornerStyle = buttons[.Button2]! ? CornerStyle.sharp : CornerStyle.round
             
@@ -54,12 +55,11 @@ class LinePlugin: Plugin {
         }
         
         if buttonPressed(.Button1), let path = activePath {
-            if path.points.first!.worldPosition.distance(vector: path.points[path.points.count-2].worldPosition) < maxClosureDistance {
-                path.removeNonFixedPoints()
+            if path.points.first!.worldPosition.distance(vector: path.points.last!.worldPosition) < maxClosureDistance {
                 path.closed = true
+                path.flatten()
             }
-            path.removeLastPoint()
-            path.flatten()
+            path.removeNonFixedPoints()
             path.rebuild()
             freePaths.append(path)
             activePath = nil
@@ -104,9 +104,8 @@ class LinePlugin: Plugin {
     func readyForNextPoint() -> Bool {
         if let path = activePath,
             let lastFixed = path.points.last(where: { $0.fixed }),
-            let lastFree = path.points.last(where: { !$0.fixed }),
-            let scn = scene {
-            if lastFree.position.distance(vector: lastFixed.worldPosition) < minNextPointDistance {
+            let lastFree = path.points.last(where: { !$0.fixed }) {
+            if lastFree.worldPosition.distance(vector: lastFixed.worldPosition) < minNextPointDistance {
                 return false
             }
         }
@@ -117,7 +116,7 @@ class LinePlugin: Plugin {
         if !busy, let path = activePath {
             busy = true
             DispatchQueue.global(qos: .userInitiated).async {
-                if path.points.first!.worldPosition.distance(vector: path.points[path.points.count-1].worldPosition) < self.maxClosureDistance {
+                if path.points.first!.worldPosition.distance(vector: path.points.last!.worldPosition) < self.maxClosureDistance {
                     path.closed = true
                 } else {
                     path.closed = false

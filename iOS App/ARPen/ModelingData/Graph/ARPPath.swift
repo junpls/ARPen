@@ -91,6 +91,7 @@ class ARPPath: ARPGeomNode {
     }
     
     func removeNonFixedPoints() {
+        points.filter({ !$0.fixed }).forEach({ $0.removeFromParentNode() })
         points.removeAll(where: { !$0.fixed })
     }
     
