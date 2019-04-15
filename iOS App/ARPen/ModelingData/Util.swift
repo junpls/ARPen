@@ -59,3 +59,8 @@ func * (left: SCNMatrix4, right: SCNVector3) -> SCNVector3 {
     
     return SCNVector3(result)
 }
+
+struct Axis {
+    var position: SCNVector3 = SCNVector3(0, 0, 0)
+    var direction: SCNVector3 = SCNVector3(0, 1, 0)
+}

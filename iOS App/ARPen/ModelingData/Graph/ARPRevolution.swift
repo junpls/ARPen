@@ -12,10 +12,12 @@ import Foundation
 class ARPRevolution: ARPGeomNode {
     
     var profile:ARPPath
-    
-    init(profile:ARPPath) throws {
+    var axis:Axis
+
+    init(profile: ARPPath, axis: Axis) throws {
         
         self.profile = profile
+        self.axis = axis
         
         super.init(pivotChild: profile)
         
@@ -28,13 +30,21 @@ class ARPRevolution: ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
+        func projectToAxis(point: SCNVector3) -> SCNVector3 {
+            return axis.position + axis.direction*(point - axis.position).dot(vector: axis.direction)
+        }
         
-        let axisDirection = profile.points.last!.position - profile.points.first!.position
-        let com = profile.points.map({$0.position}).reduce(SCNVector3(), +) / Float(profile.points.count)
-        let delta = (profile.points.first!.position - com).normalized()
-        let axisPosition = profile.points.first!.position + delta*0.02
-        
-        let ref = try? OCCTAPI.shared.revolve(profile: profile.occtReference!, aroundAxis: axisPosition, withDirection: axisDirection)
+        let closedProfile = ARPPath(points: profile.points, closed: true)
+        let top = ARPPathNode(projectToAxis(point: profile.points.last!.position))
+        top.fixed = true
+        closedProfile.points.append(top)
+        let bottom = ARPPathNode(projectToAxis(point: profile.points.first!.position))
+        bottom.fixed = true
+        closedProfile.points.insert(bottom, at: 0)
+        closedProfile.flatten()
+        closedProfile.rebuild()
+
+        let ref = try? OCCTAPI.shared.revolve(profile: closedProfile.occtReference!, aroundAxis: axis.position, withDirection: axis.direction)
         
         if let r = ref {
             OCCTAPI.shared.pivot(handle: r, pivot: pivotChild.worldTransform)

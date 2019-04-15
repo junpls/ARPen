@@ -38,6 +38,8 @@
 #include <Geom_Plane.hxx>
 #include <GeomAPI_Interpolate.hxx>
 #include <BRepPrimAPI_MakeRevol.hxx>
+#include <TopAbs_ShapeEnum.hxx>
+#include <BRep_Builder.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -641,16 +643,19 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     TCollection_AsciiString keyProfile = TCollection_AsciiString(profile);
     
     TopoDS_Shape shapeProfile = [self retrieveFromRegistryTransformed: keyProfile];
-    
+    TopoDS_Face profileFace = BRepBuilderAPI_MakeFace(TopoDS::Wire(shapeProfile));
+
     gp_Ax1 axis = gp_Ax1(gp_Pnt(axisPosition.x, axisPosition.y, axisPosition.z),
                          gp_Dir(axisDirection.x, axisDirection.y, axisDirection.z));
     
-    TopoDS_Shape solid = BRepPrimAPI_MakeRevol(shapeProfile, axis);
+    BRepPrimAPI_MakeRevol makeRevol = BRepPrimAPI_MakeRevol(profileFace, axis);
+    makeRevol.Build();
+    TopoDS_Shape revolution = makeRevol.Shape();
     
     NSTimeInterval timeInterval = [start timeIntervalSinceNow];
     NSLog(@"Sweeping took %f", timeInterval);
     
-    return [self storeInRegistryWithCString:solid];
+    return [self storeInRegistryWithCString:revolution];
     
 }
 
