@@ -14,6 +14,12 @@ enum CornerStyle: Int32 {
 
 class ARPPathNode: ARPNode {
     
+    static let highlightAnimation = SCNAction.customAction(duration: 2*Double.pi, action: { (node, elapsedTime) in
+        let rgb = (sin(elapsedTime*2)+1) / 2
+        let color = UIColor(red: rgb, green: rgb, blue: rgb, alpha: 1)
+        node.geometry?.firstMaterial?.emission.contents = color
+    })
+    
     let sharpColor = UIColor.red
     let roundColor = UIColor.blue
 
@@ -23,7 +29,11 @@ class ARPPathNode: ARPNode {
         }
     }
     
-    var fixed = false
+    var fixed = false {
+        didSet {
+            updateFixedState()
+        }
+    }
     
     convenience init(_ x: Float, _ y: Float, _ z: Float, cornerStyle: CornerStyle = CornerStyle.sharp) {
         self.init(SCNVector3(x, y, z), cornerStyle: cornerStyle)
@@ -35,6 +45,7 @@ class ARPPathNode: ARPNode {
         self.geometry?.firstMaterial?.lightingModel = .constant
         self.cornerStyle = cornerStyle
         updateCornerStyle()
+        updateFixedState()
         self.position = position
     }
     
@@ -44,6 +55,18 @@ class ARPPathNode: ARPNode {
     
     func updateCornerStyle() {
         self.geometry?.firstMaterial?.diffuse.contents = self.cornerStyle == .sharp ? sharpColor : roundColor
+    }
+    
+    func updateFixedState() {
+        /// Wanted to highlight the non-fixed point to distinguish it. Just looked distracting though.
+        /*
+        if self.fixed {
+            self.removeAction(forKey: "blinking")
+            self.geometry?.firstMaterial?.emission.contents = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        } else {
+            self.runAction(SCNAction.repeatForever(ARPPathNode.highlightAnimation), forKey: "blinking")
+        }
+        */
     }
 }
 

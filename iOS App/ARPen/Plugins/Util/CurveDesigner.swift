@@ -18,6 +18,7 @@ class CurveDesigner {
 
     var activePath: ARPPath? = nil
     
+    private var blocked: Bool = false
     private var busy: Bool = false
     private var scene: PenScene!
     
@@ -26,6 +27,7 @@ class CurveDesigner {
     init() {
         buttonEvents = ButtonEvents()
         buttonEvents.didPressButton = self.didPressButton
+        buttonEvents.didReleaseButton = self.didReleaseButton
     }
     
     func update(scene: PenScene, buttons: [Button : Bool]) {
@@ -37,7 +39,7 @@ class CurveDesigner {
         }
         
         if let path = activePath {
-            path.points.last?.position = scene.pencilPoint.position
+            path.getNonFixedPoint()?.position = scene.pencilPoint.position
             tryRebuildPreview()
         }
     }
@@ -49,6 +51,10 @@ class CurveDesigner {
         case .Button2, .Button3:
             addNode()
         }
+    }
+    
+    private func didReleaseButton(_ button: Button) {
+        blocked = false
     }
     
     private func addNode() {
@@ -63,9 +69,13 @@ class CurveDesigner {
         
         if let path = activePath {
             let activePoint = path.getNonFixedPoint()
-            activePoint?.cornerStyle = cornerStyle
-            activePoint?.fixed = true
-            path.appendPoint(ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle))
+            if cornerStyle == activePoint?.cornerStyle {
+                activePoint?.fixed = true
+                path.appendPoint(ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle))
+            } else {
+                activePoint?.cornerStyle = cornerStyle
+                blocked = true
+            }
         }
     }
     
@@ -91,7 +101,7 @@ class CurveDesigner {
                 return false
             }
         }
-        return true
+        return !blocked
     }
     
     func tryRebuildPreview() {
