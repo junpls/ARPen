@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D26154E22569CB200D9F0F8 /* LinePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26154D22569CB200D9F0F8 /* LinePlugin.swift */; };
+		3D26154E22569CB200D9F0F8 /* SweepPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26154D22569CB200D9F0F8 /* SweepPlugin.swift */; };
 		3D3450822261F5650017DB39 /* ARPRevolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3450812261F5650017DB39 /* ARPRevolution.swift */; };
+		3D34508522646D920017DB39 /* CurveDesigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508422646D920017DB39 /* CurveDesigner.swift */; };
+		3D345087226470D30017DB39 /* ButtonEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D345086226470D30017DB39 /* ButtonEvents.swift */; };
+		3D34508922647C7F0017DB39 /* RevolvePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508822647C7F0017DB39 /* RevolvePlugin.swift */; };
 		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
 		3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48674A224A527200EABD23 /* ARPSweep.swift */; };
 		3D61FCF82201EFB200183AEA /* libTKMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE82201EFB200183AEA /* libTKMath.a */; };
@@ -94,8 +97,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3D26154D22569CB200D9F0F8 /* LinePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePlugin.swift; sourceTree = "<group>"; };
+		3D26154D22569CB200D9F0F8 /* SweepPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweepPlugin.swift; sourceTree = "<group>"; };
 		3D3450812261F5650017DB39 /* ARPRevolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPRevolution.swift; sourceTree = "<group>"; };
+		3D34508422646D920017DB39 /* CurveDesigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveDesigner.swift; sourceTree = "<group>"; };
+		3D345086226470D30017DB39 /* ButtonEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonEvents.swift; sourceTree = "<group>"; };
+		3D34508822647C7F0017DB39 /* RevolvePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevolvePlugin.swift; sourceTree = "<group>"; };
 		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
 		3D48674A224A527200EABD23 /* ARPSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPSweep.swift; sourceTree = "<group>"; };
 		3D61FCE82201EFB200183AEA /* libTKMath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKMath.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKMath.a"; sourceTree = "<group>"; };
@@ -202,6 +208,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D34508322646D2B0017DB39 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				3D34508422646D920017DB39 /* CurveDesigner.swift */,
+				3D345086226470D30017DB39 /* ButtonEvents.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		3D883656221AD84300672CEB /* ModelingData */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,7 +374,9 @@
 				DC28B474200E64B7008B77AB /* ObjectCreationPlugin.swift */,
 				4A895F092052791100CC2C8E /* CubeByDraggingPlugin.swift */,
 				4A895F0B2052D46000CC2C8E /* CubeByExtractionPlugin.swift */,
-				3D26154D22569CB200D9F0F8 /* LinePlugin.swift */,
+				3D26154D22569CB200D9F0F8 /* SweepPlugin.swift */,
+				3D34508822647C7F0017DB39 /* RevolvePlugin.swift */,
+				3D34508322646D2B0017DB39 /* Util */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";
@@ -505,6 +522,7 @@
 				DC18B2BC202384D700884920 /* UserDefaultsKeys.swift in Sources */,
 				DC28B45C200E4470008B77AB /* OpenCVWrapper.mm in Sources */,
 				3D883660221AD84300672CEB /* ARPGeomNode.swift in Sources */,
+				3D34508522646D920017DB39 /* CurveDesigner.swift in Sources */,
 				DC28B444200E4353008B77AB /* ViewController.swift in Sources */,
 				3D88365F221AD84300672CEB /* ARPSphere.swift in Sources */,
 				DC28B46D200E4E6E008B77AB /* MarkerBox.swift in Sources */,
@@ -512,6 +530,7 @@
 				3D883662221AD84300672CEB /* ARPBoolNode.swift in Sources */,
 				4A895F0C2052D46000CC2C8E /* CubeByExtractionPlugin.swift in Sources */,
 				DC28B454200E4389008B77AB /* ARManager.swift in Sources */,
+				3D34508922647C7F0017DB39 /* RevolvePlugin.swift in Sources */,
 				4A5695322058192B00C8065E /* UserStudyIDListTableViewController.swift in Sources */,
 				3DA388E32251F4CB003A8937 /* OCCT.mm in Sources */,
 				3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */,
@@ -522,9 +541,10 @@
 				DC28B463200E471F008B77AB /* PluginManager.swift in Sources */,
 				DC28B467200E4BF1008B77AB /* PaintPlugin.swift in Sources */,
 				4AC711C7204EDCBE00CD4239 /* SettingsTableViewController.swift in Sources */,
-				3D26154E22569CB200D9F0F8 /* LinePlugin.swift in Sources */,
+				3D26154E22569CB200D9F0F8 /* SweepPlugin.swift in Sources */,
 				DC28B46B200E4C78008B77AB /* Button.swift in Sources */,
 				3D883661221AD84300672CEB /* ARPNode.swift in Sources */,
+				3D345087226470D30017DB39 /* ButtonEvents.swift in Sources */,
 				DC28B471200E592C008B77AB /* DegreesToRadians.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

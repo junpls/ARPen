@@ -28,8 +28,12 @@ class ARPRevolution: ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
-        let axisDirection = SCNVector3(0, 1, 0)
-        let axisPosition = profile.points.first!.position - SCNVector3(-0.01, 0, 0)
+        
+        let axisDirection = profile.points.last!.position - profile.points.first!.position
+        let com = profile.points.map({$0.position}).reduce(SCNVector3(), +) / Float(profile.points.count)
+        let delta = (profile.points.first!.position - com).normalized()
+        let axisPosition = profile.points.first!.position + delta*0.02
+        
         let ref = try? OCCTAPI.shared.revolve(profile: profile.occtReference!, aroundAxis: axisPosition, withDirection: axisDirection)
         
         if let r = ref {
