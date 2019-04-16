@@ -93,6 +93,15 @@ class OCCTAPI {
         }
     }
     
+    func loft(profiles: [OCCTReference])  throws -> OCCTReference {
+        if let sum = occt.loft(profiles as [Any], length: Int32(profiles.count)) {
+            let ref = OCCTReference(cString: sum)
+            return ref
+        } else {
+            throw OCCTError.couldNotCreateGeometry
+        }
+    }
+    
     func transform(handle: OCCTReference, transformation: SCNMatrix4) {
         occt.setTransformOf(handle, transformation: transformation)
     }

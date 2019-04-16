@@ -40,6 +40,7 @@
 #include <BRepPrimAPI_MakeRevol.hxx>
 #include <TopAbs_ShapeEnum.hxx>
 #include <BRep_Builder.hxx>
+#include <BRepOffsetAPI_ThruSections.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -656,7 +657,31 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     NSLog(@"Sweeping took %f", timeInterval);
     
     return [self storeInRegistryWithCString:revolution];
+}
+
+- (const char *) loft:(NSArray *) profiles
+               length:(int) length;
+{
+    start = [NSDate date];
+
+    BRepOffsetAPI_ThruSections thruSections = BRepOffsetAPI_ThruSections(Standard_True);
+    for (int i = 0; i < length; i++) {
+        NSString *profile = profiles[i];
+        TCollection_AsciiString keyProfile = TCollection_AsciiString(profile.UTF8String);
+        TopoDS_Shape shapeProfile = [self retrieveFromRegistryTransformed: keyProfile];
+        if (shapeProfile.ShapeType() == TopAbs_WIRE) {
+            thruSections.AddWire(TopoDS::Wire(shapeProfile));
+        } else if (shapeProfile.ShapeType() == TopAbs_VERTEX) {
+            thruSections.AddVertex(TopoDS::Vertex(shapeProfile));
+        }
+    }
     
+    TopoDS_Shape loft = thruSections.Shape();
+    
+    NSTimeInterval timeInterval = [start timeIntervalSinceNow];
+    NSLog(@"Lofting took %f", timeInterval);
+    
+    return [self storeInRegistryWithCString:loft];
 }
 
 - (const char *) booleanCut:(const char *) a

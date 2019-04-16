@@ -35,7 +35,8 @@
 - (const char *) revolve:(const char *) profile
               aroundAxis:(SCNVector3) axisPosition
            withDirection:(SCNVector3) axisDirection;
-
+- (const char *) loft:(NSArray *) profiles
+               length:(int) length;
 
 - (const char *) booleanCut:(const char *) a
                    subtract:(const char *) b;

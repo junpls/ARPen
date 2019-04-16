@@ -12,6 +12,8 @@
 		3D34508522646D920017DB39 /* CurveDesigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508422646D920017DB39 /* CurveDesigner.swift */; };
 		3D345087226470D30017DB39 /* ButtonEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D345086226470D30017DB39 /* ButtonEvents.swift */; };
 		3D34508922647C7F0017DB39 /* RevolvePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508822647C7F0017DB39 /* RevolvePlugin.swift */; };
+		3D34508D2265C1850017DB39 /* LoftPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508C2265C1850017DB39 /* LoftPlugin.swift */; };
+		3D34508F226617100017DB39 /* ARPLoft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508E2266170F0017DB39 /* ARPLoft.swift */; };
 		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
 		3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48674A224A527200EABD23 /* ARPSweep.swift */; };
 		3D61FCF82201EFB200183AEA /* libTKMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE82201EFB200183AEA /* libTKMath.a */; };
@@ -102,6 +104,8 @@
 		3D34508422646D920017DB39 /* CurveDesigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveDesigner.swift; sourceTree = "<group>"; };
 		3D345086226470D30017DB39 /* ButtonEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonEvents.swift; sourceTree = "<group>"; };
 		3D34508822647C7F0017DB39 /* RevolvePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevolvePlugin.swift; sourceTree = "<group>"; };
+		3D34508C2265C1850017DB39 /* LoftPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoftPlugin.swift; sourceTree = "<group>"; };
+		3D34508E2266170F0017DB39 /* ARPLoft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPLoft.swift; sourceTree = "<group>"; };
 		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
 		3D48674A224A527200EABD23 /* ARPSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPSweep.swift; sourceTree = "<group>"; };
 		3D61FCE82201EFB200183AEA /* libTKMath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKMath.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKMath.a"; sourceTree = "<group>"; };
@@ -238,6 +242,7 @@
 				3D486748224959F200EABD23 /* ARPPath.swift */,
 				3D48674A224A527200EABD23 /* ARPSweep.swift */,
 				3D3450812261F5650017DB39 /* ARPRevolution.swift */,
+				3D34508E2266170F0017DB39 /* ARPLoft.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				4A895F0B2052D46000CC2C8E /* CubeByExtractionPlugin.swift */,
 				3D26154D22569CB200D9F0F8 /* SweepPlugin.swift */,
 				3D34508822647C7F0017DB39 /* RevolvePlugin.swift */,
+				3D34508C2265C1850017DB39 /* LoftPlugin.swift */,
 				3D34508322646D2B0017DB39 /* Util */,
 			);
 			path = Plugins;
@@ -522,6 +528,7 @@
 				DC18B2BC202384D700884920 /* UserDefaultsKeys.swift in Sources */,
 				DC28B45C200E4470008B77AB /* OpenCVWrapper.mm in Sources */,
 				3D883660221AD84300672CEB /* ARPGeomNode.swift in Sources */,
+				3D34508D2265C1850017DB39 /* LoftPlugin.swift in Sources */,
 				3D34508522646D920017DB39 /* CurveDesigner.swift in Sources */,
 				DC28B444200E4353008B77AB /* ViewController.swift in Sources */,
 				3D88365F221AD84300672CEB /* ARPSphere.swift in Sources */,
@@ -539,6 +546,7 @@
 				DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */,
 				DC28B440200E4353008B77AB /* AppDelegate.swift in Sources */,
 				DC28B463200E471F008B77AB /* PluginManager.swift in Sources */,
+				3D34508F226617100017DB39 /* ARPLoft.swift in Sources */,
 				DC28B467200E4BF1008B77AB /* PaintPlugin.swift in Sources */,
 				4AC711C7204EDCBE00CD4239 /* SettingsTableViewController.swift in Sources */,
 				3D26154E22569CB200D9F0F8 /* SweepPlugin.swift in Sources */,
