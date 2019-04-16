@@ -41,6 +41,7 @@
 #include <TopAbs_ShapeEnum.hxx>
 #include <BRep_Builder.hxx>
 #include <BRepOffsetAPI_ThruSections.hxx>
+#include <BRepBuilderAPI_MakeVertex.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -446,13 +447,18 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
         }
     }
     
-    TopoDS_Wire wire;
+    TopoDS_Shape wire;
     
     try {
         OCC_CATCH_SIGNALS
         wire = makeWire.Wire();
     } catch (...) {
-        wire = TopoDS_Wire();
+        if (length == 1) {
+            gp_Pnt point(points[0].x, points[0].y, points[0].z);
+            wire = BRepBuilderAPI_MakeVertex(point);
+        } else {
+            wire = TopoDS_Wire();
+        }
     }
 
     TCollection_AsciiString key = [self storeInRegistry:wire];
