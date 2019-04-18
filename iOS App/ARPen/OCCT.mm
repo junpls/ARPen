@@ -42,6 +42,8 @@
 #include <BRep_Builder.hxx>
 #include <BRepOffsetAPI_ThruSections.hxx>
 #include <BRepBuilderAPI_MakeVertex.hxx>
+#include <GProp_PGProps.hxx>
+#include <GProp_PrincipalProps.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -246,23 +248,18 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
         ocPoints.SetValue(i, gp_Pnt(points[i-1].x, points[i-1].y, points[i-1].z));
     }
     
-    GProp_PEquation eq = GProp_PEquation(ocPoints, flatteningTolerance);
-    if (eq.IsPlanar()) {
-        Handle(Geom_Plane) plane = new Geom_Plane(eq.Plane());
-        for (int i = 1; i <= length; i++) {
-            GeomAPI_ProjectPointOnSurf proj = GeomAPI_ProjectPointOnSurf(ocPoints.Value(i), plane);
-            ocPoints.SetValue(i, proj.Point(1));
-        }
-    } else if (eq.IsLinear()) {
-        Handle(Geom_Line) line = new Geom_Line(eq.Line());
-        for (int i = 1; i <= length; i++) {
-            GeomAPI_ProjectPointOnCurve proj = GeomAPI_ProjectPointOnCurve(ocPoints.Value(i), line);
-            ocPoints.SetValue(i, proj.Point(1));
-        }
-    } else if (eq.IsPoint()) {
-        for (int i = 1; i <= length; i++) {
-            ocPoints.SetValue(i, eq.Point());
-        }
+    GProp_PGProps Pmat(ocPoints);
+    gp_Pnt g = Pmat.CentreOfMass();
+    Standard_Real Xg,Yg,Zg;
+    g.Coord(Xg,Yg,Zg);
+    GProp_PrincipalProps Pp = Pmat.PrincipalProperties();
+    gp_Vec V1 = Pp.FirstAxisOfInertia();
+    gp_Pln pln = gp_Pln(g, V1);
+    Handle(Geom_Plane) plane = new Geom_Plane(pln);
+    
+    for (int i = 1; i <= length; i++) {
+        GeomAPI_ProjectPointOnSurf proj = GeomAPI_ProjectPointOnSurf(ocPoints.Value(i), plane);
+        ocPoints.SetValue(i, proj.Point(1));
     }
     
     SCNVector3 *res = new SCNVector3[length];

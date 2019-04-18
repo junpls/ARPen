@@ -96,7 +96,7 @@ class ARPGeomNode: ARPNode {
         }
     }
     
-    /// This method is responsible for creating the geometry, s.t. it has its origin at (0,0,0). Note that in some cases (e.g. combining operations like booleans or extrusions) this requires to manually shift the origin using OCCTAPI.shared.pivot, as the object is created at a remote location.
+    /// This method is responsible for creating the geometry, s.t. it has its origin at (0,0,0). Therefore you have to ensure to either create it there, or to manually shift the origin using OCCTAPI.shared.pivot. What's more appropriate depends on the situation.
     func build() throws -> OCCTReference {
         fatalError("Must Override")
     }

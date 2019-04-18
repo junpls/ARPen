@@ -83,7 +83,7 @@ class CurveDesigner {
         if let path = activePath {
             if path.points.first!.worldPosition.distance(vector: path.points.last!.worldPosition) < CurveDesigner.maxClosureDistance {
                 path.closed = true
-                path.flatten()
+//                path.flatten()
             }
             path.removeNonFixedPoints()
             path.rebuild()

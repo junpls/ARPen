@@ -39,6 +39,8 @@ class RevolvePlugin: Plugin {
             let axisPath = freePaths.first(where: { !$0.closed && $0.points.count == 2 }) {
                         
             DispatchQueue.global(qos: .userInitiated).async {
+                profile.flatten()
+                profile.rebuild()
                 if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
                     DispatchQueue.main.async {
                         self.scene?.drawingNode.addChildNode(revolution)
