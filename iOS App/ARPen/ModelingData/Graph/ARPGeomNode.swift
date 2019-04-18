@@ -24,16 +24,16 @@ class ARPGeomNode: ARPNode {
     override init() {
         self.pivotChild = SCNNode()
         super.init()
-        self.addChildNode(pivotChild)
         appendVisualization()
+        self.content.addChildNode(pivotChild)
         rebuild()
     }
     
     init(pivotChild:SCNNode) {
         self.pivotChild = pivotChild
         super.init()
-        self.addChildNode(self.pivotChild)
         appendVisualization()
+        self.content.addChildNode(self.pivotChild)
         rebuild()
     }
     

@@ -35,19 +35,14 @@ class RevolvePlugin: Plugin {
     
     func didCompletePath(_ path: ARPPath) {
         freePaths.append(path)
-        if let profile = freePaths.first(where: { !$0.closed }) {
-            
-            var axis = Axis()
-            axis.direction = (profile.points.last!.position - profile.points.first!.position).normalized()
-            let com = profile.points.map({$0.position}).reduce(SCNVector3(), +) / Float(profile.points.count)
-            let delta = (profile.points.first!.position - com).normalized()
-            axis.position = profile.points.first!.position - axis.direction * 0.02 + delta * 0.02
+        if let profile = freePaths.first(where: { !$0.closed && $0.points.count > 2 }),
+            let axisPath = freePaths.first(where: { !$0.closed && $0.points.count == 2 }) {
                         
             DispatchQueue.global(qos: .userInitiated).async {
-                if let revolution = try? ARPRevolution(profile: profile, axis: axis) {
+                if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
                     DispatchQueue.main.async {
                         self.scene?.drawingNode.addChildNode(revolution)
-                        self.freePaths.removeAll(where: { $0 === profile })
+                        self.freePaths.removeAll(where: { $0 === profile || $0 === axisPath })
                     }
                 }
             }
