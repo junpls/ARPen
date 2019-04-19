@@ -7,11 +7,15 @@
 //
 
 import Foundation
+import ARKit
 
 class LoftPlugin: Plugin {
     
-    var pluginImage : UIImage?// = UIImage.init(named: "PaintPlugin")
+    var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Loft"
+    
+    var currentScene: PenScene?
+    var currentView: ARSCNView?
     /**
      The previous point is the point of the pencil one frame before.
      If this var is nil, there was no last point
@@ -27,6 +31,15 @@ class LoftPlugin: Plugin {
     init() {
         curveDesigner = CurveDesigner()
         curveDesigner.didCompletePath = self.didCompletePath;
+    }
+    
+    func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
+        self.currentView = view
+        self.currentScene = scene
+    }
+    
+    func deactivatePlugin() {
+        
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
