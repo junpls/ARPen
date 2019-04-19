@@ -21,6 +21,13 @@ class ARPGeomNode: ARPNode {
     var geometryColor = UIColor.init(hue: CGFloat(Float.random(in: 0...1)), saturation: 0.3, brightness: 0.9, alpha: 1)
     var lineColor = UIColor.black
     
+    var highlightColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+    var highlighted: Bool = false {
+        didSet {
+            self.geometryNode.geometry?.firstMaterial?.emission.contents = highlightColor
+        }
+    }
+    
     override init() {
         self.pivotChild = SCNNode()
         super.init()
@@ -61,6 +68,7 @@ class ARPGeomNode: ARPNode {
             self.geometryNode.geometry?.firstMaterial?.diffuse.contents = self.geometryColor
             self.geometryNode.geometry?.firstMaterial?.lightingModel = .blinn
             self.geometryNode.geometry?.firstMaterial?.diffuse.intensity = 1;
+            self.geometryNode.geometry?.firstMaterial?.emission.contents = self.highlightColor
             self.isoLinesNode.geometry = lines
             self.isoLinesNode.geometry?.firstMaterial?.diffuse.contents = self.lineColor
             self.isoLinesNode.geometry?.firstMaterial?.lightingModel = .constant

@@ -14,6 +14,7 @@
 		3D34508922647C7F0017DB39 /* RevolvePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508822647C7F0017DB39 /* RevolvePlugin.swift */; };
 		3D34508D2265C1850017DB39 /* LoftPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508C2265C1850017DB39 /* LoftPlugin.swift */; };
 		3D34508F226617100017DB39 /* ARPLoft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508E2266170F0017DB39 /* ARPLoft.swift */; };
+		3D3AC4352269FAA800331696 /* ArrangePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3AC4342269FAA800331696 /* ArrangePlugin.swift */; };
 		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
 		3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48674A224A527200EABD23 /* ARPSweep.swift */; };
 		3D61FCF82201EFB200183AEA /* libTKMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE82201EFB200183AEA /* libTKMath.a */; };
@@ -32,6 +33,7 @@
 		3D61FD052201EFB200183AEA /* libTKOffset.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF52201EFB200183AEA /* libTKOffset.a */; };
 		3D61FD062201EFB200183AEA /* libTKBool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF62201EFB200183AEA /* libTKBool.a */; };
 		3D61FD072201EFB200183AEA /* libTKShHealing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCF72201EFB200183AEA /* libTKShHealing.a */; };
+		3D68FCAA226A0F1A00C421AD /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68FCA9226A0F1A00C421AD /* DateExtensions.swift */; };
 		3D88365F221AD84300672CEB /* ARPSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D883658221AD84300672CEB /* ARPSphere.swift */; };
 		3D883660221AD84300672CEB /* ARPGeomNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D883659221AD84300672CEB /* ARPGeomNode.swift */; };
 		3D883661221AD84300672CEB /* ARPNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D88365A221AD84300672CEB /* ARPNode.swift */; };
@@ -113,6 +115,7 @@
 		3D34508822647C7F0017DB39 /* RevolvePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevolvePlugin.swift; sourceTree = "<group>"; };
 		3D34508C2265C1850017DB39 /* LoftPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoftPlugin.swift; sourceTree = "<group>"; };
 		3D34508E2266170F0017DB39 /* ARPLoft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPLoft.swift; sourceTree = "<group>"; };
+		3D3AC4342269FAA800331696 /* ArrangePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangePlugin.swift; sourceTree = "<group>"; };
 		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
 		3D48674A224A527200EABD23 /* ARPSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPSweep.swift; sourceTree = "<group>"; };
 		3D61FCE82201EFB200183AEA /* libTKMath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKMath.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKMath.a"; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 		3D61FCF52201EFB200183AEA /* libTKOffset.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKOffset.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKOffset.a"; sourceTree = "<group>"; };
 		3D61FCF62201EFB200183AEA /* libTKBool.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKBool.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKBool.a"; sourceTree = "<group>"; };
 		3D61FCF72201EFB200183AEA /* libTKShHealing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKShHealing.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKShHealing.a"; sourceTree = "<group>"; };
+		3D68FCA9226A0F1A00C421AD /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		3D883658221AD84300672CEB /* ARPSphere.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPSphere.swift; sourceTree = "<group>"; };
 		3D883659221AD84300672CEB /* ARPGeomNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPGeomNode.swift; sourceTree = "<group>"; };
 		3D88365A221AD84300672CEB /* ARPNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPNode.swift; sourceTree = "<group>"; };
@@ -396,6 +400,7 @@
 				3D26154D22569CB200D9F0F8 /* SweepPlugin.swift */,
 				3D34508822647C7F0017DB39 /* RevolvePlugin.swift */,
 				3D34508C2265C1850017DB39 /* LoftPlugin.swift */,
+				3D3AC4342269FAA800331696 /* ArrangePlugin.swift */,
 				3D34508322646D2B0017DB39 /* Util */,
 				AA935109224245CE002AEB00 /* ARMenusPlugin.swift */,
 				4A59BA1D2244E66D00EA23E7 /* TranslationDemoPlugin.swift */,
@@ -414,6 +419,7 @@
 				4A59BA1F2244E68800EA23E7 /* ARPenDropTargetNode.swift */,
 				4A59BA202244E68800EA23E7 /* ARPenSceneConstructor.swift */,
 				AA93510B2242460D002AEB00 /* ARMenusSupportFile.swift */,
+				3D68FCA9226A0F1A00C421AD /* DateExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -574,6 +580,7 @@
 				4A56953720581B4500C8065E /* UserStudyRecord.swift in Sources */,
 				DC28B475200E64B7008B77AB /* ObjectCreationPlugin.swift in Sources */,
 				DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */,
+				3D3AC4352269FAA800331696 /* ArrangePlugin.swift in Sources */,
 				DC28B440200E4353008B77AB /* AppDelegate.swift in Sources */,
 				DC28B463200E471F008B77AB /* PluginManager.swift in Sources */,
 				3D34508F226617100017DB39 /* ARPLoft.swift in Sources */,
@@ -581,6 +588,7 @@
 				4AC711C7204EDCBE00CD4239 /* SettingsTableViewController.swift in Sources */,
 				3D26154E22569CB200D9F0F8 /* SweepPlugin.swift in Sources */,
 				DC28B46B200E4C78008B77AB /* Button.swift in Sources */,
+				3D68FCAA226A0F1A00C421AD /* DateExtensions.swift in Sources */,
 				3D883661221AD84300672CEB /* ARPNode.swift in Sources */,
 				3D345087226470D30017DB39 /* ButtonEvents.swift in Sources */,
 				DC28B471200E592C008B77AB /* DegreesToRadians.swift in Sources */,
