@@ -10,14 +10,19 @@ import Foundation
 
 class ButtonEvents {
     
+    static let doubleClickMaxDuration = 0.5
+    
     var didPressButton: ((Button) -> Void)?
     var didReleaseButton: ((Button) -> Void)?
+    var didDoubleClick: ((Button) -> Void)?
 
     private var pressedThisFrame: [Button : Bool] = [:]
     private var releasedThisFrame: [Button : Bool] = [:]
-    
+    private var doubleClickedThisFrame: [Button : Bool] = [:]
+
     var buttons: [Button : Bool] = [:]
     private var previousButtons: [Button : Bool] = [:]
+    private var previousClick: [Button : Date] = [:]
     
     func update(buttons: [Button : Bool]) {
         self.buttons = buttons
@@ -25,10 +30,16 @@ class ButtonEvents {
         for (button, _) in buttons {
             pressedThisFrame[button] = false
             releasedThisFrame[button] = false
+            doubleClickedThisFrame[button] = false
             
             if buttonPressed(button) {
                 pressedThisFrame[button] = true
                 didPressButton?(button)
+                if let prev = previousClick[button], (Date() - prev) <= ButtonEvents.doubleClickMaxDuration {
+                    doubleClickedThisFrame[button] = true
+                    didDoubleClick?(button)
+                }
+                previousClick[button] = Date()
             } else if buttonReleased(button) {
                 releasedThisFrame[button] = true
                 didReleaseButton?(button)
@@ -59,6 +70,10 @@ class ButtonEvents {
     }
     
     func justReleased(_ button: Button) -> Bool {
+        return releasedThisFrame[button] ?? false
+    }
+    
+    func justDoubleClicked(_ button: Button) -> Bool {
         return releasedThisFrame[button] ?? false
     }
 }
