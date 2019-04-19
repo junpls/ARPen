@@ -5,11 +5,15 @@
 //  Created by Jan on 19.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
+import ARKit
 
 class ArrangePlugin: Plugin {
     
     var pluginImage : UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Arrange"
+    
+    var currentScene: PenScene?
+    var currentView: ARSCNView?
     /**
      The previous point is the point of the pencil one frame before.
      If this var is nil, there was no last point
@@ -24,6 +28,14 @@ class ArrangePlugin: Plugin {
         buttonEvents.didReleaseButton = self.didReleaseButton
     }
 
+    func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
+        self.currentView = view
+        self.currentScene = scene
+    }
+    
+    func deactivatePlugin() {
+        
+    }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
         self.scene = scene
