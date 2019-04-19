@@ -401,10 +401,10 @@
 				3D34508822647C7F0017DB39 /* RevolvePlugin.swift */,
 				3D34508C2265C1850017DB39 /* LoftPlugin.swift */,
 				3D3AC4342269FAA800331696 /* ArrangePlugin.swift */,
-				3D34508322646D2B0017DB39 /* Util */,
 				AA935109224245CE002AEB00 /* ARMenusPlugin.swift */,
 				4A59BA1D2244E66D00EA23E7 /* TranslationDemoPlugin.swift */,
 				4A59BA252244E69400EA23E7 /* CombinationPlugin.swift */,
+				3D34508322646D2B0017DB39 /* Util */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";

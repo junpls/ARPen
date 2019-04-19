@@ -19,7 +19,6 @@ class ArrangePlugin: Plugin {
      If this var is nil, there was no last point
      */
     
-    private var scene: PenScene!
     private var buttonEvents: ButtonEvents
     
     init() {
@@ -38,7 +37,6 @@ class ArrangePlugin: Plugin {
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
-        self.scene = scene
         buttonEvents.update(buttons: buttons)
     }
     

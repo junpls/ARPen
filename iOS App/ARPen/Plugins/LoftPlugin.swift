@@ -25,7 +25,6 @@ class LoftPlugin: Plugin {
     private var loft: ARPLoft?
     private var busy: Bool = false
     
-    private var scene: PenScene!
     private var curveDesigner: CurveDesigner
     
     init() {
@@ -43,7 +42,6 @@ class LoftPlugin: Plugin {
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
-        self.scene = scene
         curveDesigner.update(scene: scene, buttons: buttons)
     }
     
@@ -65,7 +63,7 @@ class LoftPlugin: Plugin {
                     if let l = try? ARPLoft(profiles: paths) {
                         self.loft = l
                         DispatchQueue.main.async {
-                            self.scene?.drawingNode.addChildNode(l)
+                            self.currentScene?.drawingNode.addChildNode(l)
                         }
                     }
                 }

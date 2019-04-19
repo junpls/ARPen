@@ -23,7 +23,6 @@ class SweepPlugin: Plugin {
     private var freePaths: [ARPPath] = [ARPPath]()
     private var busy: Bool = false
     
-    private var scene: PenScene!
     private var curveDesigner: CurveDesigner
     
     init() {
@@ -41,7 +40,6 @@ class SweepPlugin: Plugin {
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
-        self.scene = scene
         curveDesigner.update(scene: scene, buttons: buttons)
     }
     
@@ -54,7 +52,7 @@ class SweepPlugin: Plugin {
                 profile.rebuild()
                 if let sweep = try? ARPSweep(profile: profile, path: spine) {
                     DispatchQueue.main.async {
-                        self.scene?.drawingNode.addChildNode(sweep)
+                        self.currentScene?.drawingNode.addChildNode(sweep)
                         self.freePaths.removeAll(where: { $0 === profile || $0 === spine })
                     }
                 }

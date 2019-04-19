@@ -23,7 +23,6 @@ class RevolvePlugin: Plugin {
     private var freePaths: [ARPPath] = [ARPPath]()
     private var busy: Bool = false
     
-    private var scene: PenScene!
     private var curveDesigner: CurveDesigner
     
     init() {
@@ -41,7 +40,6 @@ class RevolvePlugin: Plugin {
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
-        self.scene = scene
         curveDesigner.update(scene: scene, buttons: buttons)
     }
     
@@ -55,7 +53,7 @@ class RevolvePlugin: Plugin {
                 profile.rebuild()
                 if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
                     DispatchQueue.main.async {
-                        self.scene?.drawingNode.addChildNode(revolution)
+                        self.currentScene?.drawingNode.addChildNode(revolution)
                         self.freePaths.removeAll(where: { $0 === profile || $0 === axisPath })
                     }
                 }
