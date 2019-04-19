@@ -129,6 +129,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         path.position = SCNVector3(0,0,-0.2)
         scene.rootNode.addChildNode(path)
         */
+        
+        let smallBox = ARPBox(width: 0.1, height: 0.1, length: 0.1)
+        scene.drawingNode.addChildNode(smallBox)
+        
         arSceneView.delegate = self
 
         self.pluginManager = PluginManager(scene: scene)

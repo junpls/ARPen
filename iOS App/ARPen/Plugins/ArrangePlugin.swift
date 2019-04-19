@@ -19,6 +19,9 @@ class ArrangePlugin: Plugin {
      If this var is nil, there was no last point
      */
     
+    
+    private var hoverTarget: ARPGeomNode?
+    private var draggingTargets: [ARPGeomNode] = []
     private var buttonEvents: ButtonEvents
     
     init() {
@@ -38,10 +41,34 @@ class ArrangePlugin: Plugin {
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
         buttonEvents.update(buttons: buttons)
+        
+
+        for node in scene.drawingNode.childNodes {
+            if let arpGeom = node as? ARPGeomNode, !draggingTargets.contains(arpGeom) {
+                arpGeom.highlighted = false
+            }
+        }
+        hoverTarget = nil
+        
+        if let tip = currentScene?.pencilPoint.position,
+            let hitTestResult = hitTest(pointerPosition: tip).first,
+            let hit = hitTestResult.node.parent as? ARPGeomNode {
+                hit.highlighted = true
+                hoverTarget = hit
+        }
+        
     }
     
     func didPressButton(_ button: Button) {
-        
+        if let target = hoverTarget {
+            if draggingTargets.contains(target) {
+                draggingTargets.removeAll(where: { $0 === target })
+            } else {
+                draggingTargets.append(target)
+            }
+        } else {
+            draggingTargets = []
+        }
     }
     
     func didReleaseButton(_ button: Button) {

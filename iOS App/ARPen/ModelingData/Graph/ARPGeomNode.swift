@@ -24,7 +24,7 @@ class ARPGeomNode: ARPNode {
     var highlightColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
     var highlighted: Bool = false {
         didSet {
-            self.geometryNode.geometry?.firstMaterial?.emission.contents = highlightColor
+            updateHighlightedState()
         }
     }
     
@@ -66,9 +66,10 @@ class ARPGeomNode: ARPNode {
         DispatchQueue.main.async {
             self.geometryNode.geometry = geom
             self.geometryNode.geometry?.firstMaterial?.diffuse.contents = self.geometryColor
+            self.geometryNode.geometry?.firstMaterial?.emission.contents = self.highlightColor
             self.geometryNode.geometry?.firstMaterial?.lightingModel = .blinn
             self.geometryNode.geometry?.firstMaterial?.diffuse.intensity = 1;
-            self.geometryNode.geometry?.firstMaterial?.emission.contents = self.highlightColor
+            self.updateHighlightedState()
             self.isoLinesNode.geometry = lines
             self.isoLinesNode.geometry?.firstMaterial?.diffuse.contents = self.lineColor
             self.isoLinesNode.geometry?.firstMaterial?.lightingModel = .constant
@@ -136,6 +137,14 @@ class ARPGeomNode: ARPNode {
          */
         self.setWorldTransform(pivotChild.worldTransform)
         content.transform = SCNMatrix4Invert(pivotChild.transform)
+    }
+    
+    private func updateHighlightedState() {
+        if highlighted {
+            geometryNode.geometry?.firstMaterial?.emission.intensity = 1
+        } else {
+            geometryNode.geometry?.firstMaterial?.emission.intensity = 0
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
