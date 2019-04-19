@@ -40,6 +40,15 @@
                                     <action selector="softwarePenButtonReleased:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="eFE-v3-81F"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC2-14-eaW" userLabel="SoftwarePenButton2">
+                                <rect key="frame" x="88" y="10" width="60" height="60"/>
+                                <state key="normal" image="SoftwareButton"/>
+                                <connections>
+                                    <action selector="softwarePenButton2Pressed:" destination="BV1-FR-VrT" eventType="touchDown" id="yw2-wR-3FI"/>
+                                    <action selector="softwarePenButton2Released:" destination="BV1-FR-VrT" eventType="touchUpInside" id="6J8-bf-nAL"/>
+                                    <action selector="softwarePenButton2Released:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="fKZ-dX-xa8"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5z-U4-mJN" userLabel="SettingsButton">
                                 <rect key="frame" x="619" y="327" width="38" height="38"/>
                                 <constraints>
@@ -151,26 +160,48 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvz-5Y-P2h" userLabel="SoftwarePenButton3">
+                                <rect key="frame" x="88" y="78" width="60" height="60"/>
+                                <state key="normal" image="SoftwareButton"/>
+                                <connections>
+                                    <action selector="softwarePenButton3Pressed:" destination="BV1-FR-VrT" eventType="touchDown" id="RnM-9t-Tcx"/>
+                                    <action selector="softwarePenButton3Released:" destination="BV1-FR-VrT" eventType="touchUpInside" id="BRD-4R-jIC"/>
+                                    <action selector="softwarePenButton3Released:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="Vtw-PY-Gsb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="leading" secondItem="YSQ-pH-N6L" secondAttribute="leading" id="4R4-hk-6Gk"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="leading" secondItem="YSQ-pH-N6L" secondAttribute="leading" id="96J-6E-dhy"/>
+                            <constraint firstItem="gvz-5Y-P2h" firstAttribute="leading" secondItem="eC2-14-eaW" secondAttribute="leading" id="Aoy-dv-oQM"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="A5z-U4-mJN" secondAttribute="trailing" constant="10" id="CMI-vn-wNc"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="DLC-mq-LKi"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="top" secondItem="7vt-XS-Ox1" secondAttribute="top" constant="-10" id="Dev-l3-dAa"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="top" secondItem="7vt-XS-Ox1" secondAttribute="bottom" constant="8" id="Jpi-QZ-dNH"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="LBk-3V-d3Y"/>
+                            <constraint firstItem="eC2-14-eaW" firstAttribute="leading" secondItem="gGF-H0-N2c" secondAttribute="trailing" constant="8" symbolic="YES" id="OFs-cR-RdF"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="A5z-U4-mJN" secondAttribute="bottom" constant="10" id="QsW-2Q-MbL"/>
+                            <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="gvz-5Y-P2h" secondAttribute="bottom" constant="237" id="SqG-Ql-DWR"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="trailing" secondItem="YSQ-pH-N6L" secondAttribute="trailing" id="Un0-kz-gbv"/>
                             <constraint firstItem="7vt-XS-Ox1" firstAttribute="centerX" secondItem="gGF-H0-N2c" secondAttribute="centerX" id="XVo-cj-B5O"/>
                             <constraint firstAttribute="trailing" secondItem="Z1i-B5-dqO" secondAttribute="trailing" id="ZCc-G1-ORQ"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="leading" secondItem="EIQ-Ip-Tyt" secondAttribute="leading" id="ZPg-7T-trW"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="ZUV-Sl-MuL"/>
+                            <constraint firstItem="eC2-14-eaW" firstAttribute="bottom" secondItem="7vt-XS-Ox1" secondAttribute="bottom" id="b4n-pD-P3Q"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="bottom" secondItem="EIQ-Ip-Tyt" secondAttribute="bottom" id="bC5-TC-gU0"/>
+                            <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="eC2-14-eaW" secondAttribute="trailing" constant="519" id="cCR-5H-j78"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="cqj-y5-Wso"/>
+                            <constraint firstItem="eC2-14-eaW" firstAttribute="top" secondItem="7vt-XS-Ox1" secondAttribute="top" id="kB1-Iz-k4L"/>
+                            <constraint firstItem="gvz-5Y-P2h" firstAttribute="trailing" secondItem="eC2-14-eaW" secondAttribute="trailing" id="tDN-vS-EIw"/>
+                            <constraint firstItem="gvz-5Y-P2h" firstAttribute="top" secondItem="eC2-14-eaW" secondAttribute="bottom" constant="8" symbolic="YES" id="tLo-sO-nKK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EIQ-Ip-Tyt"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="iYd-yH-V3o"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="6Ro-dD-aza"/>
                     <nil key="simulatedTopBarMetrics"/>
