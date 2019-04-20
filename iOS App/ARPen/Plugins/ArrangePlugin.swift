@@ -20,10 +20,19 @@ class ArrangePlugin: Plugin {
      */
     
     
-    private var hoverTarget: ARPGeomNode?
-    private var draggingTargets: [ARPGeomNode] = []
-    private var buttonEvents: ButtonEvents
+    static let timeTillDrag: Double = 0.5
+    static let maxDistanceTillDrag: Float = 0.01
     
+    private var hoverTarget: ARPGeomNode?
+    private var selectedTargets: [ARPGeomNode] = []
+    private var dragging: Bool = false
+    private var buttonEvents: ButtonEvents
+    private var justSelectedSomething = false
+    
+    private var lastClickPosition: SCNVector3?
+    private var lastClickTime: Date?
+    private var lastPenPosition: SCNVector3?
+
     init() {
         buttonEvents = ButtonEvents()
         buttonEvents.didPressButton = self.didPressButton
@@ -36,7 +45,9 @@ class ArrangePlugin: Plugin {
     }
     
     func deactivatePlugin() {
-        
+        for target in selectedTargets {
+            unSelectTarget(target)
+        }
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
@@ -44,35 +55,73 @@ class ArrangePlugin: Plugin {
         
 
         for node in scene.drawingNode.childNodes {
-            if let arpGeom = node as? ARPGeomNode, !draggingTargets.contains(arpGeom) {
+            if let arpGeom = node as? ARPGeomNode, !selectedTargets.contains(arpGeom) {
                 arpGeom.highlighted = false
             }
         }
         hoverTarget = nil
         
-        if let tip = currentScene?.pencilPoint.position,
-            let hitTestResult = hitTest(pointerPosition: tip).first,
+        if let hitTestResult = hitTest(pointerPosition: scene.pencilPoint.position).first,
             let hit = hitTestResult.node.parent as? ARPGeomNode {
                 hit.highlighted = true
                 hoverTarget = hit
         }
         
+        if (buttons[.Button1] ?? false) &&
+            ((Date() - (lastClickTime ?? Date())) > ArrangePlugin.timeTillDrag
+                || (lastPenPosition?.distance(vector: scene.pencilPoint.position) ?? 0) > ArrangePlugin.maxDistanceTillDrag) {
+            dragging = true
+        }
+        
+        if dragging, let lastPos = lastPenPosition {
+            for target in selectedTargets {
+                target.position += scene.pencilPoint.position - lastPos
+            }
+        }
+        
+        lastPenPosition = scene.pencilPoint.position
     }
     
     func didPressButton(_ button: Button) {
+        if button == .Button1 {
+            lastClickPosition = currentScene?.pencilPoint.position
+            lastClickTime = Date()
+        }
+        
         if let target = hoverTarget {
-            if draggingTargets.contains(target) {
-                draggingTargets.removeAll(where: { $0 === target })
-            } else {
-                draggingTargets.append(target)
+            if !selectedTargets.contains(target) {
+                selectTarget(target)
             }
         } else {
-            draggingTargets = []
+            selectedTargets = []
         }
     }
     
     func didReleaseButton(_ button: Button) {
-        
+        if dragging {
+            for target in selectedTargets {
+                target.applyTransform()
+            }
+        } else {
+            if let target = hoverTarget, !justSelectedSomething {
+                if selectedTargets.contains(target) {
+                    unSelectTarget(target)
+                }
+            }
+        }
+        justSelectedSomething = false
+        dragging = false
+    }
+    
+    func selectTarget(_ target: ARPGeomNode) {
+        target.highlighted = true
+        selectedTargets.append(target)
+        justSelectedSomething = true
+    }
+    
+    func unSelectTarget(_ target: ARPGeomNode) {
+        target.highlighted = false
+        selectedTargets.removeAll(where: { $0 === target })
     }
     
     func hitTest(pointerPosition: SCNVector3) -> [SCNHitTestResult] {
