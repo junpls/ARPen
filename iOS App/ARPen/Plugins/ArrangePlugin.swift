@@ -83,17 +83,32 @@ class ArrangePlugin: Plugin {
     }
     
     func didPressButton(_ button: Button) {
-        if button == .Button1 {
+
+        switch button {
+        case .Button1:
             lastClickPosition = currentScene?.pencilPoint.position
             lastClickTime = Date()
-        }
-        
-        if let target = hoverTarget {
-            if !selectedTargets.contains(target) {
-                selectTarget(target)
+            
+            if let target = hoverTarget {
+                if !selectedTargets.contains(target) {
+                    selectTarget(target)
+                }
+            } else {
+                selectedTargets = []
             }
-        } else {
-            selectedTargets = []
+        case .Button2, .Button3:
+            if selectedTargets.count == 2 {
+                let a = selectedTargets.removeFirst()
+                let b = selectedTargets.removeFirst()
+                
+                DispatchQueue.global(qos: .userInitiated).async {
+                    if let diff = try? ARPBoolNode(a: a, b: b, operation: button == .Button2 ? .join : .cut) {
+                        DispatchQueue.main.async {
+                            self.currentScene?.drawingNode.addChildNode(diff)
+                        }
+                    }
+                }
+            }
         }
     }
     
