@@ -111,6 +111,7 @@ class ARPPath: ARPGeomNode {
         for (old, new) in zip(points, OCCTAPI.shared.flattened(getPointsAsVectors())) {
             old.position = new
         }
+        self.rebuild()
     }
     
     func removeNonFixedPoints() {

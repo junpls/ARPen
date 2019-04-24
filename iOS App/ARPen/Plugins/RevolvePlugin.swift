@@ -50,7 +50,6 @@ class RevolvePlugin: Plugin {
                         
             DispatchQueue.global(qos: .userInitiated).async {
                 profile.flatten()
-                profile.rebuild()
                 if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(revolution)

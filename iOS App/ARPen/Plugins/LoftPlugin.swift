@@ -51,6 +51,7 @@ class LoftPlugin: Plugin {
             return
         }
         
+        path.flatten()
         freePaths.append(path)
         
         DispatchQueue.global(qos: .userInitiated).async {

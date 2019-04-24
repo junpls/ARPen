@@ -49,7 +49,6 @@ class SweepPlugin: Plugin {
             let spine = freePaths.first(where: { !$0.closed }) {
             DispatchQueue.global(qos: .userInitiated).async {
                 profile.flatten()
-                profile.rebuild()
                 if let sweep = try? ARPSweep(profile: profile, path: spine) {
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(sweep)
