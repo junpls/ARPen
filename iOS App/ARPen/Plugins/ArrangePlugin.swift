@@ -20,8 +20,8 @@ class ArrangePlugin: Plugin {
      */
     
     
-    static let timeTillDrag: Double = 0.5
-    static let maxDistanceTillDrag: Float = 0.01
+    static let timeTillDrag: Double = 1
+    static let maxDistanceTillDrag: Float = 0.015
     
     private var hoverTarget: ARPGeomNode?
     private var selectedTargets: [ARPGeomNode] = []
@@ -77,9 +77,8 @@ class ArrangePlugin: Plugin {
             for target in selectedTargets {
                 target.position += scene.pencilPoint.position - lastPos
             }
+            lastPenPosition = scene.pencilPoint.position
         }
-        
-        lastPenPosition = scene.pencilPoint.position
     }
     
     func didPressButton(_ button: Button) {
@@ -87,6 +86,7 @@ class ArrangePlugin: Plugin {
         switch button {
         case .Button1:
             lastClickPosition = currentScene?.pencilPoint.position
+            lastPenPosition = currentScene?.pencilPoint.position
             lastClickTime = Date()
             
             if let target = hoverTarget {
@@ -125,6 +125,7 @@ class ArrangePlugin: Plugin {
             }
         }
         justSelectedSomething = false
+        lastPenPosition = nil
         dragging = false
     }
     
