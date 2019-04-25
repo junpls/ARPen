@@ -41,6 +41,8 @@ class ARPRevolution: ARPGeomNode {
         revAxis.position = axis.points.first!.position
         
         let closedProfile = ARPPath(points: profile.points, closed: true)
+        closedProfile.points.first!.cornerStyle = .sharp
+        closedProfile.points.last!.cornerStyle = .sharp
         let top = ARPPathNode(projectToAxis(point: profile.points.last!.position, axis: revAxis))
         top.fixed = true
         closedProfile.points.append(top)
@@ -48,7 +50,10 @@ class ARPRevolution: ARPGeomNode {
         bottom.fixed = true
         closedProfile.points.insert(bottom, at: 0)
         closedProfile.flatten()
-        closedProfile.rebuild()
+
+        /// Adjust revolution axis to newly flattened points
+        revAxis.direction = (closedProfile.points.last!.position - closedProfile.points.first!.position).normalized()
+        revAxis.position = closedProfile.points.first!.position - revAxis.direction /// It's necessary to shift this point because somehow revolving around a point which exists inside the path yields a construction error
 
         let ref = try? OCCTAPI.shared.revolve(profile: closedProfile.occtReference!, aroundAxis: revAxis.position, withDirection: revAxis.direction)
         
