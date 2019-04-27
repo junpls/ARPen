@@ -40,6 +40,13 @@ class CurveDesigner {
         
         if let path = activePath {
             path.getNonFixedPoint()?.position = scene.pencilPoint.position
+            
+            if path.points.first!.worldPosition.distance(vector: path.points.last!.worldPosition) < CurveDesigner.maxClosureDistance {
+                path.closed = true
+            } else {
+                path.closed = false
+            }
+            
             tryRebuildPreview()
         }
     }
@@ -55,6 +62,15 @@ class CurveDesigner {
     
     private func didReleaseButton(_ button: Button) {
         blocked = false
+        
+        switch button {
+        case .Button1:
+            break
+        case .Button2, .Button3:
+            if let path = activePath, path.points.count > 2 && path.closed {
+                finishActivePath()
+            }
+        }
     }
     
     private func addNode() {
@@ -108,11 +124,6 @@ class CurveDesigner {
         if !busy, let path = activePath {
             busy = true
             DispatchQueue.global(qos: .userInitiated).async {
-                if path.points.first!.worldPosition.distance(vector: path.points.last!.worldPosition) < CurveDesigner.maxClosureDistance {
-                    path.closed = true
-                } else {
-                    path.closed = false
-                }
                 path.rebuild()
                 self.busy = false
             }

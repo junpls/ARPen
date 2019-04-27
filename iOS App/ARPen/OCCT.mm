@@ -432,7 +432,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
             try {
                 OCC_CATCH_SIGNALS
                 
-                GeomAPI_Interpolate interpolate = GeomAPI_Interpolate(segmentPoints, closed && onlyRoundCorners, 0.005);
+                GeomAPI_Interpolate interpolate = GeomAPI_Interpolate(segmentPoints, closed && onlyRoundCorners, 0.001);
                 interpolate.Perform();
                 Handle(Geom_BSplineCurve) curve = interpolate.Curve();
                 BRepBuilderAPI_MakeEdge makeEdge = BRepBuilderAPI_MakeEdge(curve);
