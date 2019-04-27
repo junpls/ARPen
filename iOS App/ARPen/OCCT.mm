@@ -648,16 +648,17 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     
     TopoDS_Shape shapeProfile = [self retrieveFromRegistryTransformed: keyProfile];
     TopoDS_Face profileFace = BRepBuilderAPI_MakeFace(TopoDS::Wire(shapeProfile));
-
+    
     gp_Ax1 axis = gp_Ax1(gp_Pnt(axisPosition.x, axisPosition.y, axisPosition.z),
                          gp_Dir(axisDirection.x, axisDirection.y, axisDirection.z));
+    
     
     BRepPrimAPI_MakeRevol makeRevol = BRepPrimAPI_MakeRevol(profileFace, axis);
     makeRevol.Build();
     TopoDS_Shape revolution = makeRevol.Shape();
-    
+
     NSTimeInterval timeInterval = [start timeIntervalSinceNow];
-    NSLog(@"Sweeping took %f", timeInterval);
+    NSLog(@"Revolving took %f", timeInterval);
     
     return [self storeInRegistryWithCString:revolution];
 }

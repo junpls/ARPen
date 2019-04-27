@@ -21,8 +21,6 @@ class ARPRevolution: ARPGeomNode {
         
         super.init(pivotChild: axis)
         
-        profile.isHidden = true
-        axis.isHidden = true
         self.content.addChildNode(profile)
         self.content.addChildNode(axis)
     }
@@ -32,28 +30,29 @@ class ARPRevolution: ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
-        func projectToAxis(point: SCNVector3, axis: Axis) -> SCNVector3 {
-            return axis.position + axis.direction*(point - axis.position).dot(vector: axis.direction)
-        }
         
         var revAxis = Axis()
-        revAxis.direction = (axis.points.last!.position - axis.points.first!.position).normalized()
-        revAxis.position = axis.points.first!.position
+        revAxis.direction = (axis.points.last!.worldPosition - axis.points.first!.worldPosition).normalized()
+        revAxis.position = axis.points.first!.worldPosition
         
-        let closedProfile = ARPPath(points: profile.points, closed: true)
-        closedProfile.points.first!.cornerStyle = .sharp
-        closedProfile.points.last!.cornerStyle = .sharp
-        let top = ARPPathNode(projectToAxis(point: profile.points.last!.position, axis: revAxis))
-        top.fixed = true
-        closedProfile.points.append(top)
-        let bottom = ARPPathNode(projectToAxis(point: profile.points.first!.position, axis: revAxis))
-        bottom.fixed = true
-        closedProfile.points.insert(bottom, at: 0)
+        var points = profile.points.map({ ARPPathNode($0.worldPosition, cornerStyle: $0.cornerStyle) })
+        points.first!.cornerStyle = .sharp
+        points.last!.cornerStyle = .sharp
+        let top = ARPPathNode(revAxis.projectOnto(point: profile.points.last!.worldPosition))
+        let bottom = ARPPathNode(revAxis.projectOnto(point: profile.points.first!.worldPosition))
+        points.append(top)
+        points.insert(bottom, at: 0)
+        
+        for p in points {
+            p.fixed = true
+        }
+        
+        let closedProfile = ARPPath(points: points, closed: true)
         closedProfile.flatten()
 
         /// Adjust revolution axis to newly flattened points
-        revAxis.direction = (closedProfile.points.last!.position - closedProfile.points.first!.position).normalized()
-        revAxis.position = closedProfile.points.first!.position - revAxis.direction /// It's necessary to shift this point because somehow revolving around a point which exists inside the path yields a construction error
+        revAxis.direction = (closedProfile.points.last!.worldPosition - closedProfile.points.first!.worldPosition).normalized()
+        revAxis.position = closedProfile.points.first!.worldPosition - revAxis.direction /// It's necessary to shift this point because somehow revolving around a point which exists inside the path yields a construction error
 
         let ref = try? OCCTAPI.shared.revolve(profile: closedProfile.occtReference!, aroundAxis: revAxis.position, withDirection: revAxis.direction)
         

@@ -84,20 +84,24 @@ class ARPPath: ARPGeomNode {
             self.points.append(point)
         }
 
-        super.init()
+        super.init(pivotChild: points[0])
         
         for point in self.points {
             self.content.addChildNode(point)
         }
-        
+        self.content.isHidden = false
         self.lineColor = color
     }
     
-    func appendPoint(_ point:ARPPathNode) {
-        self.points.append(point)
+    func appendPoint(_ point:ARPPathNode, at position:Int = -1) {
+        if position >= 0 {
+            self.points.insert(point, at: position)
+        } else {
+            self.points.append(point)
+        }
         self.content.addChildNode(point)
     }
-    
+
     func removeLastPoint() {
         let removed = self.points.removeLast()
         removed.removeFromParentNode()
@@ -109,7 +113,7 @@ class ARPPath: ARPGeomNode {
     
     func flatten() {
         for (old, new) in zip(points, OCCTAPI.shared.flattened(getPointsAsVectors())) {
-            old.position = new
+            old.worldPosition = new
         }
         self.rebuild()
     }
@@ -124,7 +128,7 @@ class ARPPath: ARPGeomNode {
     }
     
     func getPointsAsVectors() -> [SCNVector3] {
-        return points.map { $0.position }
+        return points.map { $0.worldPosition }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -132,9 +136,14 @@ class ARPPath: ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
-        let positions = points.compactMap { (!closed || $0.fixed) ? $0.position : nil }
+        let positions = points.compactMap { (!closed || $0.fixed) ? $0.worldPosition : nil }
         let corners = points.compactMap { (!closed || $0.fixed) ? $0.cornerStyle : nil }
-        print(positions.count)
-        return try OCCTAPI.shared.createPath(points: positions, corners: corners, closed: closed)
+        
+        let ref = try? OCCTAPI.shared.createPath(points: positions, corners: corners, closed: closed)
+        if let r = ref {
+            OCCTAPI.shared.pivot(handle: r, pivot: pivotChild.worldTransform)
+        }
+        
+        return ref ?? ""
     }
 }

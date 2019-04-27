@@ -63,4 +63,8 @@ func * (left: SCNMatrix4, right: SCNVector3) -> SCNVector3 {
 struct Axis {
     var position: SCNVector3 = SCNVector3(0, 0, 0)
     var direction: SCNVector3 = SCNVector3(0, 1, 0)
+    
+    func projectOnto(point: SCNVector3) -> SCNVector3 {
+        return self.position + self.direction*(point - self.position).dot(vector: self.direction)
+    }
 }
