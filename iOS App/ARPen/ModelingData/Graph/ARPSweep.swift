@@ -18,13 +18,8 @@ class ARPSweep: ARPGeomNode {
         self.profile = profile
         self.path = path
         
-        //profile.removeFromParentNode()
-        //path.removeFromParentNode()
-        
         super.init(pivotChild: profile)
         
-        profile.isHidden = true
-        path.isHidden = true
         self.content.addChildNode(profile)
         self.content.addChildNode(path)
         

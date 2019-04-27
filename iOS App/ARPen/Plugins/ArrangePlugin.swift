@@ -23,8 +23,18 @@ class ArrangePlugin: Plugin {
     static let timeTillDrag: Double = 1
     static let maxDistanceTillDrag: Float = 0.015
     
-    private var hoverTarget: ARPGeomNode?
+    private var hoverTarget: ARPGeomNode? {
+        didSet {
+            if let old = oldValue, !selectedTargets.contains(old) {
+                old.highlighted = false
+            }
+            if let target = hoverTarget, !selectedTargets.contains(target) {
+                target.highlighted = true
+            }
+        }
+    }
     private var selectedTargets: [ARPGeomNode] = []
+    private var visitTarget: ARPGeomNode?
     private var dragging: Bool = false
     private var buttonEvents: ButtonEvents
     private var justSelectedSomething = false
@@ -37,6 +47,7 @@ class ArrangePlugin: Plugin {
         buttonEvents = ButtonEvents()
         buttonEvents.didPressButton = self.didPressButton
         buttonEvents.didReleaseButton = self.didReleaseButton
+        buttonEvents.didDoubleClick = self.didDoubleClick
     }
 
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
@@ -46,25 +57,17 @@ class ArrangePlugin: Plugin {
     
     func deactivatePlugin() {
         for target in selectedTargets {
-            unSelectTarget(target)
+            unselectTarget(target)
         }
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
         buttonEvents.update(buttons: buttons)
         
-
-        for node in scene.drawingNode.childNodes {
-            if let arpGeom = node as? ARPGeomNode, !selectedTargets.contains(arpGeom) {
-                arpGeom.highlighted = false
-            }
-        }
-        hoverTarget = nil
-        
-        if let hitTestResult = hitTest(pointerPosition: scene.pencilPoint.position).first,
-            let hit = hitTestResult.node.parent as? ARPGeomNode {
-                hit.highlighted = true
-                hoverTarget = hit
+        if let hit = hitTest(pointerPosition: scene.pencilPoint.position) {
+            hoverTarget = hit
+        } else {
+            hoverTarget = nil
         }
         
         if (buttons[.Button1] ?? false) &&
@@ -94,7 +97,9 @@ class ArrangePlugin: Plugin {
                     selectTarget(target)
                 }
             } else {
-                selectedTargets = []
+                for target in selectedTargets {
+                    unselectTarget(target)
+                }
             }
         case .Button2, .Button3:
             if selectedTargets.count == 2 {
@@ -115,12 +120,15 @@ class ArrangePlugin: Plugin {
     func didReleaseButton(_ button: Button) {
         if dragging {
             for target in selectedTargets {
-                target.applyTransform()
+                DispatchQueue.global(qos: .userInitiated).async {
+                    /// Do this in the background, as it may cause a rebuild in the parent object
+                    target.applyTransform()
+                }
             }
         } else {
             if let target = hoverTarget, !justSelectedSomething {
                 if selectedTargets.contains(target) {
-                    unSelectTarget(target)
+                    unselectTarget(target)
                 }
             }
         }
@@ -129,25 +137,58 @@ class ArrangePlugin: Plugin {
         dragging = false
     }
     
+    func didDoubleClick(_ button: Button) {
+        if button == .Button1,
+            let scene = currentScene {
+            if let hit = hitTest(pointerPosition: scene.pencilPoint.position) {
+                if hit.parent?.parent === visitTarget || visitTarget == nil {
+                    visitTarget(hit)
+                } else {
+                    leaveTarget()
+                }
+             } else {
+                leaveTarget()
+            }
+        }
+    }
+    
+    func visitTarget(_ target: ARPGeomNode) {
+        unselectTarget(target)
+        target.visited = true
+        visitTarget = target
+    }
+    
+    func leaveTarget() {
+        if let target = visitTarget {
+            target.visited = false
+            if let parent = target.parent?.parent as? ARPGeomNode {
+                parent.visited = true
+                visitTarget = parent
+            } else {
+                visitTarget = nil
+            }
+        }
+    }
+    
     func selectTarget(_ target: ARPGeomNode) {
         target.highlighted = true
         selectedTargets.append(target)
         justSelectedSomething = true
     }
     
-    func unSelectTarget(_ target: ARPGeomNode) {
+    func unselectTarget(_ target: ARPGeomNode) {
         target.highlighted = false
         selectedTargets.removeAll(where: { $0 === target })
     }
     
-    func hitTest(pointerPosition: SCNVector3) -> [SCNHitTestResult] {
-        guard let sceneView = self.currentView  else { return [] }
+    func hitTest(pointerPosition: SCNVector3) -> ARPGeomNode? {
+        guard let sceneView = self.currentView  else { return nil }
         let projectedPencilPosition = sceneView.projectPoint(pointerPosition)
         let projectedCGPoint = CGPoint(x: CGFloat(projectedPencilPosition.x), y: CGFloat(projectedPencilPosition.y))
         
         //cast a ray from that position and find the first ARPenNode
         let hitResults = sceneView.hitTest(projectedCGPoint, options: [SCNHitTestOption.searchMode : SCNHitTestSearchMode.all.rawValue])
         
-        return hitResults.filter( { $0.node != currentScene?.pencilPoint } )
+        return hitResults.filter( { $0.node != currentScene?.pencilPoint } ).first?.node.parent as? ARPGeomNode
     }
 }

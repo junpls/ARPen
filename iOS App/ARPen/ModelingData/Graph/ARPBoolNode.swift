@@ -28,14 +28,9 @@ class ARPBoolNode: ARPGeomNode {
         self.b = b
         self.operation = op
         
-        //a.removeFromParentNode()
-        //b.removeFromParentNode()
-
         super.init(pivotChild: a)
         self.geometryColor = a.geometryColor
 
-        a.isHidden = true
-        b.isHidden = true
         self.content.addChildNode(a)
         self.content.addChildNode(b)
         

@@ -134,9 +134,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         scene.drawingNode.addChildNode(smallBox)
         
         let smallBox2 = ARPBox(width: 0.1, height: 0.1, length: 0.1)
-        smallBox2.position.x = 0.3
+        smallBox2.position.x = 0.05
+        smallBox2.position.z = 0.05
+        smallBox2.position.y = 0.05
+        smallBox2.applyTransform()
         scene.drawingNode.addChildNode(smallBox2)
-*/
+        
+        if let bool = try? ARPBoolNode(a: smallBox, b: smallBox2, operation: .cut) {
+            scene.drawingNode.addChildNode(bool)
+        }
+         */
         arSceneView.delegate = self
 
         self.pluginManager = PluginManager(scene: scene)

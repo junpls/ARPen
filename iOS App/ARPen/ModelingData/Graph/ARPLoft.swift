@@ -19,7 +19,6 @@ class ARPLoft: ARPGeomNode {
         super.init(pivotChild: profiles[0])
         
         for profile in profiles {
-            profile.isHidden = true
             self.content.addChildNode(profile)
         }
     }

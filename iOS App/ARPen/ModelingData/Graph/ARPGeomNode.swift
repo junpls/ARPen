@@ -12,6 +12,14 @@ class ARPGeomNode: ARPNode {
     
     var occtReference:OCCTReference?
     
+    var visited = false {
+        didSet {
+            self.content.isHidden = !visited
+            self.geometryNode.isHidden = visited
+            self.isoLinesNode.isHidden = visited
+        }
+    }
+    
     var content: SCNNode = SCNNode()
     var geometryNode: SCNNode = SCNNode()
     var isoLinesNode: SCNNode = SCNNode()
@@ -33,6 +41,7 @@ class ARPGeomNode: ARPNode {
         super.init()
         appendVisualization()
         self.content.addChildNode(pivotChild)
+        self.content.isHidden = true
         rebuild()
     }
     
@@ -41,6 +50,7 @@ class ARPGeomNode: ARPNode {
         super.init()
         appendVisualization()
         self.content.addChildNode(self.pivotChild)
+        self.content.isHidden = true
         rebuild()
     }
     
