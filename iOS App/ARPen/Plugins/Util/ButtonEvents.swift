@@ -35,14 +35,14 @@ class ButtonEvents {
             if buttonPressed(button) {
                 pressedThisFrame[button] = true
                 didPressButton?(button)
+            } else if buttonReleased(button) {
+                releasedThisFrame[button] = true
+                didReleaseButton?(button)
                 if let prev = previousClick[button], (Date() - prev) <= ButtonEvents.doubleClickMaxDuration {
                     doubleClickedThisFrame[button] = true
                     didDoubleClick?(button)
                 }
                 previousClick[button] = Date()
-            } else if buttonReleased(button) {
-                releasedThisFrame[button] = true
-                didReleaseButton?(button)
             }
         }
         
