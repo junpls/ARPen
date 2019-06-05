@@ -56,37 +56,56 @@ class SweepPluginTwoProfiles: Plugin {
             let center2 = profile2.getCenter()
             
             //let midpoint = (center1 + center2) / 2
-            var normal1 = profile1.getPC1()
-            var normal2 = profile2.getPC1()
+            var pc1 = profile1.getPC1()
+            var pc2 = profile2.getPC1()
             
             var points = [ARPPathNode(center1, cornerStyle: .sharp)]
+            
+            var normal1: SCNVector3!
+            var normal2: SCNVector3!
+            var midpoint1: SCNVector3!
+            var midpoint2: SCNVector3!
 
-            /// Always choose the normal which is pointing more in the direction of the respective other endpoint.
-            /// This should be changed in favor of less of a mockup behaviour, e.g. taking into account the pen's orientation while drawing.
-            if normal1.dot(vector: center2-center1) < 0 {
-                normal1 *= -1
-            }
-            if normal2.dot(vector: center1-center2) < 0 {
-                normal2 *= -1
-            }
-            
-            /// Edge case 1: If the resulting normals are very similar, orient them upwards (slinky-behaviour).
-            if normal1.dot(vector: normal2) > 0.9 && normal1.y < 0 {
-                normal1 *= -1
-                normal2 *= -1
-            }
-            
             let pathScale = center1.distance(vector: center2) / 4
             
-            var midpoint1 = center1 + normal1*pathScale
-            midpoint1 += (center2 - center1) * 0.1
-            
-            var midpoint2 = center2 + normal2*pathScale
-            midpoint2 += (center1 - center2) * 0.1
+            /// Find the slinky direction with the least amount of bending
+            var minBending = Float.greatestFiniteMagnitude
+            for d1 in [-1.0, 1.0] {
+                for d2 in [-1.0, 1.0] {
+                    
+                    var n1 = pc1 * Float(d1)
+                    var n2 = pc2 * Float(d2)
+                    
+                    /// Edge case 1: If the resulting normals are very similar, orient them upwards (slinky-behaviour).
+                    if n1.dot(vector: n2) > 0.8 && n1.y < 0 {
+                        n1 *= -1
+                        n2 *= -1
+                    }
+                    
+                    var mid1 = center1 + n1*pathScale
+                    mid1 += (center2 - center1) * 0.1
+                    
+                    var mid2 = center2 + n2*pathScale
+                    mid2 += (center1 - center2) * 0.1
+                    
+                    let m1toc1 = (center1 - mid1).normalized()
+                    let m1tom2 = (mid2 - mid1).normalized()
+                    let m2toc2 = (center2 - mid2).normalized()
+                    let bending = m1toc1.dot(vector: m1tom2) + (m1tom2 * -1).dot(vector: m2toc2)
+                    
+                    if (bending < minBending) {
+                        minBending = bending
+                        midpoint1 = mid1
+                        midpoint2 = mid2
+                        normal1 = n1
+                        normal2 = n2
+                    }
+                }
+            }
 
-            // Edge case 2: If both normals are almost aligned with the center line between the profiles, don't add additional points s.t. the spine is just a straight line.
-            if !((center2 - center1).normalized().dot(vector: normal1) > 0.9 &&
-                (center1 - center2).normalized().dot(vector: normal2) > 0.9) {
+            /// Edge case 2: If both normals are almost aligned with the center line between the profiles, don't add additional points s.t. the spine is just a straight line.
+            if !((center2 - center1).normalized().dot(vector: normal1) > 0.8 &&
+                (center1 - center2).normalized().dot(vector: normal2) > 0.8) {
                 points.append(ARPPathNode(midpoint1, cornerStyle: .round))
                 points.append(ARPPathNode(midpoint2, cornerStyle: .round))
             }
