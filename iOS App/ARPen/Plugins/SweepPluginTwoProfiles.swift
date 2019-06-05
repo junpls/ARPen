@@ -52,10 +52,48 @@ class SweepPluginTwoProfiles: Plugin {
             profile1.flatten()
             profile2.flatten()
             
-            let center1 = ARPPathNode(profile1.getCenter())
-            let center2 = ARPPathNode(profile2.getCenter())
+            let center1 = profile1.getCenter()
+            let center2 = profile2.getCenter()
+            
+            //let midpoint = (center1 + center2) / 2
+            var normal1 = profile1.getPC1()
+            var normal2 = profile2.getPC1()
+            
+            var points = [ARPPathNode(center1, cornerStyle: .sharp)]
 
-            let spine = ARPPath(points: [center1, center2], closed: false)
+            /// Always choose the normal which is pointing more in the direction of the respective other endpoint.
+            /// This should be changed in favor of less of a mockup behaviour, e.g. taking into account the pen's orientation while drawing.
+            if normal1.dot(vector: center2-center1) < 0 {
+                normal1 *= -1
+            }
+            if normal2.dot(vector: center1-center2) < 0 {
+                normal2 *= -1
+            }
+            
+            /// Edge case 1: If the resulting normals are very similar, orient them upwards (slinky-behaviour).
+            if normal1.dot(vector: normal2) > 0.9 && normal1.y < 0 {
+                normal1 *= -1
+                normal2 *= -1
+            }
+            
+            let pathScale = center1.distance(vector: center2) / 4
+            
+            var midpoint1 = center1 + normal1*pathScale
+            midpoint1 += (center2 - center1) * 0.1
+            
+            var midpoint2 = center2 + normal2*pathScale
+            midpoint2 += (center1 - center2) * 0.1
+
+            // Edge case 2: If both normals are almost aligned with the center line between the profiles, don't add additional points s.t. the spine is just a straight line.
+            if !((center2 - center1).normalized().dot(vector: normal1) > 0.9 &&
+                (center1 - center2).normalized().dot(vector: normal2) > 0.9) {
+                points.append(ARPPathNode(midpoint1, cornerStyle: .round))
+                points.append(ARPPathNode(midpoint2, cornerStyle: .round))
+            }
+
+            points.append(ARPPathNode(center2, cornerStyle: .sharp))
+            
+            let spine = ARPPath(points: points, closed: false)
             self.currentScene?.drawingNode.addChildNode(spine)
             
             DispatchQueue.global(qos: .userInitiated).async {

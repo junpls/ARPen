@@ -271,6 +271,25 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     return res;
 }
 
+- (SCNVector3) pc1Of:(const SCNVector3 []) points
+            ofLength:(int) length
+{
+    TColgp_Array1OfPnt ocPoints = TColgp_Array1OfPnt(1, length);
+    
+    for (int i = 1; i <= length; i++) {
+        ocPoints.SetValue(i, gp_Pnt(points[i-1].x, points[i-1].y, points[i-1].z));
+    }
+    
+    GProp_PGProps Pmat(ocPoints);
+    gp_Pnt g = Pmat.CentreOfMass();
+    Standard_Real Xg,Yg,Zg;
+    g.Coord(Xg,Yg,Zg);
+    GProp_PrincipalProps Pp = Pmat.PrincipalProperties();
+    gp_Vec V1 = Pp.FirstAxisOfInertia();
+    
+    return {(float)V1.X(), (float)V1.Y(), (float)V1.Z()};
+}
+
 - (int) coincidentDimensionsOf:(const SCNVector3 [])points
                       ofLength:(int)length
 {

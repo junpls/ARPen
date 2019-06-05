@@ -135,6 +135,10 @@ class ARPPath: ARPGeomNode {
         let sum = points.map { $0.worldPosition }.reduce(SCNVector3(0,0,0), { $0 + $1 })
         return sum / Float(points.count)
     }
+    
+    func getPC1() -> SCNVector3 {
+        return OCCTAPI.shared.pc1(getPointsAsVectors())
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

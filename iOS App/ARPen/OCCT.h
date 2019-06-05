@@ -50,6 +50,8 @@
 
 - (const SCNVector3 *) flattened:(const SCNVector3 []) points
                         ofLength:(int) length;
+- (SCNVector3) pc1Of:(const SCNVector3 []) points
+            ofLength:(int) length;
 - (int) coincidentDimensionsOf:(const SCNVector3 []) points
                       ofLength:(int) length;
 
