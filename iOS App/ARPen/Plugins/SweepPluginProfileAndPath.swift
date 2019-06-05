@@ -9,10 +9,10 @@
 import Foundation
 import ARKit
 
-class SweepPlugin: Plugin {
+class SweepPluginProfileAndPath: Plugin {
     
     var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
-    var pluginIdentifier: String = "Sweep"
+    var pluginIdentifier: String = "Sweep (Profile + Path)"
     var currentScene: PenScene?
     var currentView: ARSCNView?
     /**

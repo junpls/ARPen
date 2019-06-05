@@ -130,6 +130,11 @@ class ARPPath: ARPGeomNode {
     func getPointsAsVectors() -> [SCNVector3] {
         return points.map { $0.worldPosition }
     }
+    
+    func getCenter() -> SCNVector3 {
+        let sum = points.map { $0.worldPosition }.reduce(SCNVector3(0,0,0), { $0 + $1 })
+        return sum / Float(points.count)
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
