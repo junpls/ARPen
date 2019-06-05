@@ -20,6 +20,8 @@ class ARPPathNode: ARPNode {
         node.geometry?.firstMaterial?.emission.contents = color
     })
     
+    static let samePointTolerance: Float = 0.001
+    
     let sharpColor = UIColor.red
     let roundColor = UIColor.blue
 
@@ -145,10 +147,15 @@ class ARPPath: ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
-        let positions = points.compactMap { (!closed || $0.fixed) ? $0.worldPosition : nil }
-        let corners = points.compactMap { (!closed || $0.fixed) ? $0.cornerStyle : nil }
+        var calcClosed = closed
+        if let first = points.first, let last = points.last,
+            first.position.distance(vector: last.position) < ARPPathNode.samePointTolerance {
+            calcClosed = true
+        }
+        let positions = points.compactMap { (!calcClosed || $0.fixed) ? $0.worldPosition : nil }
+        let corners = points.compactMap { (!calcClosed || $0.fixed) ? $0.cornerStyle : nil }
         
-        let ref = try? OCCTAPI.shared.createPath(points: positions, corners: corners, closed: closed)
+        let ref = try? OCCTAPI.shared.createPath(points: positions, corners: corners, closed: calcClosed)
         if let r = ref {
             OCCTAPI.shared.pivot(handle: r, pivot: pivotChild.worldTransform)
         }

@@ -61,6 +61,7 @@ class ARPGeomNode: ARPNode {
     }
 
     final func updateView() {
+        
         let geom  = OCCTAPI.shared.triangulate(handle: occtReference!)
         let lines = OCCTAPI.shared.tubeframe(handle: occtReference!)
         

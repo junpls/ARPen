@@ -10,7 +10,7 @@ import Foundation
 
 class CurveDesigner {
     
-    static let maxClosureDistance: Float = 0.01
+    static let snappingDistance: Float = 0.01
     static let minNextPointDistance: Float = 0.02
     
     var didStartPath: ((ARPPath) -> Void)?
@@ -24,6 +24,8 @@ class CurveDesigner {
     
     private var buttonEvents: ButtonEvents
     
+    private var addedThisFrame: Bool = false
+    
     init() {
         buttonEvents = ButtonEvents()
         buttonEvents.didPressButton = self.didPressButton
@@ -32,19 +34,18 @@ class CurveDesigner {
     
     func update(scene: PenScene, buttons: [Button : Bool]) {
         self.scene = scene
+        addedThisFrame = false
         buttonEvents.update(buttons: buttons)
         
-        if ((buttonEvents.buttons[.Button2]! || buttonEvents.buttons[.Button3]!) && readyForNextPoint()) {
+        if ((buttonEvents.buttons[.Button2]! || buttonEvents.buttons[.Button3]!) && readyForNextPoint() && !addedThisFrame) {
             addNode()
         }
         
         if let path = activePath {
-            path.getNonFixedPoint()?.position = scene.pencilPoint.position
-            
-            if path.points.first!.worldPosition.distance(vector: path.points.last!.worldPosition) < CurveDesigner.maxClosureDistance {
-                path.closed = true
+            if path.points.first!.position.distance(vector: scene.pencilPoint.position) < CurveDesigner.snappingDistance {
+                path.getNonFixedPoint()?.position = path.points.first!.worldPosition
             } else {
-                path.closed = false
+                path.getNonFixedPoint()?.position = scene.pencilPoint.position
             }
             
             tryRebuildPreview()
@@ -62,7 +63,7 @@ class CurveDesigner {
     
     private func didReleaseButton(_ button: Button) {
         blocked = false
-        
+        /*
         switch button {
         case .Button1:
             break
@@ -70,10 +71,11 @@ class CurveDesigner {
             if let path = activePath, path.points.count > 2 && path.closed {
                 finishActivePath()
             }
-        }
+        }*/
     }
     
     private func addNode() {
+        addedThisFrame = true
         let cornerStyle = buttonEvents.buttons[.Button2]! ? CornerStyle.sharp : CornerStyle.round
         
         if activePath == nil {
@@ -84,20 +86,33 @@ class CurveDesigner {
         }
         
         if let path = activePath {
-            let activePoint = path.getNonFixedPoint()
-            if cornerStyle == activePoint?.cornerStyle {
-                activePoint?.fixed = true
-                path.appendPoint(ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle))
+            if pathEndsTouch(path) {
+                finishActivePath()
             } else {
-                activePoint?.cornerStyle = cornerStyle
-                blocked = true
+                let activePoint = path.getNonFixedPoint()
+                if cornerStyle == activePoint?.cornerStyle {
+                    activePoint?.fixed = true
+                    path.appendPoint(ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle))
+                } else {
+                    activePoint?.cornerStyle = cornerStyle
+                    blocked = true
+                }
             }
         }
     }
     
+    private func pathEndsTouch(_ path: ARPPath) -> Bool {
+        if let nonFixedPoint = path.getNonFixedPoint(), path.points.count > 2 {
+            if path.points.first!.worldPosition.distance(vector: nonFixedPoint.worldPosition) < CurveDesigner.snappingDistance {
+                return true
+            }
+        }
+        return false
+    }
+    
     private func finishActivePath() {
         if let path = activePath {
-            if path.points.first!.worldPosition.distance(vector: path.points.last!.worldPosition) < CurveDesigner.maxClosureDistance {
+            if pathEndsTouch(path) {
                 path.closed = true
 //                path.flatten()
             }
