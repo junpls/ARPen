@@ -9,10 +9,10 @@
 import Foundation
 import ARKit
 
-class RevolvePlugin: Plugin {
+class RevolvePluginProfileAndCircle: Plugin {
     
     var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
-    var pluginIdentifier: String = "Revolve"
+    var pluginIdentifier: String = "Revolve (Profile + Circle)"
     var currentScene: PenScene?
     var currentView: ARSCNView?
     /**
@@ -45,15 +45,25 @@ class RevolvePlugin: Plugin {
     
     func didCompletePath(_ path: ARPPath) {
         freePaths.append(path)
-        if let profile = freePaths.first(where: { !$0.closed && $0.points.count > 2 }),
-            let axisPath = freePaths.first(where: { !$0.closed && $0.points.count == 2 }) {
-                        
+        if let profile = freePaths.first(where: { !$0.closed && $0.points.count >= 2 }),
+            let circle = freePaths.first(where: { $0.closed }) {
+            
             DispatchQueue.global(qos: .userInitiated).async {
                 profile.flatten()
+                circle.flatten()
+                
+                let axisDir = circle.getPC1()
+                let axisPos = OCCTAPI.shared.circleCenter(circle.getPointsAsVectors())
+                let axisPath = ARPPath(points: [
+                    ARPPathNode(axisPos),
+                    ARPPathNode(axisPos + axisDir)
+                    ], closed: false);
+                print(axisPos)
                 if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(revolution)
-                        self.freePaths.removeAll(where: { $0 === profile || $0 === axisPath })
+                        circle.removeFromParentNode()
+                        self.freePaths.removeAll(where: { $0 === profile || $0 == circle })
                     }
                 }
             }

@@ -44,6 +44,7 @@
 #include <BRepBuilderAPI_MakeVertex.hxx>
 #include <GProp_PGProps.hxx>
 #include <GProp_PrincipalProps.hxx>
+#include <math_GaussLeastSquare.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -242,19 +243,9 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
 - (const SCNVector3 *) flattened:(const SCNVector3 []) points
                         ofLength:(int) length
 {
-    TColgp_Array1OfPnt ocPoints = TColgp_Array1OfPnt(1, length);
+    TColgp_Array1OfPnt ocPoints = [self convertPoints:points ofLength:length];
     
-    for (int i = 1; i <= length; i++) {
-        ocPoints.SetValue(i, gp_Pnt(points[i-1].x, points[i-1].y, points[i-1].z));
-    }
-    
-    GProp_PGProps Pmat(ocPoints);
-    gp_Pnt g = Pmat.CentreOfMass();
-    Standard_Real Xg,Yg,Zg;
-    g.Coord(Xg,Yg,Zg);
-    GProp_PrincipalProps Pp = Pmat.PrincipalProperties();
-    gp_Vec V1 = Pp.FirstAxisOfInertia();
-    gp_Pln pln = gp_Pln(g, V1);
+    gp_Pln pln = [self projectOntoPlane:ocPoints];
     Handle(Geom_Plane) plane = new Geom_Plane(pln);
     
     for (int i = 1; i <= length; i++) {
@@ -271,8 +262,72 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     return res;
 }
 
+- (SCNVector3) circleCenterOf:(const SCNVector3 []) points
+                     ofLength:(int) length
+{
+    TColgp_Array1OfPnt ocPoints = [self convertPoints:points ofLength:length];
+    
+    gp_Pln pln = [self projectOntoPlane:ocPoints];
+    Handle(Geom_Plane) plane = new Geom_Plane(pln);
+    
+    math_Matrix M = math_Matrix(1, length, 1, 3);
+    math_Vector b = math_Vector(1, length);
+    
+    for (int i = 1; i <= length; i++) {
+        GeomAPI_ProjectPointOnSurf proj = GeomAPI_ProjectPointOnSurf(ocPoints.Value(i), plane);
+        Standard_Real u, v;
+        proj.Parameters(1, u, v);
+        M(i, 1) = u;
+        M(i, 2) = v;
+        M(i, 3) = 1;
+        b(i) = u*u + v*v;
+    }
+    
+    math_GaussLeastSquare gls = math_GaussLeastSquare(M);
+    math_Vector x = math_Vector(1,3);
+    x(1) = pln.Location().X();
+    x(2) = pln.Location().Y();
+    x(3) = pln.Location().Z();
+    if (gls.IsDone()) {
+        gls.Solve(b, x);
+    }
+    
+    Standard_Real ru = x(1) * 0.5;
+    Standard_Real rv = x(2) * 0.5;
+    //Standard_Real rz = Sqrt(x(3)+rx*rx+ry*ry);
+    
+    gp_Pnt r = plane->Value(ru, rv);
+
+    SCNVector3 res = {(float)r.X(), (float)r.Y(), (float)r.Z()};
+    
+    return res;
+}
+
 - (SCNVector3) pc1Of:(const SCNVector3 []) points
             ofLength:(int) length
+{
+    TColgp_Array1OfPnt ocPoints = [self convertPoints:points ofLength:length];
+    gp_Pln pln = [self projectOntoPlane:ocPoints];
+    gp_Ax1 axis = pln.Axis();
+    gp_Dir dir = axis.Direction();
+    
+    return {(float)dir.X(), (float)dir.Y(), (float)dir.Z()};
+}
+
+- (gp_Pln) projectOntoPlane:(const TColgp_Array1OfPnt&) ocPoints {
+    GProp_PGProps Pmat(ocPoints);
+    gp_Pnt g = Pmat.CentreOfMass();
+    Standard_Real Xg,Yg,Zg;
+    g.Coord(Xg,Yg,Zg);
+    GProp_PrincipalProps Pp = Pmat.PrincipalProperties();
+    gp_Vec V1 = Pp.FirstAxisOfInertia();
+    gp_Pln pln = gp_Pln(g, V1);
+    
+    return pln;
+}
+
+- (TColgp_Array1OfPnt) convertPoints:(const SCNVector3 []) points
+                            ofLength:(int) length
 {
     TColgp_Array1OfPnt ocPoints = TColgp_Array1OfPnt(1, length);
     
@@ -280,14 +335,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
         ocPoints.SetValue(i, gp_Pnt(points[i-1].x, points[i-1].y, points[i-1].z));
     }
     
-    GProp_PGProps Pmat(ocPoints);
-    gp_Pnt g = Pmat.CentreOfMass();
-    Standard_Real Xg,Yg,Zg;
-    g.Coord(Xg,Yg,Zg);
-    GProp_PrincipalProps Pp = Pmat.PrincipalProperties();
-    gp_Vec V1 = Pp.FirstAxisOfInertia();
-    
-    return {(float)V1.X(), (float)V1.Y(), (float)V1.Z()};
+    return ocPoints;
 }
 
 - (int) coincidentDimensionsOf:(const SCNVector3 [])points

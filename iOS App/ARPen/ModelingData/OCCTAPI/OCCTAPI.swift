@@ -127,6 +127,10 @@ class OCCTAPI {
         return occt.pc1(of: of, ofLength: Int32(of.count))
     }
     
+    func circleCenter(_ of: [SCNVector3]) -> SCNVector3 {
+        return occt.circleCenter(of: of, ofLength: Int32(of.count))
+    }
+    
     func conincidentDimensions(_ of: [SCNVector3]) -> Int {
         return Int(occt.coincidentDimensions(of: of, ofLength: Int32(of.count)))
     }    
