@@ -29,13 +29,20 @@ class ARPGeomNode: ARPNode {
     var geometryColor = UIColor.init(hue: CGFloat(Float.random(in: 0...1)), saturation: 0.3, brightness: 0.9, alpha: 1)
     var lineColor = UIColor.black
     
-    var highlightColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+    var highlightColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
     var highlighted: Bool = false {
         didSet {
             updateHighlightedState()
         }
     }
     
+    var selectedColor = UIColor.white
+    var selected: Bool = false {
+        didSet {
+            updateSelectedState()
+        }
+    }
+
     var isHole: Bool = false {
         didSet {
             self.geometryColor = geometryColor.withAlphaComponent(isHole ? 0.5 : 1)
@@ -90,7 +97,9 @@ class ARPGeomNode: ARPNode {
             self.updateHighlightedState()
             self.isoLinesNode.geometry = lines
             self.isoLinesNode.geometry?.firstMaterial?.diffuse.contents = self.lineColor
+            self.isoLinesNode.geometry?.firstMaterial?.emission.contents = self.selectedColor
             self.isoLinesNode.geometry?.firstMaterial?.lightingModel = .constant
+            self.updateSelectedState()
             //self.isoLinesNode.geometry?.firstMaterial?.readsFromDepthBuffer = false
             //self.geometryNode.renderingOrder = -1
             
@@ -162,6 +171,14 @@ class ARPGeomNode: ARPNode {
             geometryNode.geometry?.firstMaterial?.emission.intensity = 1
         } else {
             geometryNode.geometry?.firstMaterial?.emission.intensity = 0
+        }
+    }
+    
+    private func updateSelectedState() {
+        if selected {
+            isoLinesNode.geometry?.firstMaterial?.emission.intensity = 1
+        } else {
+            isoLinesNode.geometry?.firstMaterial?.emission.intensity = 0
         }
     }
     

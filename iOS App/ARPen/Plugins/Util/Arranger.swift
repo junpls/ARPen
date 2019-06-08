@@ -24,10 +24,10 @@ class Arranger {
     
     var hoverTarget: ARPGeomNode? {
         didSet {
-            if let old = oldValue, !selectedTargets.contains(old) {
+            if let old = oldValue {
                 old.highlighted = false
             }
-            if let target = hoverTarget, !selectedTargets.contains(target) {
+            if let target = hoverTarget {
                 target.highlighted = true
             }
         }
@@ -106,23 +106,28 @@ class Arranger {
     }
     
     func didReleaseButton(_ button: Button) {
-        if dragging {
-            for target in selectedTargets {
-                DispatchQueue.global(qos: .userInitiated).async {
-                    /// Do this in the background, as it may cause a rebuild in the parent object
-                    target.applyTransform()
+        switch button {
+        case .Button1:
+            if dragging {
+                for target in selectedTargets {
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        /// Do this in the background, as it may cause a rebuild in the parent object
+                        target.applyTransform()
+                    }
+                }
+            } else {
+                if let target = hoverTarget, !justSelectedSomething {
+                    if selectedTargets.contains(target) {
+                        unselectTarget(target)
+                    }
                 }
             }
-        } else {
-            if let target = hoverTarget, !justSelectedSomething {
-                if selectedTargets.contains(target) {
-                    unselectTarget(target)
-                }
-            }
+            justSelectedSomething = false
+            lastPenPosition = nil
+            dragging = false
+        default:
+            break
         }
-        justSelectedSomething = false
-        lastPenPosition = nil
-        dragging = false
     }
     
     func didDoubleClick(_ button: Button) {
@@ -159,13 +164,13 @@ class Arranger {
     }
     
     func selectTarget(_ target: ARPGeomNode) {
-        target.highlighted = true
+        target.selected = true
         selectedTargets.append(target)
         justSelectedSomething = true
     }
     
     func unselectTarget(_ target: ARPGeomNode) {
-        target.highlighted = false
+        target.selected = false
         selectedTargets.removeAll(where: { $0 === target })
     }
     

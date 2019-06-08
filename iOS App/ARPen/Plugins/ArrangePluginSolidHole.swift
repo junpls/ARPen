@@ -51,7 +51,10 @@ class ArrangePluginSolidHole: Plugin {
         case .Button1:
             break
         case .Button2:
-            if let target = arranger.hoverTarget {
+            for target in arranger.selectedTargets {
+                target.isHole = !target.isHole
+            }
+            if let target = arranger.hoverTarget, !arranger.selectedTargets.contains(target) {
                 target.isHole = !target.isHole
             }
         case .Button3:
