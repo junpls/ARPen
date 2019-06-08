@@ -29,10 +29,17 @@ class ARPGeomNode: ARPNode {
     var geometryColor = UIColor.init(hue: CGFloat(Float.random(in: 0...1)), saturation: 0.3, brightness: 0.9, alpha: 1)
     var lineColor = UIColor.black
     
-    var highlightColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+    var highlightColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
     var highlighted: Bool = false {
         didSet {
             updateHighlightedState()
+        }
+    }
+    
+    var isHole: Bool = false {
+        didSet {
+            self.geometryColor = geometryColor.withAlphaComponent(isHole ? 0.5 : 1)
+            self.geometryNode.geometry?.firstMaterial?.diffuse.contents = self.geometryColor
         }
     }
     

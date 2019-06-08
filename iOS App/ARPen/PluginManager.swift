@@ -22,7 +22,7 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
     var arManager: ARManager
     var arPenManager: PenManager
     var buttons: [Button: Bool] = [.Button1: false, .Button2: false, .Button3: false]
-    var plugins: [Plugin] = [PaintPlugin(), ArrangePlugin(), SweepPluginProfileAndPath(), SweepPluginTwoProfiles(), RevolvePluginProfileAndAxis(), RevolvePluginProfileAndCircle(), RevolvePluginTwoProfiles(), LoftPlugin()]
+    var plugins: [Plugin] = [PaintPlugin(), ArrangePluginFunction(), ArrangePluginSolidHole(), SweepPluginProfileAndPath(), SweepPluginTwoProfiles(), RevolvePluginProfileAndAxis(), RevolvePluginProfileAndCircle(), RevolvePluginTwoProfiles(), LoftPlugin()]
     var activePlugin: Plugin?
     var delegate: PluginManagerDelegate?
     
