@@ -58,7 +58,6 @@ class RevolvePluginProfileAndCircle: Plugin {
                     ARPPathNode(axisPos),
                     ARPPathNode(axisPos + axisDir)
                     ], closed: false);
-                print(axisPos)
                 if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(revolution)

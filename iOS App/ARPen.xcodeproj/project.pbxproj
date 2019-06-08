@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D08D81622AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */; };
 		3D26154E22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26154D22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift */; };
 		3D3450822261F5650017DB39 /* ARPRevolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3450812261F5650017DB39 /* ARPRevolution.swift */; };
 		3D34508522646D920017DB39 /* CurveDesigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508422646D920017DB39 /* CurveDesigner.swift */; };
@@ -110,6 +111,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevolvePluginTwoProfiles.swift; sourceTree = "<group>"; };
 		3D26154D22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweepPluginProfileAndPath.swift; sourceTree = "<group>"; };
 		3D3450812261F5650017DB39 /* ARPRevolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPRevolution.swift; sourceTree = "<group>"; };
 		3D34508422646D920017DB39 /* CurveDesigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveDesigner.swift; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 				3DE5191A22A7DB850005B73B /* SweepPluginTwoProfiles.swift */,
 				3D34508822647C7F0017DB39 /* RevolvePluginProfileAndAxis.swift */,
 				3DE5191C22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift */,
+				3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */,
 				3D34508C2265C1850017DB39 /* LoftPlugin.swift */,
 				3D3AC4342269FAA800331696 /* ArrangePlugin.swift */,
 				AA935109224245CE002AEB00 /* ARMenusPlugin.swift */,
@@ -593,6 +596,7 @@
 				3D34508F226617100017DB39 /* ARPLoft.swift in Sources */,
 				DC28B467200E4BF1008B77AB /* PaintPlugin.swift in Sources */,
 				4AC711C7204EDCBE00CD4239 /* SettingsTableViewController.swift in Sources */,
+				3D08D81622AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift in Sources */,
 				3D26154E22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift in Sources */,
 				DC28B46B200E4C78008B77AB /* Button.swift in Sources */,
 				3D68FCAA226A0F1A00C421AD /* DateExtensions.swift in Sources */,
