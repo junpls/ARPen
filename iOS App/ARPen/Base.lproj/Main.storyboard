@@ -42,10 +42,10 @@
                                     <action selector="softwarePenButtonReleased:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="eFE-v3-81F"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC2-14-eaW" userLabel="SoftwarePenButton2">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC2-14-eaW" userLabel="SoftwarePenButton2">
                                 <rect key="frame" x="88" y="88" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="2oF-Ca-6bp"/>
+                                    <constraint firstAttribute="height" constant="40" id="p0U-Lu-vcK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="60" maxX="40" maxY="0.0"/>
@@ -169,7 +169,7 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvz-5Y-P2h" userLabel="SoftwarePenButton3">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvz-5Y-P2h" userLabel="SoftwarePenButton3">
                                 <rect key="frame" x="88" y="154" width="40" height="40"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                 <inset key="titleEdgeInsets" minX="0.0" minY="60" maxX="40" maxY="0.0"/>
@@ -185,29 +185,29 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gvz-5Y-P2h" firstAttribute="top" secondItem="eC2-14-eaW" secondAttribute="bottom" constant="26" id="0X0-7k-O2q"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="leading" secondItem="YSQ-pH-N6L" secondAttribute="leading" id="4R4-hk-6Gk"/>
-                            <constraint firstItem="eC2-14-eaW" firstAttribute="leading" secondItem="gvz-5Y-P2h" secondAttribute="leading" id="7Ow-su-bg9"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="leading" secondItem="YSQ-pH-N6L" secondAttribute="leading" id="96J-6E-dhy"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="A5z-U4-mJN" secondAttribute="trailing" constant="10" id="CMI-vn-wNc"/>
+                            <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="eC2-14-eaW" secondAttribute="trailing" constant="539" id="CNg-sT-ioA"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="DLC-mq-LKi"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="top" secondItem="7vt-XS-Ox1" secondAttribute="top" constant="-10" id="Dev-l3-dAa"/>
-                            <constraint firstItem="eC2-14-eaW" firstAttribute="top" secondItem="EIQ-Ip-Tyt" secondAttribute="top" constant="73" id="Dnz-Zr-DkB"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="bottom" secondItem="Z1i-B5-dqO" secondAttribute="bottom" id="Gcj-WH-1Az"/>
-                            <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="eC2-14-eaW" secondAttribute="trailing" constant="519" id="INj-HE-Fwb"/>
+                            <constraint firstItem="eC2-14-eaW" firstAttribute="leading" secondItem="gvz-5Y-P2h" secondAttribute="leading" id="Gph-WH-oRe"/>
+                            <constraint firstItem="eC2-14-eaW" firstAttribute="top" secondItem="gGF-H0-N2c" secondAttribute="top" id="IeU-dX-JHb"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="LBk-3V-d3Y"/>
+                            <constraint firstItem="eC2-14-eaW" firstAttribute="trailing" secondItem="gvz-5Y-P2h" secondAttribute="trailing" id="Ljn-ft-QH3"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="top" secondItem="7vt-XS-Ox1" secondAttribute="bottom" constant="18" id="OJh-Pg-1vz"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="A5z-U4-mJN" secondAttribute="bottom" constant="10" id="QsW-2Q-MbL"/>
-                            <constraint firstItem="eC2-14-eaW" firstAttribute="leading" secondItem="gGF-H0-N2c" secondAttribute="trailing" constant="8" symbolic="YES" id="Rcm-bG-0kD"/>
-                            <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="gvz-5Y-P2h" secondAttribute="bottom" constant="159" id="RgB-sm-D23"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="trailing" secondItem="YSQ-pH-N6L" secondAttribute="trailing" id="Un0-kz-gbv"/>
+                            <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="gvz-5Y-P2h" secondAttribute="bottom" constant="181" id="Wd9-eu-OtP"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="leading" secondItem="Z1i-B5-dqO" secondAttribute="leading" id="Wqc-SV-crf"/>
                             <constraint firstAttribute="trailing" secondItem="Z1i-B5-dqO" secondAttribute="trailing" id="ZCc-G1-ORQ"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="ZUV-Sl-MuL"/>
+                            <constraint firstItem="eC2-14-eaW" firstAttribute="leading" secondItem="gGF-H0-N2c" secondAttribute="trailing" constant="8" symbolic="YES" id="bfO-zf-DJN"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="cqj-y5-Wso"/>
-                            <constraint firstItem="gvz-5Y-P2h" firstAttribute="top" secondItem="eC2-14-eaW" secondAttribute="bottom" constant="23" id="eWH-Z0-M9g"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="centerX" secondItem="7vt-XS-Ox1" secondAttribute="centerX" id="eZt-r4-kuE"/>
                             <constraint firstAttribute="trailing" secondItem="gGF-H0-N2c" secondAttribute="trailing" constant="587" id="pTY-PI-nZs"/>
-                            <constraint firstItem="eC2-14-eaW" firstAttribute="trailing" secondItem="gvz-5Y-P2h" secondAttribute="trailing" id="rnG-JR-Vp7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EIQ-Ip-Tyt"/>
                         <variation key="default">
@@ -226,6 +226,9 @@
                         <outlet property="arPenImage" destination="Z1N-qB-Uok" id="Ffr-Fr-nlm"/>
                         <outlet property="arPenLabel" destination="4kR-hm-tXz" id="WxC-sC-hY1"/>
                         <outlet property="arSceneView" destination="Z1i-B5-dqO" id="iVk-um-itv"/>
+                        <outlet property="button1" destination="7vt-XS-Ox1" id="p7D-HY-zpH"/>
+                        <outlet property="button2" destination="eC2-14-eaW" id="qdj-Le-oJi"/>
+                        <outlet property="button3" destination="gvz-5Y-P2h" id="Jmb-hk-D8T"/>
                         <outlet property="pluginMenuScrollView" destination="gGF-H0-N2c" id="VX1-TR-Ghh"/>
                         <outlet property="visualEffectView" destination="iYd-yH-V3o" id="9t5-aF-3w7"/>
                     </connections>

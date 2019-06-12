@@ -39,6 +39,10 @@ class SweepPluginProfileAndPath: Plugin {
         
     }
     
+    func injectUIButtons(_ buttons: [Button : UIButton]) {
+        curveDesigner.injectUIButtons(buttons)
+    }
+    
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
         curveDesigner.update(scene: scene, buttons: buttons)
     }

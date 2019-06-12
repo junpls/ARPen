@@ -55,6 +55,12 @@ class PaintPlugin: Plugin {
         
     }
     
+    func injectUIButtons(_ buttons: [Button : UIButton]) {
+        buttons[.Button1]?.setTitle("Paint", for: .normal)
+        buttons[.Button2]?.setTitle("Make cube", for: .normal)
+        buttons[.Button3]?.setTitle("", for: .normal)
+    }
+    
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentScene = scene
         self.currentView = view

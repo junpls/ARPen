@@ -21,6 +21,7 @@ class ArrangePluginFunction: Plugin {
 
     private var buttonEvents: ButtonEvents
     private var arranger: Arranger
+    private var uiButtons: [Button:UIButton]?
 
     init() {
         arranger = Arranger()
@@ -38,6 +39,13 @@ class ArrangePluginFunction: Plugin {
     
     func deactivatePlugin() {
         arranger.deactivate()
+    }
+    
+    func injectUIButtons(_ buttons: [Button : UIButton]) {
+        self.uiButtons = buttons
+        buttons[.Button1]?.setTitle("Select/Move", for: .normal)
+        buttons[.Button2]?.setTitle("Merge", for: .normal)
+        buttons[.Button3]?.setTitle("Cut", for: .normal)
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {

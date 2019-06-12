@@ -52,6 +52,12 @@ class CurveDesigner {
         }
     }
     
+    func injectUIButtons(_ buttons: [Button : UIButton]) {
+        buttons[.Button1]?.setTitle("Finish", for: .normal)
+        buttons[.Button2]?.setTitle("Sharp corner", for: .normal)
+        buttons[.Button3]?.setTitle("Round corner", for: .normal)
+    }
+    
     private func didPressButton(_ button: Button) {
         switch button {
         case .Button1:

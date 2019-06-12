@@ -27,4 +27,11 @@ protocol Plugin {
     
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView)
     func deactivatePlugin()
+    func injectUIButtons(_ buttons: [Button:UIButton])
+}
+
+extension Plugin {
+    func injectUIButtons(_ buttons: [Button:UIButton]) {
+        return
+    }
 }

@@ -26,6 +26,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     @IBOutlet var arSceneView: ARSCNView!
     @IBOutlet weak var pluginMenuScrollView: UIScrollView!
     
+    @IBOutlet weak var button1: UIButton!
+    @IBOutlet weak var button2: UIButton!
+    @IBOutlet weak var button3: UIButton!
+    
+    var buttonMap: [Button:UIButton] = [Button:UIButton]()
+
     let menuButtonHeight = 70
     let menuButtonPadding = 5
     var currentActivePluginID = 1
@@ -50,6 +56,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         let scene = PenScene(named: "art.scnassets/ship.scn")!
         scene.markerBox = MarkerBox()
         self.arSceneView.pointOfView?.addChildNode(scene.markerBox)
+        
+        buttonMap[.Button1] = button1
+        buttonMap[.Button2] = button2
+        buttonMap[.Button3] = button3
+
+        //button1.setTitle("Bla?", for: .normal)
         /*
         if let cube = try? ARPBox(width: 0.1, height: 0.1, length: 0.1) {
             scene.rootNode.addChildNode(cube)
@@ -261,6 +273,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         }
         if let currentScene = self.pluginManager.arManager.scene {
             newActivePlugin.activatePlugin(withScene: currentScene, andView: self.arSceneView)
+            newActivePlugin.injectUIButtons(self.buttonMap)
         }
         currentActivePluginID = pluginID
     }

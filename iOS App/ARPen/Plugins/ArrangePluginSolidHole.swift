@@ -40,6 +40,12 @@ class ArrangePluginSolidHole: Plugin {
         arranger.deactivate()
     }
     
+    func injectUIButtons(_ buttons: [Button : UIButton]) {
+        buttons[.Button1]?.setTitle("Select/Move", for: .normal)
+        buttons[.Button2]?.setTitle("Solid ↔ Hole", for: .normal)
+        buttons[.Button3]?.setTitle("Combine", for: .normal)
+    }
+    
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
         buttonEvents.update(buttons: buttons)
         arranger.update(scene: scene, buttons: buttons)
