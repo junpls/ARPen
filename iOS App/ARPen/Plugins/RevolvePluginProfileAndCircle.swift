@@ -9,7 +9,7 @@
 import Foundation
 import ARKit
 
-class RevolvePluginProfileAndCircle: Plugin {
+class RevolvePluginProfileAndCircle: Plugin, UserStudyRecordPluginProtocol {
     
     var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Revolve (Profile + Circle)"
@@ -25,9 +25,19 @@ class RevolvePluginProfileAndCircle: Plugin {
     
     private var curveDesigner: CurveDesigner
     
+    /// **** For user study ****
+    var recordManager: UserStudyRecordManager!
+    private var taskTimeLogger = TaskTimeLogger()
+    /// ************************
+    
     init() {
         curveDesigner = CurveDesigner()
-        curveDesigner.didCompletePath = self.didCompletePath;
+        curveDesigner.didCompletePath = self.didCompletePath
+        
+        /// **** For user study ****
+        curveDesigner.didStartPath = { _ in self.taskTimeLogger.startUnlessRunning() }
+        self.taskTimeLogger.defaultDict = ["Model": "Doorstopper"]
+        /// ************************
     }
     
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
@@ -62,6 +72,12 @@ class RevolvePluginProfileAndCircle: Plugin {
                     ARPPathNode(axisPos),
                     ARPPathNode(axisPos + axisDir)
                     ], closed: false);
+                
+                /// **** For user study ****
+                let targetMeasurementDict = self.taskTimeLogger.finish()
+                self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                /// **** For user study ****
+                
                 if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(revolution)

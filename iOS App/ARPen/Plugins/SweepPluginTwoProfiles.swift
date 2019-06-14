@@ -9,8 +9,7 @@
 import Foundation
 import ARKit
 
-class SweepPluginTwoProfiles: Plugin {
-    
+class SweepPluginTwoProfiles: Plugin, UserStudyRecordPluginProtocol {
     var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Sweep (Two Profiles)"
     var currentScene: PenScene?
@@ -25,9 +24,19 @@ class SweepPluginTwoProfiles: Plugin {
     
     private var curveDesigner: CurveDesigner
     
+    /// **** For user study ****
+    var recordManager: UserStudyRecordManager!
+    private var taskTimeLogger = TaskTimeLogger()
+    /// ************************
+    
     init() {
         curveDesigner = CurveDesigner()
         curveDesigner.didCompletePath = self.didCompletePath;
+        
+        /// **** For user study ****
+        curveDesigner.didStartPath = { _ in self.taskTimeLogger.startUnlessRunning() }
+        self.taskTimeLogger.defaultDict = ["Model": "Cube"]
+        /// ************************
     }
     
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
@@ -120,6 +129,12 @@ class SweepPluginTwoProfiles: Plugin {
             self.currentScene?.drawingNode.addChildNode(spine)
             
             DispatchQueue.global(qos: .userInitiated).async {
+                
+                /// **** For user study ****
+                let targetMeasurementDict = self.taskTimeLogger.finish()
+                self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                /// **** For user study ****
+                
                 if let sweep = try? ARPSweep(profile: profile1, path: spine) {
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(sweep)

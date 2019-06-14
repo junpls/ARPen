@@ -66,7 +66,7 @@
                                 </constraints>
                                 <state key="normal" image="cog"/>
                                 <connections>
-                                    <segue destination="Lka-5d-7oi" kind="presentation" identifier="ShowSettingsSegue" id="6IN-xV-Gst"/>
+                                    <segue destination="Lka-5d-7oi" kind="presentation" identifier="ShowSettingsSegue" id="7NY-qq-kWI"/>
                                 </connections>
                             </button>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYd-yH-V3o">
@@ -271,9 +271,6 @@
                                                                 <segment title="Without Bluetooth"/>
                                                                 <segment title="Cardboard Demo"/>
                                                             </segments>
-                                                            <connections>
-                                                                <action selector="arPenTypeSegmentedControlChanged:" destination="bV6-Dl-H7K" eventType="valueChanged" id="QBw-eE-NmD"/>
-                                                            </connections>
                                                         </segmentedControl>
                                                     </subviews>
                                                     <constraints>
@@ -607,7 +604,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="arPenTypeSegmentedControl" destination="tfb-v7-b4f" id="D8s-F3-tGA"/>
                         <outlet property="bluetoothDeviceTableViewCell" destination="hwo-f9-QtB" id="rbY-ic-vas"/>
                         <outlet property="penSizeLabel" destination="Yzh-ZR-qGb" id="DjM-j6-FHi"/>
                         <outlet property="penSizeSlider" destination="Mtg-ZS-EeL" id="6he-r6-tom"/>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D0280DE22B4003F00111586 /* TaskTimeLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0280DD22B4003F00111586 /* TaskTimeLogger.swift */; };
 		3D0624EF22AC30FE00A1F73C /* Arranger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0624EE22AC30FE00A1F73C /* Arranger.swift */; };
 		3D0624F122AC3FB600A1F73C /* ArrangePluginSolidHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0624F022AC3FB600A1F73C /* ArrangePluginSolidHole.swift */; };
 		3D08D81622AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */; };
@@ -113,6 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D0280DD22B4003F00111586 /* TaskTimeLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTimeLogger.swift; sourceTree = "<group>"; };
 		3D0624EE22AC30FE00A1F73C /* Arranger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arranger.swift; sourceTree = "<group>"; };
 		3D0624F022AC3FB600A1F73C /* ArrangePluginSolidHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangePluginSolidHole.swift; sourceTree = "<group>"; };
 		3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevolvePluginTwoProfiles.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				3D34508422646D920017DB39 /* CurveDesigner.swift */,
 				3D345086226470D30017DB39 /* ButtonEvents.swift */,
 				3D0624EE22AC30FE00A1F73C /* Arranger.swift */,
+				3D0280DD22B4003F00111586 /* TaskTimeLogger.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				4A895F0C2052D46000CC2C8E /* CubeByExtractionPlugin.swift in Sources */,
 				DC28B454200E4389008B77AB /* ARManager.swift in Sources */,
 				3D34508922647C7F0017DB39 /* RevolvePluginProfileAndAxis.swift in Sources */,
+				3D0280DE22B4003F00111586 /* TaskTimeLogger.swift in Sources */,
 				4A5695322058192B00C8065E /* UserStudyIDListTableViewController.swift in Sources */,
 				3DA388E32251F4CB003A8937 /* OCCT.mm in Sources */,
 				3DE5191D22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift in Sources */,
