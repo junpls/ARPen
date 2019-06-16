@@ -25,7 +25,7 @@ class CurveDesigner {
     private var buttonEvents: ButtonEvents
     
     private var addedThisFrame: Bool = false
-    
+
     init() {
         buttonEvents = ButtonEvents()
         buttonEvents.didPressButton = self.didPressButton
@@ -37,19 +37,23 @@ class CurveDesigner {
         addedThisFrame = false
         buttonEvents.update(buttons: buttons)
         
-        if ((buttonEvents.buttons[.Button2]! || buttonEvents.buttons[.Button3]!) && readyForNextPoint() && !addedThisFrame) {
-            addNode()
-        }
-        
         if let path = activePath {
-            if path.points.first!.position.distance(vector: scene.pencilPoint.position) < CurveDesigner.snappingDistance {
+            if path.points.first!.position.distance(vector: scene.pencilPoint.position) < CurveDesigner.snappingDistance && path.points.count > 2 {
                 path.getNonFixedPoint()?.position = path.points.first!.worldPosition
+                if buttonEvents.buttons[.Button2]! || buttonEvents.buttons[.Button3]! {
+                    addNode(noNewPath: true)
+                }
             } else {
                 path.getNonFixedPoint()?.position = scene.pencilPoint.position
             }
             
             tryRebuildPreview()
         }
+        
+        if (buttonEvents.buttons[.Button2]! || buttonEvents.buttons[.Button3]!) && readyForNextPoint() {
+            addNode(noNewPath: true)
+        }
+
     }
     
     func injectUIButtons(_ buttons: [Button : UIButton]) {
@@ -80,11 +84,14 @@ class CurveDesigner {
         }*/
     }
     
-    private func addNode() {
+    private func addNode(noNewPath: Bool = false) {
+        if addedThisFrame {
+            return
+        }
         addedThisFrame = true
         let cornerStyle = buttonEvents.buttons[.Button2]! ? CornerStyle.sharp : CornerStyle.round
         
-        if activePath == nil {
+        if activePath == nil && !noNewPath {
             let path = ARPPath(points: [ARPPathNode(scene.pencilPoint.position, cornerStyle: cornerStyle)], closed: false)
             activePath = path
             scene.drawingNode.addChildNode(path)
