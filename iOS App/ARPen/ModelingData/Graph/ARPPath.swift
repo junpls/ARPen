@@ -160,6 +160,8 @@ class ARPPath: ARPGeomNode {
             OCCTAPI.shared.pivot(handle: r, pivot: pivotChild.worldTransform)
         }
         
+        self.lineColor = calcClosed ? UIColor.green : UIColor.red
+
         return ref ?? ""
     }
 }
