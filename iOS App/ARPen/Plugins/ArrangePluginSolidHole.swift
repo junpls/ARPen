@@ -57,16 +57,18 @@ class ArrangePluginSolidHole: Plugin {
         case .Button1:
             break
         case .Button2:
-            for target in arranger.selectedTargets {
+            for case let target as ARPGeomNode in arranger.selectedTargets {
                 target.isHole = !target.isHole
             }
-            if let target = arranger.hoverTarget, !arranger.selectedTargets.contains(target) {
+            if case let target as ARPGeomNode = arranger.hoverTarget, !arranger.selectedTargets.contains(target) {
                 target.isHole = !target.isHole
             }
         case .Button3:
             if arranger.selectedTargets.count == 2 {
-                let a = arranger.selectedTargets.removeFirst()
-                let b = arranger.selectedTargets.removeFirst()
+                guard let a = arranger.selectedTargets.removeFirst() as? ARPGeomNode,
+                   let b = arranger.selectedTargets.removeFirst() as? ARPGeomNode else {
+                        return
+                }
                 
                 var target = a
                 var tool = b

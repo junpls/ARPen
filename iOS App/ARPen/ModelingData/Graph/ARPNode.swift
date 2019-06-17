@@ -10,7 +10,33 @@ import Foundation
 
 class ARPNode: SCNNode {
     
+    var highlighted: Bool = false {
+        didSet {
+            updateHighlightedState()
+        }
+    }
+    
+    var selected: Bool = false {
+        didSet {
+            updateSelectedState()
+        }
+    }
+    
+    var visited: Bool = false {
+        didSet {
+            updateVisitedState()
+        }
+    }
+    
     func isRootNode() -> Bool {
         return (parent as? ARPNode) == nil
     }
+    
+    func updateHighlightedState() {}
+    
+    func updateSelectedState() {}
+    
+    func updateVisitedState() {}
+    
+    func applyTransform() {}
 }

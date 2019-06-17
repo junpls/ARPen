@@ -22,7 +22,7 @@ class Arranger {
     static let timeTillDrag: Double = 1
     static let maxDistanceTillDrag: Float = 0.015
     
-    var hoverTarget: ARPGeomNode? {
+    var hoverTarget: ARPNode? {
         didSet {
             if let old = oldValue {
                 old.highlighted = false
@@ -32,7 +32,7 @@ class Arranger {
             }
         }
     }
-    var selectedTargets: [ARPGeomNode] = []
+    var selectedTargets: [ARPNode] = []
     var visitTarget: ARPGeomNode?
     var dragging: Bool = false
     private var buttonEvents: ButtonEvents
@@ -133,7 +133,7 @@ class Arranger {
     func didDoubleClick(_ button: Button) {
         if button == .Button1,
             let scene = currentScene {
-            if let hit = hitTest(pointerPosition: scene.pencilPoint.position) {
+            if let hit = hitTest(pointerPosition: scene.pencilPoint.position) as? ARPGeomNode {
                 if hit.parent?.parent === visitTarget || visitTarget == nil {
                     visitTarget(hit)
                 } else {
@@ -163,25 +163,25 @@ class Arranger {
         }
     }
     
-    func selectTarget(_ target: ARPGeomNode) {
+    func selectTarget(_ target: ARPNode) {
         target.selected = true
         selectedTargets.append(target)
         justSelectedSomething = true
     }
     
-    func unselectTarget(_ target: ARPGeomNode) {
+    func unselectTarget(_ target: ARPNode) {
         target.selected = false
         selectedTargets.removeAll(where: { $0 === target })
     }
     
-    func hitTest(pointerPosition: SCNVector3) -> ARPGeomNode? {
+    func hitTest(pointerPosition: SCNVector3) -> ARPNode? {
         guard let sceneView = self.currentView  else { return nil }
         let projectedPencilPosition = sceneView.projectPoint(pointerPosition)
         let projectedCGPoint = CGPoint(x: CGFloat(projectedPencilPosition.x), y: CGFloat(projectedPencilPosition.y))
         
         //cast a ray from that position and find the first ARPenNode
         let hitResults = sceneView.hitTest(projectedCGPoint, options: [SCNHitTestOption.searchMode : SCNHitTestSearchMode.all.rawValue])
-        
-        return hitResults.filter( { $0.node != currentScene?.pencilPoint } ).first?.node.parent as? ARPGeomNode
+                
+        return hitResults.filter( { $0.node != currentScene?.pencilPoint } ).first?.node.parent as? ARPNode
     }
 }

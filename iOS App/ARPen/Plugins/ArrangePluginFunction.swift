@@ -60,8 +60,10 @@ class ArrangePluginFunction: Plugin {
             break
         case .Button2, .Button3:
             if arranger.selectedTargets.count == 2 {
-                let a = arranger.selectedTargets.removeFirst()
-                let b = arranger.selectedTargets.removeFirst()
+                guard let a = arranger.selectedTargets.removeFirst() as? ARPGeomNode,
+                    let b = arranger.selectedTargets.removeFirst() as? ARPGeomNode else {
+                        return
+                }
                 
                 DispatchQueue.global(qos: .userInitiated).async {
                     if let diff = try? ARPBoolNode(a: a, b: b, operation: button == .Button2 ? .join : .cut) {

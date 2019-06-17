@@ -13,18 +13,25 @@ enum CornerStyle: Int32 {
 }
 
 class ARPPathNode: ARPNode {
-    
+    /*
     static let highlightAnimation = SCNAction.customAction(duration: 2*Double.pi, action: { (node, elapsedTime) in
         let rgb = (sin(elapsedTime*2)+1) / 2
         let color = UIColor(red: rgb, green: rgb, blue: rgb, alpha: 1)
-        node.geometry?.firstMaterial?.emission.contents = color
-    })
+        node.geometryNode.geometry?.firstMaterial?.emission.contents = color
+    })*/
     
     static let samePointTolerance: Float = 0.001
-    
+
+    static let radius: CGFloat = 0.002
+
+    static let highlightScale: Float = 2
+    static let highlightColor: UIColor = UIColor.white
+
     let sharpColor = UIColor.red
     let roundColor = UIColor.blue
 
+    let geometryNode: SCNNode = SCNNode()
+    
     var cornerStyle = CornerStyle.sharp {
         didSet {
             updateCornerStyle()
@@ -43,8 +50,11 @@ class ARPPathNode: ARPNode {
     
     init(_ position: SCNVector3, cornerStyle: CornerStyle = CornerStyle.sharp) {
         super.init()
-        self.geometry = SCNSphere(radius: 0.002)
-        self.geometry?.firstMaterial?.lightingModel = .constant
+        self.addChildNode(geometryNode)
+        self.geometryNode.geometry = SCNSphere(radius: ARPPathNode.radius)
+        self.geometryNode.geometry?.firstMaterial?.lightingModel = .constant
+        self.geometryNode.geometry?.firstMaterial?.emission.contents = ARPPathNode.highlightColor
+        self.geometryNode.geometry?.firstMaterial?.emission.intensity = 0
         self.cornerStyle = cornerStyle
         updateCornerStyle()
         updateFixedState()
@@ -55,8 +65,12 @@ class ARPPathNode: ARPNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func applyTransform() {
+        (parent?.parent as? ARPGeomNode)?.rebuild()
+    }
+    
     func updateCornerStyle() {
-        self.geometry?.firstMaterial?.diffuse.contents = self.cornerStyle == .sharp ? sharpColor : roundColor
+        self.geometryNode.geometry?.firstMaterial?.diffuse.contents = self.cornerStyle == .sharp ? sharpColor : roundColor
     }
     
     func updateFixedState() {
@@ -69,6 +83,22 @@ class ARPPathNode: ARPNode {
             self.runAction(SCNAction.repeatForever(ARPPathNode.highlightAnimation), forKey: "blinking")
         }
         */
+    }
+    
+    override func updateHighlightedState() {
+        if highlighted {
+            self.geometryNode.scale = SCNVector3(ARPPathNode.highlightScale, ARPPathNode.highlightScale, ARPPathNode.highlightScale)
+        } else {
+            self.geometryNode.scale = SCNVector3(1, 1, 1)
+        }
+    }
+    
+    override func updateSelectedState() {
+        if selected {
+            self.geometryNode.geometry?.firstMaterial?.emission.intensity = 1
+        } else {
+            self.geometryNode.geometry?.firstMaterial?.emission.intensity = 0
+        }
     }
 }
 
@@ -145,6 +175,8 @@ class ARPPath: ARPGeomNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func updateVisitedState() {}
     
     override func build() throws -> OCCTReference {
         var calcClosed = closed

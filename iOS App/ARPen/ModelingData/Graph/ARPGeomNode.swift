@@ -12,14 +12,6 @@ class ARPGeomNode: ARPNode {
     
     var occtReference:OCCTReference?
     
-    var visited = false {
-        didSet {
-            self.content.isHidden = !visited
-            self.geometryNode.isHidden = visited
-            self.isoLinesNode.isHidden = visited
-        }
-    }
-    
     var content: SCNNode = SCNNode()
     var geometryNode: SCNNode = SCNNode()
     var isoLinesNode: SCNNode = SCNNode()
@@ -30,18 +22,8 @@ class ARPGeomNode: ARPNode {
     var lineColor = UIColor.black
     
     var highlightColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-    var highlighted: Bool = false {
-        didSet {
-            updateHighlightedState()
-        }
-    }
-    
     var selectedColor = UIColor.white
-    var selected: Bool = false {
-        didSet {
-            updateSelectedState()
-        }
-    }
+
 
     var isHole: Bool = false {
         didSet {
@@ -114,7 +96,7 @@ class ARPGeomNode: ARPNode {
     }
     
     /// Call to apply changes in translation, rotation or scale to OCCT.
-    final func applyTransform() {
+    override func applyTransform() {
         self.applyTransform_()
         (parent?.parent as? ARPGeomNode)?.rebuild()
     }
@@ -166,7 +148,7 @@ class ARPGeomNode: ARPNode {
         content.transform = SCNMatrix4Invert(pivotChild.transform)
     }
     
-    private func updateHighlightedState() {
+    override func updateHighlightedState() {
         if highlighted {
             geometryNode.geometry?.firstMaterial?.emission.intensity = 1
         } else {
@@ -174,12 +156,18 @@ class ARPGeomNode: ARPNode {
         }
     }
     
-    private func updateSelectedState() {
+    override func updateSelectedState() {
         if selected {
             isoLinesNode.geometry?.firstMaterial?.emission.intensity = 1
         } else {
             isoLinesNode.geometry?.firstMaterial?.emission.intensity = 0
         }
+    }
+    
+    override func updateVisitedState() {
+        self.content.isHidden = !visited
+        self.geometryNode.isHidden = visited
+        self.isoLinesNode.isHidden = visited
     }
     
     required init?(coder aDecoder: NSCoder) {
