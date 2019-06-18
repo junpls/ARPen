@@ -60,12 +60,18 @@ class UserStudyRecordManager : NSObject{
         var dataRecordsOfCurrentUser = self.userStudyData[currentActiveUserID]
         dataRecordsOfCurrentUser?.append(newRecord)
         self.userStudyData[currentActiveUserID] = dataRecordsOfCurrentUser
+        
+        /// Prevent data loss if app crashes
+        self.saveToFile()
     }
     
     //deletion methods
     func deleteAllRecords() {
         self.userStudyData = [:]
         currentActiveUserID = nil
+        
+        /// Prevent data loss if app crashes
+        self.saveToFile()
     }
     
     //delete all records for a specified userID
