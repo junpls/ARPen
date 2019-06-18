@@ -84,6 +84,23 @@ class UserStudyRecordManager : NSObject{
         self.userStudyData[id]?.remove(at: position)
     }
     
+    //mark last record as an outlier
+    func markLastRecordAsAnOutlier() {
+        guard let currentActiveUserID = self.currentActiveUserID else {
+            return
+        }
+        var dataRecordsOfCurrentUser = self.userStudyData[currentActiveUserID]
+        guard let lastRecord = dataRecordsOfCurrentUser?.popLast() else { return }
+        var data = lastRecord.data
+        data["MarkedAsOutlier"] = String(describing: true)
+        let newRecord = UserStudyRecord(creationTime: lastRecord.creationTime, identifier: lastRecord.identifier, data: data)
+        dataRecordsOfCurrentUser?.append(newRecord)
+        self.userStudyData[currentActiveUserID] = dataRecordsOfCurrentUser
+        
+        /// Prevent data loss if app crashes
+        self.saveToFile()
+    }
+    
     //data export methods
     
     //try to create and store a plist file of current user study data. If successfull, return url to the created file

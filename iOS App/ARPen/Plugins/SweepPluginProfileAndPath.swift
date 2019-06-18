@@ -9,7 +9,7 @@
 import Foundation
 import ARKit
 
-class SweepPluginProfileAndPath: Plugin, UserStudyRecordPluginProtocol {
+class SweepPluginProfileAndPath: Plugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
     
     var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Sweep (Profile + Path)"
@@ -27,6 +27,7 @@ class SweepPluginProfileAndPath: Plugin, UserStudyRecordPluginProtocol {
     
     /// **** For user study ****
     var recordManager: UserStudyRecordManager!
+    var stateManager: UserStudyStateManager!
     private var taskTimeLogger = TaskTimeLogger()
     /// ************************
 
@@ -36,13 +37,16 @@ class SweepPluginProfileAndPath: Plugin, UserStudyRecordPluginProtocol {
         
         /// **** For user study ****
         curveDesigner.didStartPath = { _ in self.taskTimeLogger.startUnlessRunning() }
-        self.taskTimeLogger.defaultDict = ["Model": "Cube"]
         /// ************************
     }
     
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentView = view
         self.currentScene = scene
+        
+        /// **** For user study ****
+        self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        /// ************************
     }
     
     func deactivatePlugin() {
@@ -78,6 +82,4 @@ class SweepPluginProfileAndPath: Plugin, UserStudyRecordPluginProtocol {
             }
         }
     }
-    
-    
 }

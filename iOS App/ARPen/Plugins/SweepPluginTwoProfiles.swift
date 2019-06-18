@@ -9,7 +9,7 @@
 import Foundation
 import ARKit
 
-class SweepPluginTwoProfiles: Plugin, UserStudyRecordPluginProtocol {
+class SweepPluginTwoProfiles: Plugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
     var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Sweep (Two Profiles)"
     var currentScene: PenScene?
@@ -26,6 +26,7 @@ class SweepPluginTwoProfiles: Plugin, UserStudyRecordPluginProtocol {
     
     /// **** For user study ****
     var recordManager: UserStudyRecordManager!
+    var stateManager: UserStudyStateManager!
     private var taskTimeLogger = TaskTimeLogger()
     /// ************************
     
@@ -35,13 +36,16 @@ class SweepPluginTwoProfiles: Plugin, UserStudyRecordPluginProtocol {
         
         /// **** For user study ****
         curveDesigner.didStartPath = { _ in self.taskTimeLogger.startUnlessRunning() }
-        self.taskTimeLogger.defaultDict = ["Model": "Cube"]
         /// ************************
     }
     
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentView = view
         self.currentScene = scene
+        
+        /// **** For user study ****
+        self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        /// ************************
     }
     
     func deactivatePlugin() {
@@ -69,8 +73,8 @@ class SweepPluginTwoProfiles: Plugin, UserStudyRecordPluginProtocol {
             let center2 = profile2.getCenter()
             
             //let midpoint = (center1 + center2) / 2
-            var pc1 = profile1.getPC1()
-            var pc2 = profile2.getPC1()
+            let pc1 = profile1.getPC1()
+            let pc2 = profile2.getPC1()
             
             var points = [ARPPathNode(center1, cornerStyle: .sharp)]
             

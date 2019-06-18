@@ -18,6 +18,8 @@
 		3D34508922647C7F0017DB39 /* RevolvePluginProfileAndAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508822647C7F0017DB39 /* RevolvePluginProfileAndAxis.swift */; };
 		3D34508D2265C1850017DB39 /* LoftPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508C2265C1850017DB39 /* LoftPlugin.swift */; };
 		3D34508F226617100017DB39 /* ARPLoft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508E2266170F0017DB39 /* ARPLoft.swift */; };
+		3D36C8BA22B8358600166224 /* UserStudyStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8B922B8358600166224 /* UserStudyStateManager.swift */; };
+		3D36C8BC22B836E500166224 /* UserStudyStatePluginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8BB22B836E500166224 /* UserStudyStatePluginProtocol.swift */; };
 		3D3AC4352269FAA800331696 /* ArrangePluginFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3AC4342269FAA800331696 /* ArrangePluginFunction.swift */; };
 		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
 		3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48674A224A527200EABD23 /* ARPSweep.swift */; };
@@ -125,6 +127,8 @@
 		3D34508822647C7F0017DB39 /* RevolvePluginProfileAndAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevolvePluginProfileAndAxis.swift; sourceTree = "<group>"; };
 		3D34508C2265C1850017DB39 /* LoftPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoftPlugin.swift; sourceTree = "<group>"; };
 		3D34508E2266170F0017DB39 /* ARPLoft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPLoft.swift; sourceTree = "<group>"; };
+		3D36C8B922B8358600166224 /* UserStudyStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyStateManager.swift; sourceTree = "<group>"; };
+		3D36C8BB22B836E500166224 /* UserStudyStatePluginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyStatePluginProtocol.swift; sourceTree = "<group>"; };
 		3D3AC4342269FAA800331696 /* ArrangePluginFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangePluginFunction.swift; sourceTree = "<group>"; };
 		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
 		3D48674A224A527200EABD23 /* ARPSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPSweep.swift; sourceTree = "<group>"; };
@@ -313,6 +317,8 @@
 				4A56953620581B4500C8065E /* UserStudyRecord.swift */,
 				4A56953820581B6700C8065E /* UserStudyRecordManager.swift */,
 				4A56953A20581B9000C8065E /* UserStudyRecordPluginProtocol.swift */,
+				3D36C8B922B8358600166224 /* UserStudyStateManager.swift */,
+				3D36C8BB22B836E500166224 /* UserStudyStatePluginProtocol.swift */,
 			);
 			path = UserStudyData;
 			sourceTree = "<group>";
@@ -599,6 +605,7 @@
 				3DE5191D22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift in Sources */,
 				3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */,
 				3D0624F122AC3FB600A1F73C /* ArrangePluginSolidHole.swift in Sources */,
+				3D36C8BA22B8358600166224 /* UserStudyStateManager.swift in Sources */,
 				4A56953720581B4500C8065E /* UserStudyRecord.swift in Sources */,
 				DC28B475200E64B7008B77AB /* ObjectCreationPlugin.swift in Sources */,
 				DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */,
@@ -608,6 +615,7 @@
 				3D34508F226617100017DB39 /* ARPLoft.swift in Sources */,
 				DC28B467200E4BF1008B77AB /* PaintPlugin.swift in Sources */,
 				4AC711C7204EDCBE00CD4239 /* SettingsTableViewController.swift in Sources */,
+				3D36C8BC22B836E500166224 /* UserStudyStatePluginProtocol.swift in Sources */,
 				3D08D81622AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift in Sources */,
 				3D26154E22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift in Sources */,
 				DC28B46B200E4C78008B77AB /* Button.swift in Sources */,

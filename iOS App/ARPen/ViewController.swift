@@ -40,8 +40,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
      */
     var pluginManager: PluginManager!
     
-    //Manager for user study data
+    /// Manager for user study data
     let userStudyRecordManager = UserStudyRecordManager()
+    /// Manager for user study state
+    let userStudyStateManager = UserStudyStateManager()
     
     var s:ARPGeomNode?
     var p:ARPGeomNode?
@@ -271,6 +273,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         if var pluginConformingToUserStudyProtocol = newActivePlugin as? UserStudyRecordPluginProtocol {
             pluginConformingToUserStudyProtocol.recordManager = self.userStudyRecordManager
         }
+        if var pluginConformingToUserStudyProtocol = newActivePlugin as? UserStudyStatePluginProtocol {
+            pluginConformingToUserStudyProtocol.stateManager = self.userStudyStateManager
+        }
         if let currentScene = self.pluginManager.arManager.scene {
             newActivePlugin.activatePlugin(withScene: currentScene, andView: self.arSceneView)
             newActivePlugin.injectUIButtons(self.buttonMap)
@@ -293,6 +298,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             destinationSettingsController.scene = self.arSceneView.scene as! PenScene
             //pass reference to the record manager (to show active user ID and export data)
             destinationSettingsController.userStudyRecordManager = self.userStudyRecordManager
+            destinationSettingsController.userStudyStateManager = self.userStudyStateManager
         }
         
     }

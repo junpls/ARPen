@@ -7,7 +7,7 @@
 //
 import ARKit
 
-class ArrangePluginFunction: Plugin {
+class ArrangePluginFunction: Plugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol  {
     
     var pluginImage : UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Arrange (Function)"
@@ -22,6 +22,12 @@ class ArrangePluginFunction: Plugin {
     private var buttonEvents: ButtonEvents
     private var arranger: Arranger
     private var uiButtons: [Button:UIButton]?
+    
+    /// **** For user study ****
+    var recordManager: UserStudyRecordManager!
+    var stateManager: UserStudyStateManager!
+    private var taskTimeLogger = TaskTimeLogger()
+    /// ************************
 
     init() {
         arranger = Arranger()
@@ -35,6 +41,10 @@ class ArrangePluginFunction: Plugin {
         self.currentView = view
         self.currentScene = scene
         self.arranger.activate(withScene: scene, andView: view)
+        
+        /// **** For user study ****
+        self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        /// ************************
     }
     
     func deactivatePlugin() {

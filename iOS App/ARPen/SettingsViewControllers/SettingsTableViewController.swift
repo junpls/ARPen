@@ -12,15 +12,21 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate  {
 
     var scene: PenScene!
     var userStudyRecordManager: UserStudyRecordManager!
+    var userStudyStateManager: UserStudyStateManager!
+    
+    private let tasksDataSource = ["Cube", "Phone stand", "Handle", "Flower pot", "Door stopper", "Candle holder", "Spoon", "Pen holder"]
     
     @IBOutlet weak var penSizeLabel: UILabel!
     @IBOutlet weak var penSizeSlider: UISlider!
     @IBOutlet weak var bluetoothDeviceTableViewCell: UITableViewCell!
     @IBOutlet weak var userIDTextField: UITextField!
+    @IBOutlet weak var taskPickerView: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.userIDTextField.delegate = self
+        self.taskPickerView.dataSource = self
+        self.taskPickerView.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -126,6 +132,10 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate  {
         present(alertController, animated: true, completion: nil)
     }
     
+    @IBAction func outlierButtonPressed(_ sender: Any) {
+        self.userStudyRecordManager.markLastRecordAsAnOutlier()
+    }
+    
     //TextFieldDelegate Methods
     //taken from: https://stackoverflow.com/questions/26919854/how-can-i-declare-that-a-text-field-can-only-contain-an-integer
     //restrict possible inputs only to numbers. Other input will be ignored
@@ -162,4 +172,24 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate  {
         }
     }
     
+}
+
+
+extension SettingsTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return tasksDataSource.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.clearSceneButtonPressed("")
+        userStudyStateManager.task = tasksDataSource[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return tasksDataSource[row]
+    }
 }

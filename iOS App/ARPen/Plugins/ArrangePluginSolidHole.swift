@@ -7,7 +7,7 @@
 //
 import ARKit
 
-class ArrangePluginSolidHole: Plugin {
+class ArrangePluginSolidHole: Plugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
     
     var pluginImage : UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Arrange (Solid + Hole)"
@@ -22,6 +22,12 @@ class ArrangePluginSolidHole: Plugin {
     private var buttonEvents: ButtonEvents
     private var arranger: Arranger
     
+    /// **** For user study ****
+    var recordManager: UserStudyRecordManager!
+    var stateManager: UserStudyStateManager!
+    private var taskTimeLogger = TaskTimeLogger()
+    /// ************************
+    
     init() {
         arranger = Arranger()
         buttonEvents = ButtonEvents()
@@ -34,6 +40,10 @@ class ArrangePluginSolidHole: Plugin {
         self.currentView = view
         self.currentScene = scene
         self.arranger.activate(withScene: scene, andView: view)
+        
+        /// **** For user study ****
+        self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        /// ************************
     }
     
     func deactivatePlugin() {
