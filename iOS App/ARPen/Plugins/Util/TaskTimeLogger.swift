@@ -12,24 +12,45 @@ class TaskTimeLogger {
 
     var defaultDict = [String: String]()
     private var startTime: Date?
+    private var accumulatedTime: TimeInterval = 0
+    private var running: Bool = false
     
     func startUnlessRunning() {
-        if startTime == nil {
-            startTime = Date()
+        if self.startTime == nil {
+            self.reset()
+            self.resume()
         }
     }
     
+    func pause() {
+        if running, let startTime = self.startTime {
+            self.accumulatedTime += Date().timeIntervalSince(startTime)
+            self.running = false
+        }
+    }
+    
+    func resume() {
+        self.startTime = Date()
+        self.running = true
+    }
+    
+    func reset() {
+        self.accumulatedTime = 0
+        self.startTime = nil
+        self.running = false
+    }
+    
     func finish() -> [String:String]  {
-        if let startTime = self.startTime {
-            let duration = Date().timeIntervalSince(startTime)
-            self.startTime = nil
+        if self.startTime != nil {
+            self.pause()
             
+            var targetMeasurementDict = self.defaultDict
+            targetMeasurementDict["TaskTime"] = String(describing: self.accumulatedTime)
             
-            var targetMeasurementDict = defaultDict
-            targetMeasurementDict["TaskTime"] = String(describing: duration)
+            self.reset()
             return targetMeasurementDict
         } else {
-            return defaultDict
+            return defaultDict
         }
 
     }

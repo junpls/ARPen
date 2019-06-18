@@ -8,20 +8,18 @@
 
 import Foundation
 
-class ARPBox:ARPGeomNode {
+class ARPCylinder: ARPGeomNode {
     
-    var width:Double = 1
+    var radius:Double = 1
     var height:Double = 1
-    var length:Double = 1
     
     override init() {
         super.init()
     }
     
-    init(width:Double, height:Double, length:Double) {
-        self.width = width
+    init(radius:Double, height:Double) {
+        self.radius = radius
         self.height = height
-        self.length = length
         
         super.init()
     }
@@ -31,6 +29,6 @@ class ARPBox:ARPGeomNode {
     }
     
     override func build() throws -> OCCTReference {
-        return try OCCTAPI.shared.createBox(width: width, height: height, length: length)
+        return try OCCTAPI.shared.createCylinder(radius: self.radius, height: self.height)
     }
 }

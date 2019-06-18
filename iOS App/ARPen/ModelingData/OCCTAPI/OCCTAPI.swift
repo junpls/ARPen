@@ -39,6 +39,15 @@ class OCCTAPI {
         }
     }
     
+    func createCylinder(radius:Double, height:Double) throws -> OCCTReference {
+        if let cString = occt.createCylinder(radius, height: height) {
+            let ref = OCCTReference(cString: cString)
+            return ref
+        } else {
+            throw OCCTError.couldNotCreateGeometry
+        }
+    }
+    
     func createPath(points:[SCNVector3], corners:[CornerStyle], closed:Bool) throws -> OCCTReference {
         if let cString = occt.createPath(points, length:Int32(points.count), corners: corners.map({ $0.rawValue }), closed:closed) {
             let ref = OCCTReference(cString: cString)

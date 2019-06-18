@@ -79,11 +79,16 @@ class RevolvePluginProfileAndCircle: Plugin, UserStudyRecordPluginProtocol, User
                     ], closed: false);
                 
                 /// **** For user study ****
-                let targetMeasurementDict = self.taskTimeLogger.finish()
-                self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
-                /// **** For user study ****
+                self.taskTimeLogger.pause()
+                /// ************************
                 
                 if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
+                    
+                    /// **** For user study ****
+                    let targetMeasurementDict = self.taskTimeLogger.finish()
+                    self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                    /// ************************
+                    
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(revolution)
                         circle.removeFromParentNode()

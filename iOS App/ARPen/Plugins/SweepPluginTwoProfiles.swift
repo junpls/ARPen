@@ -136,11 +136,16 @@ class SweepPluginTwoProfiles: Plugin, UserStudyRecordPluginProtocol, UserStudySt
             DispatchQueue.global(qos: .userInitiated).async {
                 
                 /// **** For user study ****
-                let targetMeasurementDict = self.taskTimeLogger.finish()
-                self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
-                /// **** For user study ****
+                self.taskTimeLogger.pause()
+                /// ************************
                 
                 if let sweep = try? ARPSweep(profile: profile1, path: spine) {
+                    
+                    /// **** For user study ****
+                    let targetMeasurementDict = self.taskTimeLogger.finish()
+                    self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                    /// ************************
+
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(sweep)
                         profile2.removeFromParentNode()

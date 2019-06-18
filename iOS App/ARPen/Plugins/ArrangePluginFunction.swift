@@ -34,7 +34,7 @@ class ArrangePluginFunction: Plugin, UserStudyRecordPluginProtocol, UserStudySta
         buttonEvents = ButtonEvents()
         buttonEvents.didPressButton = self.didPressButton
         buttonEvents.didReleaseButton = self.didReleaseButton
-        buttonEvents.didDoubleClick = self.didDoubleClick
+        buttonEvents.didDoubleClick = self.didDoubleClick        
     }
 
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
@@ -44,6 +44,7 @@ class ArrangePluginFunction: Plugin, UserStudyRecordPluginProtocol, UserStudySta
         
         /// **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        CombinationDemoScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: SCNVector3(0, 0, 0))
         /// ************************
     }
     
@@ -64,6 +65,10 @@ class ArrangePluginFunction: Plugin, UserStudyRecordPluginProtocol, UserStudySta
     }
     
     func didPressButton(_ button: Button) {
+        
+        /// **** For user study ****
+        self.taskTimeLogger.startUnlessRunning()
+        /// ************************
 
         switch button {
         case .Button1:
@@ -75,10 +80,22 @@ class ArrangePluginFunction: Plugin, UserStudyRecordPluginProtocol, UserStudySta
                         return
                 }
                 
+                /// **** For user study ****
+                self.taskTimeLogger.pause()
+                /// ************************
+                
                 DispatchQueue.global(qos: .userInitiated).async {
                     if let diff = try? ARPBoolNode(a: a, b: b, operation: button == .Button2 ? .join : .cut) {
+                        
                         DispatchQueue.main.async {
                             self.currentScene?.drawingNode.addChildNode(diff)
+                            
+                            /// **** For user study ****
+                            if CombinationDemoScenes.isTaskDone(scene: self.currentScene?.drawingNode, task: self.stateManager.task) {
+                                let targetMeasurementDict = self.taskTimeLogger.finish()
+                                self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                            }
+                            /// **** For user study ****
                         }
                     }
                 }

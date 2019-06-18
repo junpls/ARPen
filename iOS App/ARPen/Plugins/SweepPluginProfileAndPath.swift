@@ -70,11 +70,16 @@ class SweepPluginProfileAndPath: Plugin, UserStudyRecordPluginProtocol, UserStud
                 profile.flatten()
                 
                 /// **** For user study ****
-                let targetMeasurementDict = self.taskTimeLogger.finish()
-                self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
-                /// **** For user study ****
+                self.taskTimeLogger.pause()
+                /// ************************
                 
                 if let sweep = try? ARPSweep(profile: profile, path: spine) {
+                    
+                    /// **** For user study ****
+                    let targetMeasurementDict = self.taskTimeLogger.finish()
+                    self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                    /// ************************
+                    
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(sweep)
                         self.freePaths.removeAll(where: { $0 === profile || $0 === spine })

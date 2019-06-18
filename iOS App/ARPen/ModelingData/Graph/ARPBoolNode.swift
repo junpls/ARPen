@@ -46,10 +46,21 @@ class ARPBoolNode: ARPGeomNode {
         switch self.operation {
         case .cut:
             ref = try? OCCTAPI.shared.boolean(from: a.occtReference!, cut: b.occtReference!)
+            self.name = "(\(a.name ?? "a")-\(b.name ?? "b"))"
         case .join:
             ref = try? OCCTAPI.shared.boolean(join: a.occtReference!, with: b.occtReference!)
+            if (a.name ?? "").count >= (b.name ?? "").count {
+                self.name = "(\(a.name ?? "a")+\(b.name ?? "b"))"
+            } else {
+                self.name = "(\(b.name ?? "b")+\(a.name ?? "a"))"
+            }
         case .intersect:
             ref = try? OCCTAPI.shared.boolean(intersect: a.occtReference!, with: b.occtReference!)
+            if (a.name ?? "").count >= (b.name ?? "").count {
+                self.name = "(\(a.name ?? "a")x\(b.name ?? "b"))"
+            } else {
+                self.name = "(\(b.name ?? "b")x\(a.name ?? "a"))"
+            }
         }
         
         if let r = ref {

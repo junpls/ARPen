@@ -43,6 +43,7 @@ class ArrangePluginSolidHole: Plugin, UserStudyRecordPluginProtocol, UserStudySt
         
         /// **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        CombinationDemoScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: SCNVector3(0, 0, 0))
         /// ************************
     }
     
@@ -62,6 +63,10 @@ class ArrangePluginSolidHole: Plugin, UserStudyRecordPluginProtocol, UserStudySt
     }
     
     func didPressButton(_ button: Button) {
+        
+        /// **** For user study ****
+        self.taskTimeLogger.startUnlessRunning()
+        /// ************************
         
         switch button {
         case .Button1:
@@ -96,11 +101,23 @@ class ArrangePluginSolidHole: Plugin, UserStudyRecordPluginProtocol, UserStudySt
                     tool = b.isHole ? b : a
                 }
                 
+                /// **** For user study ****
+                self.taskTimeLogger.pause()
+                /// ************************
+                
                 DispatchQueue.global(qos: .userInitiated).async {
                     if let res = try? ARPBoolNode(a: target, b: tool, operation: operation) {
+                        
                         DispatchQueue.main.async {
                             self.currentScene?.drawingNode.addChildNode(res)
                             res.isHole = createHole
+                            
+                            /// **** For user study ****
+                            if CombinationDemoScenes.isTaskDone(scene: self.currentScene?.drawingNode, task: self.stateManager.task) {
+                                let targetMeasurementDict = self.taskTimeLogger.finish()
+                                self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                            }
+                            /// **** For user study ****
                         }
                     }
                 }

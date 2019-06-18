@@ -42,6 +42,8 @@ class Arranger {
     private var lastClickTime: Date?
     private var lastPenPosition: SCNVector3?
     
+    var didSelectSomething: ((ARPNode) -> Void)?
+    
     init() {
         buttonEvents = ButtonEvents()
         buttonEvents.didPressButton = self.didPressButton
@@ -173,6 +175,7 @@ class Arranger {
         target.selected = true
         selectedTargets.append(target)
         justSelectedSomething = true
+        didSelectSomething?(target)
     }
     
     func unselectTarget(_ target: ARPNode) {
