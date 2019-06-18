@@ -52,6 +52,12 @@ class Arranger {
     func activate(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentView = view
         self.currentScene = scene
+        self.visitTarget = nil
+        self.dragging = false
+        self.justSelectedSomething = false
+        self.lastClickPosition = nil
+        self.lastClickTime = nil
+        self.lastPenPosition = nil
     }
     
     func deactivate() {

@@ -46,6 +46,7 @@ class RevolvePluginProfileAndAxis: Plugin, UserStudyRecordPluginProtocol, UserSt
         
         /// **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        self.freePaths.removeAll()
         /// ************************
     }
     

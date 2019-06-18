@@ -70,7 +70,7 @@ typedef struct {
 //    float nx, ny, nz; // normal
 } MyVertex;
 
-double meshDeflection = 0.01;
+double meshDeflection = 0.005;
 double lineDeflection = 0.0003;
 double flatteningTolerance = 0.01;
 

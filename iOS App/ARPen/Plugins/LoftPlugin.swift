@@ -35,6 +35,9 @@ class LoftPlugin: Plugin {
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentView = view
         self.currentScene = scene
+        
+        self.freePaths.removeAll()
+        self.loft = nil
     }
     
     func deactivatePlugin() {

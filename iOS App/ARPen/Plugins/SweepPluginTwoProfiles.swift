@@ -45,6 +45,7 @@ class SweepPluginTwoProfiles: Plugin, UserStudyRecordPluginProtocol, UserStudySt
         
         /// **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        self.freePaths.removeAll()
         /// ************************
     }
     
