@@ -10,16 +10,23 @@ import Foundation
 
 //the record manager keeps track of all records stored for all participants. These information can be exported to plist and csv
 class UserStudyRecordManager : NSObject{
+    
+    static let defaultUserID: Int = 0
+
     fileprivate var userStudyData : [Int:[UserStudyRecord]]
     
     var currentActiveUserID : Int? = nil {
         //if a new userID is set, create an empty array for the records for this new userID (key)
-        didSet{
-            if let currentActiveUserID = currentActiveUserID, self.userStudyData[currentActiveUserID] == nil {
+        didSet {
+            let currentActiveUserID = self.currentActiveUserID ?? UserStudyRecordManager.defaultUserID
+            
+            if self.userStudyData[currentActiveUserID] == nil {
                 self.userStudyData[currentActiveUserID] = []
             }
         }
     }
+    
+    var isRecording: Bool = false
     
     fileprivate var headerNames = ["CreationTime", "UserID", "Identifier"]
     
@@ -49,10 +56,15 @@ class UserStudyRecordManager : NSObject{
     
     //data storage methods
     func addNewRecord(withIdentifier identifier: String, andData data: [String:String]) {
-        //only add a new record if currently a userID is set
-        guard let currentActiveUserID = self.currentActiveUserID else {
+        
+        print("Is recording: \(isRecording)")
+        
+        if !isRecording {
             return
         }
+        
+        let currentActiveUserID = self.currentActiveUserID ?? UserStudyRecordManager.defaultUserID
+        
         //create a new record with the current time and specified data (identifier & data dictionary)
         let newRecord = UserStudyRecord(creationTime: Date(), identifier: identifier, data: data)
         
@@ -86,9 +98,7 @@ class UserStudyRecordManager : NSObject{
     
     //mark last record as an outlier
     func markLastRecordAsAnOutlier() {
-        guard let currentActiveUserID = self.currentActiveUserID else {
-            return
-        }
+        let currentActiveUserID = self.currentActiveUserID ?? UserStudyRecordManager.defaultUserID
         var dataRecordsOfCurrentUser = self.userStudyData[currentActiveUserID]
         guard let lastRecord = dataRecordsOfCurrentUser?.popLast() else { return }
         var data = lastRecord.data

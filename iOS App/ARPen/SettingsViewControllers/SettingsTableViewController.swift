@@ -21,12 +21,14 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate  {
     @IBOutlet weak var bluetoothDeviceTableViewCell: UITableViewCell!
     @IBOutlet weak var userIDTextField: UITextField!
     @IBOutlet weak var taskPickerView: UIPickerView!
+    @IBOutlet weak var recordingSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.userIDTextField.delegate = self
         self.taskPickerView.dataSource = self
         self.taskPickerView.delegate = self
+        self.recordingSwitch.addTarget(self, action: #selector(recordingSwitchStateChanged), for: .valueChanged)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +39,9 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate  {
         
         self.setCurrentBluetoothDeviceLabel()
         
+        self.recordingSwitch.setOn(self.userStudyRecordManager.isRecording, animated: false)
+        self.taskPickerView.selectRow(self.tasksDataSource.index(of: userStudyStateManager.task ?? "") ?? 0, inComponent: 0, animated: false)
+        
         //if there is a currently active user ID set in the record manager, use this in the ID text field. Otherwise, use placeholder
         if let currentActiveUserID = self.userStudyRecordManager.currentActiveUserID {
             self.userIDTextField.text = String(currentActiveUserID)
@@ -44,12 +49,42 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate  {
             self.userIDTextField.text = ""
             self.userIDTextField.placeholder = "Enter a number"
         }
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func recordingSwitchStateChanged(sender: UISwitch!) {
+        if self.recordingSwitch.isOn {
+            
+            var alertText = ""
+            if self.userStudyStateManager.task == nil {
+                alertText += "No task selected! "
+            }
+            if self.userStudyRecordManager.currentActiveUserID == nil {
+                alertText += "No user id entered!"
+            }
+            
+            if alertText == "" {
+                self.userStudyRecordManager.isRecording = true
+            } else {
+                let alert = UIAlertController(title: "Warning", message: alertText, preferredStyle: .actionSheet)
+                
+                alert.addAction(UIAlertAction(title: "Enter missing data first", style: .default, handler: { _ in
+                    self.recordingSwitch.setOn(false, animated: false)
+                }))
+                alert.addAction(UIAlertAction(title: "Record anyway", style: .destructive, handler: { _ in
+                    self.userStudyRecordManager.isRecording = true
+                }))
+                
+                self.present(alert, animated: true)
+            }
+
+        } else {
+            self.userStudyRecordManager.isRecording = false
+        }
     }
 
     // Update the pen size label while the slider is dragged
@@ -192,4 +227,5 @@ extension SettingsTableViewController: UIPickerViewDelegate, UIPickerViewDataSou
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return tasksDataSource[row]
     }
+    
 }
