@@ -7,8 +7,18 @@
 //
 import ARKit
 
-class ArrangePluginSolidHole: Plugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
+class ArrangePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
     
+    var penButtons: [Button : UIButton]! {
+        didSet {
+            self.penButtons[.Button1]?.setTitle("Select/Move", for: .normal)
+            self.penButtons[.Button2]?.setTitle("Solid ↔ Hole", for: .normal)
+            self.penButtons[.Button3]?.setTitle("Combine", for: .normal)
+        }
+    }
+    
+    var undoButton: UIButton!
+
     var pluginImage : UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Arrange (Solid + Hole)"
     
@@ -49,12 +59,6 @@ class ArrangePluginSolidHole: Plugin, UserStudyRecordPluginProtocol, UserStudySt
     
     func deactivatePlugin() {
         arranger.deactivate()
-    }
-    
-    func injectUIButtons(_ buttons: [Button : UIButton]) {
-        buttons[.Button1]?.setTitle("Select/Move", for: .normal)
-        buttons[.Button2]?.setTitle("Solid ↔ Hole", for: .normal)
-        buttons[.Button3]?.setTitle("Combine", for: .normal)
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {

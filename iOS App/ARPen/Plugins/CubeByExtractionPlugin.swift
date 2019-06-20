@@ -9,9 +9,8 @@
 import Foundation
 import ARKit
 
-class CubeByExtractionPlugin: Plugin,UserStudyRecordPluginProtocol {
+class CubeByExtractionPlugin: Plugin, UserStudyRecordPluginProtocol {
     var recordManager: UserStudyRecordManager!
-    
 
     var pluginImage : UIImage? = UIImage.init(named: "CubeByExtractionPlugin")
     var pluginIdentifier: String = "CubeByExtraction"

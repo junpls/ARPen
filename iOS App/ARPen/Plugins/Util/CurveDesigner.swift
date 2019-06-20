@@ -47,13 +47,27 @@ class CurveDesigner {
                 path.getNonFixedPoint()?.position = scene.pencilPoint.position
             }
             
+            if let nonFixed = path.getNonFixedPoint() {
+                nonFixed.active = scene.markerFound
+            }
+            
             tryRebuildPreview()
         }
         
         if (buttonEvents.buttons[.Button2]! || buttonEvents.buttons[.Button3]!) && readyForNextPoint() {
             addNode(noNewPath: true)
         }
-
+    }
+    
+    func undo() {
+        if let path = self.activePath {
+            path.removeLastPoint()
+            if let last = path.points.last {
+                last.fixed = false
+            } else {
+                self.activePath = nil
+            }
+        }
     }
     
     func injectUIButtons(_ buttons: [Button : UIButton]) {

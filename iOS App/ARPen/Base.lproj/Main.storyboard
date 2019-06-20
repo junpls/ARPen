@@ -69,6 +69,26 @@
                                     <segue destination="Lka-5d-7oi" kind="presentation" identifier="ShowSettingsSegue" id="7NY-qq-kWI"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvz-5Y-P2h" userLabel="SoftwarePenButton3">
+                                <rect key="frame" x="88" y="154" width="40" height="40"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="60" maxX="40" maxY="0.0"/>
+                                <state key="normal" title="Blue Button" image="SoftwareButton3">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="softwarePenButton3Pressed:" destination="BV1-FR-VrT" eventType="touchDown" id="RnM-9t-Tcx"/>
+                                    <action selector="softwarePenButton3Released:" destination="BV1-FR-VrT" eventType="touchUpInside" id="BRD-4R-jIC"/>
+                                    <action selector="softwarePenButton3Released:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="Vtw-PY-Gsb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BE3-fU-oGz" userLabel="UndoButton">
+                                <rect key="frame" x="619" y="10" width="38" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="c63-z6-ecU"/>
+                                </constraints>
+                                <state key="normal" image="UndoButton"/>
+                            </button>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYd-yH-V3o">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YXb-VB-vP4">
@@ -169,23 +189,11 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvz-5Y-P2h" userLabel="SoftwarePenButton3">
-                                <rect key="frame" x="88" y="154" width="40" height="40"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
-                                <inset key="titleEdgeInsets" minX="0.0" minY="60" maxX="40" maxY="0.0"/>
-                                <state key="normal" title="Blue Button" image="SoftwareButton3">
-                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="softwarePenButton3Pressed:" destination="BV1-FR-VrT" eventType="touchDown" id="RnM-9t-Tcx"/>
-                                    <action selector="softwarePenButton3Released:" destination="BV1-FR-VrT" eventType="touchUpInside" id="BRD-4R-jIC"/>
-                                    <action selector="softwarePenButton3Released:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="Vtw-PY-Gsb"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gvz-5Y-P2h" firstAttribute="top" secondItem="eC2-14-eaW" secondAttribute="bottom" constant="26" id="0X0-7k-O2q"/>
+                            <constraint firstItem="BE3-fU-oGz" firstAttribute="trailing" secondItem="A5z-U4-mJN" secondAttribute="trailing" id="0zQ-ow-Mek"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="leading" secondItem="YSQ-pH-N6L" secondAttribute="leading" id="4R4-hk-6Gk"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="leading" secondItem="YSQ-pH-N6L" secondAttribute="leading" id="96J-6E-dhy"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="A5z-U4-mJN" secondAttribute="trailing" constant="10" id="CMI-vn-wNc"/>
@@ -197,6 +205,7 @@
                             <constraint firstItem="eC2-14-eaW" firstAttribute="top" secondItem="gGF-H0-N2c" secondAttribute="top" id="IeU-dX-JHb"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="LBk-3V-d3Y"/>
                             <constraint firstItem="eC2-14-eaW" firstAttribute="trailing" secondItem="gvz-5Y-P2h" secondAttribute="trailing" id="Ljn-ft-QH3"/>
+                            <constraint firstItem="BE3-fU-oGz" firstAttribute="top" secondItem="7vt-XS-Ox1" secondAttribute="top" id="NAC-BX-zVk"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="top" secondItem="7vt-XS-Ox1" secondAttribute="bottom" constant="18" id="OJh-Pg-1vz"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="A5z-U4-mJN" secondAttribute="bottom" constant="10" id="QsW-2Q-MbL"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="trailing" secondItem="YSQ-pH-N6L" secondAttribute="trailing" id="Un0-kz-gbv"/>
@@ -207,6 +216,7 @@
                             <constraint firstItem="eC2-14-eaW" firstAttribute="leading" secondItem="gGF-H0-N2c" secondAttribute="trailing" constant="8" symbolic="YES" id="bfO-zf-DJN"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="cqj-y5-Wso"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="centerX" secondItem="7vt-XS-Ox1" secondAttribute="centerX" id="eZt-r4-kuE"/>
+                            <constraint firstItem="BE3-fU-oGz" firstAttribute="leading" secondItem="A5z-U4-mJN" secondAttribute="leading" id="kEJ-qS-gy2"/>
                             <constraint firstAttribute="trailing" secondItem="gGF-H0-N2c" secondAttribute="trailing" constant="587" id="pTY-PI-nZs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EIQ-Ip-Tyt"/>
@@ -230,6 +240,7 @@
                         <outlet property="button2" destination="eC2-14-eaW" id="qdj-Le-oJi"/>
                         <outlet property="button3" destination="gvz-5Y-P2h" id="Jmb-hk-D8T"/>
                         <outlet property="pluginMenuScrollView" destination="gGF-H0-N2c" id="VX1-TR-Ghh"/>
+                        <outlet property="undoButton" destination="BE3-fU-oGz" id="gJ8-Mx-UQ4"/>
                         <outlet property="visualEffectView" destination="iYd-yH-V3o" id="9t5-aF-3w7"/>
                     </connections>
                 </viewController>
@@ -562,11 +573,11 @@
                                         <rect key="frame" x="0.0" y="710.5" width="667" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BuW-El-RmV" id="zqY-uW-cr3">
-                                            <rect key="frame" x="0.0" y="0.0" width="629" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="641" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="View Entries" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AI9-fw-eBb">
-                                                    <rect key="frame" x="20" y="0.0" width="609" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="617" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -937,6 +948,7 @@
         <image name="SoftwareButton1" width="603.33331298828125" height="603.33331298828125"/>
         <image name="SoftwareButton2" width="603.33331298828125" height="603.33331298828125"/>
         <image name="SoftwareButton3" width="603.33331298828125" height="603.33331298828125"/>
+        <image name="UndoButton" width="128" height="128"/>
         <image name="cog" width="128" height="128"/>
     </resources>
 </document>

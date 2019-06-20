@@ -38,6 +38,12 @@ class ARPPathNode: ARPNode {
         }
     }
     
+    var active = true {
+        didSet {
+            updateActiveState()
+        }
+    }
+    
     var fixed = false {
         didSet {
             updateFixedState()
@@ -75,18 +81,27 @@ class ARPPathNode: ARPNode {
     
     func updateFixedState() {
         /// Wanted to highlight the non-fixed point to distinguish it. Just looked distracting though.
-        /*
+        
         if self.fixed {
-            self.removeAction(forKey: "blinking")
-            self.geometry?.firstMaterial?.emission.contents = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            self.active = true
+//            self.removeAction(forKey: "blinking")
+//            self.geometry?.firstMaterial?.emission.contents = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         } else {
-            self.runAction(SCNAction.repeatForever(ARPPathNode.highlightAnimation), forKey: "blinking")
+//            self.runAction(SCNAction.repeatForever(ARPPathNode.highlightAnimation), forKey: "blinking")
         }
-        */
+        
     }
     
+    func updateActiveState() {
+        if self.active {
+            self.isHidden = false
+        } else {
+            self.isHidden = true
+        }
+    }
+
     override func updateHighlightedState() {
-        if highlighted {
+        if self.highlighted {
             self.geometryNode.scale = SCNVector3(ARPPathNode.highlightScale, ARPPathNode.highlightScale, ARPPathNode.highlightScale)
         } else {
             self.geometryNode.scale = SCNVector3(1, 1, 1)
@@ -94,7 +109,7 @@ class ARPPathNode: ARPNode {
     }
     
     override func updateSelectedState() {
-        if selected {
+        if self.selected {
             self.geometryNode.geometry?.firstMaterial?.emission.intensity = 1
         } else {
             self.geometryNode.geometry?.firstMaterial?.emission.intensity = 0
@@ -184,8 +199,8 @@ class ARPPath: ARPGeomNode {
             first.position.distance(vector: last.position) < ARPPathNode.samePointTolerance {
             calcClosed = true
         }
-        let positions = points.compactMap { (!calcClosed || $0.fixed) ? $0.worldPosition : nil }
-        let corners = points.compactMap { (!calcClosed || $0.fixed) ? $0.cornerStyle : nil }
+        let positions = points.compactMap { (!calcClosed || $0.fixed) && $0.active ? $0.worldPosition : nil }
+        let corners = points.compactMap { (!calcClosed || $0.fixed) && $0.active ? $0.cornerStyle : nil }
         
         let ref = try? OCCTAPI.shared.createPath(points: positions, corners: corners, closed: calcClosed)
         if let r = ref {

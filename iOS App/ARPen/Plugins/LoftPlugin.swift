@@ -9,7 +9,15 @@
 import Foundation
 import ARKit
 
-class LoftPlugin: Plugin {
+class LoftPlugin: Plugin, UIButtonPlugin {
+    
+    var penButtons: [Button : UIButton]! {
+        didSet {
+            curveDesigner.injectUIButtons(self.penButtons)
+        }
+    }
+    
+    var undoButton: UIButton!
     
     var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Loft"
@@ -35,13 +43,18 @@ class LoftPlugin: Plugin {
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentView = view
         self.currentScene = scene
-        
+        self.undoButton.addTarget(self, action: #selector(undo), for: .touchUpInside)
+
         self.freePaths.removeAll()
         self.loft = nil
     }
     
     func deactivatePlugin() {
         
+    }
+    
+    @objc func undo() {
+        curveDesigner.undo()
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {

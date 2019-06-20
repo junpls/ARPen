@@ -7,7 +7,17 @@
 //
 import ARKit
 
-class ArrangePluginFunction: Plugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol  {
+class ArrangePluginFunction: Plugin, UIButtonPlugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol  {
+    
+    var penButtons: [Button : UIButton]! {
+        didSet {
+            self.penButtons[.Button1]?.setTitle("Select/Move", for: .normal)
+            self.penButtons[.Button2]?.setTitle("Merge", for: .normal)
+            self.penButtons[.Button3]?.setTitle("Cut", for: .normal)
+        }
+    }
+    
+    var undoButton: UIButton!
     
     var pluginImage : UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Arrange (Function)"
@@ -21,7 +31,6 @@ class ArrangePluginFunction: Plugin, UserStudyRecordPluginProtocol, UserStudySta
 
     private var buttonEvents: ButtonEvents
     private var arranger: Arranger
-    private var uiButtons: [Button:UIButton]?
     
     /// **** For user study ****
     var recordManager: UserStudyRecordManager!
@@ -50,13 +59,6 @@ class ArrangePluginFunction: Plugin, UserStudyRecordPluginProtocol, UserStudySta
     
     func deactivatePlugin() {
         arranger.deactivate()
-    }
-    
-    func injectUIButtons(_ buttons: [Button : UIButton]) {
-        self.uiButtons = buttons
-        buttons[.Button1]?.setTitle("Select/Move", for: .normal)
-        buttons[.Button2]?.setTitle("Merge", for: .normal)
-        buttons[.Button3]?.setTitle("Cut", for: .normal)
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {

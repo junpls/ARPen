@@ -9,7 +9,15 @@
 import Foundation
 import ARKit
 
-class RevolvePluginProfileAndCircle: Plugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
+class RevolvePluginProfileAndCircle: Plugin, UIButtonPlugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
+    
+    var penButtons: [Button : UIButton]! {
+        didSet {
+            curveDesigner.injectUIButtons(self.penButtons)
+        }
+    }
+    
+    var undoButton: UIButton!
     
     var pluginImage: UIImage?// = UIImage.init(named: "PaintPlugin")
     var pluginIdentifier: String = "Revolve (Profile + Circle)"
@@ -43,7 +51,8 @@ class RevolvePluginProfileAndCircle: Plugin, UserStudyRecordPluginProtocol, User
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentView = view
         self.currentScene = scene
-        
+        self.undoButton.addTarget(self, action: #selector(undo), for: .touchUpInside)
+
         /// **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
         self.freePaths.removeAll()
@@ -54,8 +63,8 @@ class RevolvePluginProfileAndCircle: Plugin, UserStudyRecordPluginProtocol, User
         
     }
     
-    func injectUIButtons(_ buttons: [Button : UIButton]) {
-        curveDesigner.injectUIButtons(buttons)
+    @objc func undo() {
+        curveDesigner.undo()
     }
     
     func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {

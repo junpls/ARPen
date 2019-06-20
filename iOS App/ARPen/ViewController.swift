@@ -25,6 +25,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     @IBOutlet weak var arKitImage: UIImageView!
     @IBOutlet var arSceneView: ARSCNView!
     @IBOutlet weak var pluginMenuScrollView: UIScrollView!
+    @IBOutlet weak var undoButton: UIButton!
     
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
@@ -282,9 +283,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         if var pluginConformingToUserStudyProtocol = newActivePlugin as? UserStudyStatePluginProtocol {
             pluginConformingToUserStudyProtocol.stateManager = self.userStudyStateManager
         }
+        if var pluginConformingToUIButtonProtocol = newActivePlugin as? UIButtonPlugin {
+            pluginConformingToUIButtonProtocol.penButtons = self.buttonMap
+            pluginConformingToUIButtonProtocol.undoButton = self.undoButton
+        }
         if let currentScene = self.pluginManager.arManager.scene {
             newActivePlugin.activatePlugin(withScene: currentScene, andView: self.arSceneView)
-            newActivePlugin.injectUIButtons(self.buttonMap)
         }
         currentActivePluginID = pluginID
     }
