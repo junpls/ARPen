@@ -179,6 +179,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         } else {
             print("Record manager was not set up in App Delegate")
         }
+        
+        // Create a session configuration
+        let configuration = ARWorldTrackingConfiguration()
+        
+        // Run the view's session
+        arSceneView.session.run(configuration)
     }
     
     /**
@@ -188,10 +194,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         super.viewWillAppear(animated)
         
         // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
+        //let configuration = ARWorldTrackingConfiguration()
 
         // Run the view's session
-        arSceneView.session.run(configuration)
+        //arSceneView.session.run(configuration)
         
         // Hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -201,7 +207,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         super.viewWillDisappear(animated)
         
         // Pause the view's session
-        arSceneView.session.pause()
+        //arSceneView.session.pause()
         
         // Show navigation bar
         self.navigationController?.setNavigationBarHidden(false, animated: true)
