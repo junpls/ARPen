@@ -21,6 +21,7 @@ class Arranger {
     
     static let timeTillDrag: Double = 1
     static let maxDistanceTillDrag: Float = 0.015
+    static let snapWhenDragging: Bool = true
     
     var hoverTarget: ARPNode? {
         didSet {
@@ -83,10 +84,12 @@ class Arranger {
             dragging = true
          
             /// Snap targets to pen position
-            let center = selectedTargets.reduce(SCNVector3(0,0,0), { $0 + $1.position }) / Float(selectedTargets.count)
-            let shift = scene.pencilPoint.position - center
-            for target in selectedTargets {
-                target.position += shift
+            if Arranger.snapWhenDragging {
+                let center = selectedTargets.reduce(SCNVector3(0,0,0), { $0 + $1.position }) / Float(selectedTargets.count)
+                let shift = scene.pencilPoint.position - center
+                for target in selectedTargets {
+                    target.position += shift
+                }
             }
         }
         

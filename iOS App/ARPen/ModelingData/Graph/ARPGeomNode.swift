@@ -59,8 +59,14 @@ class ARPGeomNode: ARPNode {
     final func updateView() {
         
         let geom  = OCCTAPI.shared.triangulate(handle: occtReference!)
+        if self is ARPBoolNode {
+            print("non")
+        }
         let lines = OCCTAPI.shared.tubeframe(handle: occtReference!)
-        
+        if self is ARPBoolNode {
+            print("non")
+        }
+
         /// The node may have been transformed between the geometry's generation and the actual attachment in DispatchQueue.main.async
         /// transformDelta is used to capture this difference
         

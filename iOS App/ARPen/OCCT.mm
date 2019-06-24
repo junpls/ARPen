@@ -745,7 +745,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     
     int noOfNodes = 0;
     int noOfSegments = 0;
-    
+
     for (TopExp_Explorer exEdge(shape, TopAbs_EDGE); exEdge.More(); exEdge.Next())
     {
         BRepAdaptor_Curve curveAdaptor;
@@ -754,11 +754,13 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
         GCPnts_QuasiUniformDeflection uniformAbscissa;
         uniformAbscissa.Initialize(curveAdaptor, deflection);
         
-        if(uniformAbscissa.IsDone())
+        if (uniformAbscissa.IsDone())
         {
             Standard_Integer nbr = uniformAbscissa.NbPoints();
-            noOfNodes += nbr;
-            noOfSegments += nbr - 1;
+            if (uniformAbscissa.NbPoints() >= 2) {
+                noOfNodes += nbr;
+                noOfSegments += nbr - 1;
+            }
         }
     }
     
@@ -770,6 +772,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     
     int vertexIndex = 0;
     int triIndex = 0;
+    
     for (TopExp_Explorer exEdge(shape, TopAbs_EDGE); exEdge.More(); exEdge.Next())
     {
         BRepAdaptor_Curve curveAdaptor;
@@ -778,7 +781,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
         GCPnts_QuasiUniformDeflection uniformAbscissa;
         uniformAbscissa.Initialize(curveAdaptor, deflection);
         
-        if(uniformAbscissa.IsDone())
+        if (uniformAbscissa.IsDone())
         {
             Standard_Integer nbr = uniformAbscissa.NbPoints();
             gp_Pnt prev;
@@ -787,15 +790,21 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
                 gp_Pnt pt = curveAdaptor.Value(uniformAbscissa.Parameter(i));
                 
                 if (i >= 2) {
-                    // Create cyllinder
-                    gp_Vec vec = gp_Vec(prev, pt).Normalized();
+                    /// Create cylinder
+                    gp_Vec vec;
+                    if (pt.IsEqual(prev, 0.00001)) {
+                        /// In rare occasions (we found it when subtracting spheres from each other), both points may be equal. Use a default direction then.
+                        vec = gp_Vec(0, 1, 0);
+                    } else {
+                        vec = gp_Vec(prev, pt).Normalized();
+                    }
                     gp_Vec notParallel = gp_Vec(1, 0, 0);
                     if (abs(notParallel.Dot(vec)) >= 0.99) {
                         notParallel = gp_Vec(0, 1, 0);
                     }
                     gp_Vec perpendicular = vec.Crossed(notParallel).Normalized();
                     gp_Ax1 rotationAxis = gp_Ax1(pt, gp_Dir(vec));
-                    
+
                     for (int j = 0; j <= sides; j++) {
                         float rotation = (M_PI*2) * (((float)j) / sides);
                         gp_Vec dir = perpendicular.Rotated(rotationAxis, rotation);
@@ -818,6 +827,7 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
                         }
                         vertexIndex += 2;
                     }
+                    NSLog(@"3");
                 }
                 prev = pt;
             }
