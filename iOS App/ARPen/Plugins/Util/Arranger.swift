@@ -81,6 +81,13 @@ class Arranger {
             ((Date() - (lastClickTime ?? Date())) > Arranger.timeTillDrag
                 || (lastPenPosition?.distance(vector: scene.pencilPoint.position) ?? 0) > Arranger.maxDistanceTillDrag) {
             dragging = true
+         
+            /// Snap targets to pen position
+            let center = selectedTargets.reduce(SCNVector3(0,0,0), { $0 + $1.position }) / Float(selectedTargets.count)
+            let shift = scene.pencilPoint.position - center
+            for target in selectedTargets {
+                target.position += shift
+            }
         }
         
         if dragging, let lastPos = lastPenPosition {

@@ -97,7 +97,7 @@ class ArrangePluginFunction: Plugin, UIButtonPlugin, UserStudyRecordPluginProtoc
                                 let targetMeasurementDict = self.taskTimeLogger.finish()
                                 self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                             }
-                            /// **** For user study ****
+                            /// ************************
                         }
                     }
                 }
