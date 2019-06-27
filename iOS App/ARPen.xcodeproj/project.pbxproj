@@ -841,6 +841,7 @@
 				);
 				HEADER_SEARCH_PATHS = "/Users/jan/opencascade-7.3.0/inc";
 				INFOPLIST_FILE = ARPen/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "/Users/jan/opencascade-7.3.0/samples/ios/occt/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.komm.ARPen;
@@ -866,6 +867,7 @@
 				);
 				HEADER_SEARCH_PATHS = "/Users/jan/opencascade-7.3.0/inc";
 				INFOPLIST_FILE = ARPen/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "/Users/jan/opencascade-7.3.0/samples/ios/occt/lib";
 				PRODUCT_BUNDLE_IDENTIFIER = com.komm.ARPen;
