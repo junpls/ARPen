@@ -12,6 +12,7 @@
 		3D0624F122AC3FB600A1F73C /* ArrangePluginSolidHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0624F022AC3FB600A1F73C /* ArrangePluginSolidHole.swift */; };
 		3D08D81622AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */; };
 		3D26154E22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26154D22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift */; };
+		3D29519922C9196E0078BA23 /* CurvePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D29519822C9196E0078BA23 /* CurvePlugin.swift */; };
 		3D2BEC6922BC110C0027AB0C /* UIButtonPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2BEC6822BC110C0027AB0C /* UIButtonPlugin.swift */; };
 		3D3450822261F5650017DB39 /* ARPRevolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3450812261F5650017DB39 /* ARPRevolution.swift */; };
 		3D34508522646D920017DB39 /* CurveDesigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508422646D920017DB39 /* CurveDesigner.swift */; };
@@ -124,6 +125,7 @@
 		3D0624F022AC3FB600A1F73C /* ArrangePluginSolidHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangePluginSolidHole.swift; sourceTree = "<group>"; };
 		3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevolvePluginTwoProfiles.swift; sourceTree = "<group>"; };
 		3D26154D22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweepPluginProfileAndPath.swift; sourceTree = "<group>"; };
+		3D29519822C9196E0078BA23 /* CurvePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvePlugin.swift; sourceTree = "<group>"; };
 		3D2BEC6822BC110C0027AB0C /* UIButtonPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonPlugin.swift; sourceTree = "<group>"; };
 		3D3450812261F5650017DB39 /* ARPRevolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPRevolution.swift; sourceTree = "<group>"; };
 		3D34508422646D920017DB39 /* CurveDesigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveDesigner.swift; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 				3D34508C2265C1850017DB39 /* LoftPlugin.swift */,
 				3D3AC4342269FAA800331696 /* ArrangePluginFunction.swift */,
 				3D0624F022AC3FB600A1F73C /* ArrangePluginSolidHole.swift */,
+				3D29519822C9196E0078BA23 /* CurvePlugin.swift */,
 				AA935109224245CE002AEB00 /* ARMenusPlugin.swift */,
 				4A59BA1D2244E66D00EA23E7 /* TranslationDemoPlugin.swift */,
 				4A59BA252244E69400EA23E7 /* CombinationPlugin.swift */,
@@ -585,6 +588,7 @@
 				3D883669221B457C00672CEB /* ARPBox.swift in Sources */,
 				4A895F0A2052791100CC2C8E /* CubeByDraggingPlugin.swift in Sources */,
 				3D883663221AD84300672CEB /* Util.swift in Sources */,
+				3D29519922C9196E0078BA23 /* CurvePlugin.swift in Sources */,
 				DC28B47A200E7E8A008B77AB /* MarkerBox.m in Sources */,
 				4A5695342058195200C8065E /* UserStudyRecordsListTableViewController.swift in Sources */,
 				3D3450822261F5650017DB39 /* ARPRevolution.swift in Sources */,
