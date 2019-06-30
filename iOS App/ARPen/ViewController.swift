@@ -64,101 +64,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         buttonMap[.Button2] = button2
         buttonMap[.Button3] = button3
 
-        //button1.setTitle("Bla?", for: .normal)
-        /*
-        if let cube = try? ARPBox(width: 0.1, height: 0.1, length: 0.1) {
-            scene.rootNode.addChildNode(cube)
-            cube.position.x = -0.2
-            cube.scale = SCNVector3(1,1,1)
-            cube.applyTransform()
-            try? cube.rebuild()
-            //cube.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
-            //cube.applyTransform()
-        }
-        
-        if let sphere1 = try? ARPSphere(radius: 0.05), let box = try? ARPBox(width: 0.1, height: 0.2, length: 0.1) {
-            scene.rootNode.addChildNode(sphere1)
-            scene.rootNode.addChildNode(box)
-            
-            box.position.y = 0.05
-            box.scale = SCNVector3(0.5, 0.5, 0.5)
-            box.rotation = SCNVector4(0,0,1,Double.pi/4)
-            
-            box.position.y -= 0.05
-            sphere1.position.y -= 0.05
-
-            box.applyTransform()
-            sphere1.applyTransform()
-            box.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
-            //sphere2.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 1, y: 0, z: 0, duration: 1)))
-
-            if let bool = try? ARPBoolNode(a: sphere1, b: box, operation: BooleanOperation.cut) {
-                scene.rootNode.addChildNode(bool)
-                bool.position.y = -0.1;
-                bool.scale = SCNVector3(2, 2, 2)
-                bool.rotation = SCNVector4(0,0,1,Double.pi/2)
-                bool.applyTransform()
-                //bool.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
-                try? bool.rebuild()
-                s = box
-            } else {
-                print("lol, error")
-            }
-            
-        }
-        
-        var ppoints = [SCNVector3]()
-        ppoints.append(SCNVector3(-0.03, 0, -0.03))
-        ppoints.append(SCNVector3(0.03, 0, -0.03))
-        ppoints.append(SCNVector3(0.03, 0, 0.03))
-        ppoints.append(SCNVector3(-0.03, 0, 0.03))
-        
-        var profile = ARPPath(points: ppoints, closed: true)
-        profile.position = SCNVector3(0.2, 0, 0)
-        profile.applyTransform()
-        
-        var epoints = [SCNVector3]()
-        epoints.append(SCNVector3(-0.03, 0, -0.03))
-        epoints.append(SCNVector3(-0.5, 0.5, -0.5))
-        
-        var extrusion = ARPPath(points: epoints, closed: false)
-        extrusion.position = SCNVector3(0.2, 0, 0)
-        extrusion.applyTransform()
-        
-        if let pipe = try? ARPSweep(profile: profile, path: extrusion) {
-            scene.rootNode.addChildNode(pipe)
-            pipe.position.x -= 0.1
-            //pipe.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1)))
-            //profile.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0, z: 1, duration: 1)))
-            p = profile
-            //try? extrusion.rebuild()
-        }
-        
-        var ppoints2 = [SCNVector3]()
-        ppoints2.append(SCNVector3(-0.03, 0, -0.03))
-        ppoints2.append(SCNVector3(0.03, 0, -0.03))
-        ppoints2.append(SCNVector3(0.03, 0, 0.03))
-        ppoints2.append(SCNVector3(-0.03, 0, 0.03))
-        
-        var path = ARPPath(points: ppoints2, closed: true)
-        path.position = SCNVector3(0,0,-0.2)
-        scene.rootNode.addChildNode(path)
-        */
-        /*
-        let smallBox = ARPBox(width: 0.1, height: 0.1, length: 0.1)
-        scene.drawingNode.addChildNode(smallBox)
-        
-        let smallBox2 = ARPBox(width: 0.1, height: 0.1, length: 0.1)
-        smallBox2.position.x = 0.05
-        smallBox2.position.z = 0.05
-        smallBox2.position.y = 0.05
-        smallBox2.applyTransform()
-        scene.drawingNode.addChildNode(smallBox2)
-        
-        if let bool = try? ARPBoolNode(a: smallBox, b: smallBox2, operation: .cut) {
-            scene.drawingNode.addChildNode(bool)
-        }
-         */
         arSceneView.delegate = self
 
         self.pluginManager = PluginManager(scene: scene)
@@ -207,6 +112,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
         // Hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        // (Re-)activate currently active plugin
+        if let currentActivePlugin = self.pluginManager.activePlugin, let currentScene = self.pluginManager.arManager.scene {
+            currentActivePlugin.activatePlugin(withScene: currentScene, andView: self.arSceneView)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -303,7 +213,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let segueIdentifier = segue.identifier else { return }
-        
         if segueIdentifier == "ShowSettingsSegue" {
             let destinationVC = segue.destination as! UINavigationController
             guard let destinationSettingsController = destinationVC.viewControllers.first as? SettingsTableViewController else {
@@ -438,30 +347,5 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     @IBAction func softwarePenButton3Released(_ sender: Any) {
         self.pluginManager.button(.Button3, pressed: false)
     }
-    
-    var count:Int = 0
-    var busy = false
-    
-    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        
-        return
-        if !busy {
-            busy = true
-            DispatchQueue.global(qos: .userInitiated).async {
-/*
-                self.s?.rotation = SCNVector4(0, 0, 1, time/3)*/
-                self.s?.applyTransform()
-//                self.busy = false
- 
-                
-//                self.p?.points[1].position.y = Float(abs(sin(time/3)))*0.1 + 0.01
-//                self.p?.points[1].position.x = Float(abs(sin(time/3)))*0.1 + 0.01
-                //try? self.p?.applyTransform()
-                //try? self.p?.rebuild()
-                self.busy = false
- 
-            }
-        }
 
-    }
 }
