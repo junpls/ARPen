@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3D0280DE22B4003F00111586 /* TaskTimeLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0280DD22B4003F00111586 /* TaskTimeLogger.swift */; };
 		3D0624EF22AC30FE00A1F73C /* Arranger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0624EE22AC30FE00A1F73C /* Arranger.swift */; };
-		3D0624F122AC3FB600A1F73C /* ArrangePluginSolidHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0624F022AC3FB600A1F73C /* ArrangePluginSolidHole.swift */; };
+		3D0624F122AC3FB600A1F73C /* CombinePluginSolidHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0624F022AC3FB600A1F73C /* CombinePluginSolidHole.swift */; };
 		3D08D81622AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */; };
 		3D26154E22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26154D22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift */; };
 		3D29519922C9196E0078BA23 /* CurvePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D29519822C9196E0078BA23 /* CurvePlugin.swift */; };
@@ -24,7 +24,7 @@
 		3D36C8BC22B836E500166224 /* UserStudyStatePluginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8BB22B836E500166224 /* UserStudyStatePluginProtocol.swift */; };
 		3D36C8BE22B9144500166224 /* CombinationDemoScenes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8BD22B9144500166224 /* CombinationDemoScenes.swift */; };
 		3D36C8C022B941CA00166224 /* ARPCylinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8BF22B941CA00166224 /* ARPCylinder.swift */; };
-		3D3AC4352269FAA800331696 /* ArrangePluginFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3AC4342269FAA800331696 /* ArrangePluginFunction.swift */; };
+		3D3AC4352269FAA800331696 /* CombinePluginFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3AC4342269FAA800331696 /* CombinePluginFunction.swift */; };
 		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
 		3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48674A224A527200EABD23 /* ARPSweep.swift */; };
 		3D61FCF82201EFB200183AEA /* libTKMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61FCE82201EFB200183AEA /* libTKMath.a */; };
@@ -122,7 +122,7 @@
 /* Begin PBXFileReference section */
 		3D0280DD22B4003F00111586 /* TaskTimeLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTimeLogger.swift; sourceTree = "<group>"; };
 		3D0624EE22AC30FE00A1F73C /* Arranger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arranger.swift; sourceTree = "<group>"; };
-		3D0624F022AC3FB600A1F73C /* ArrangePluginSolidHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangePluginSolidHole.swift; sourceTree = "<group>"; };
+		3D0624F022AC3FB600A1F73C /* CombinePluginSolidHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombinePluginSolidHole.swift; sourceTree = "<group>"; };
 		3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevolvePluginTwoProfiles.swift; sourceTree = "<group>"; };
 		3D26154D22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweepPluginProfileAndPath.swift; sourceTree = "<group>"; };
 		3D29519822C9196E0078BA23 /* CurvePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvePlugin.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		3D36C8BB22B836E500166224 /* UserStudyStatePluginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyStatePluginProtocol.swift; sourceTree = "<group>"; };
 		3D36C8BD22B9144500166224 /* CombinationDemoScenes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinationDemoScenes.swift; sourceTree = "<group>"; };
 		3D36C8BF22B941CA00166224 /* ARPCylinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPCylinder.swift; sourceTree = "<group>"; };
-		3D3AC4342269FAA800331696 /* ArrangePluginFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangePluginFunction.swift; sourceTree = "<group>"; };
+		3D3AC4342269FAA800331696 /* CombinePluginFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinePluginFunction.swift; sourceTree = "<group>"; };
 		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
 		3D48674A224A527200EABD23 /* ARPSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPSweep.swift; sourceTree = "<group>"; };
 		3D61FCE82201EFB200183AEA /* libTKMath.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTKMath.a; path = "../../../../opencascade-7.3.0/samples/ios/occt/lib/libTKMath.a"; sourceTree = "<group>"; };
@@ -442,8 +442,8 @@
 				3DE5191C22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift */,
 				3D08D81522AC0E8A00AA54A0 /* RevolvePluginTwoProfiles.swift */,
 				3D34508C2265C1850017DB39 /* LoftPlugin.swift */,
-				3D3AC4342269FAA800331696 /* ArrangePluginFunction.swift */,
-				3D0624F022AC3FB600A1F73C /* ArrangePluginSolidHole.swift */,
+				3D3AC4342269FAA800331696 /* CombinePluginFunction.swift */,
+				3D0624F022AC3FB600A1F73C /* CombinePluginSolidHole.swift */,
 				3D29519822C9196E0078BA23 /* CurvePlugin.swift */,
 				AA935109224245CE002AEB00 /* ARMenusPlugin.swift */,
 				4A59BA1D2244E66D00EA23E7 /* TranslationDemoPlugin.swift */,
@@ -627,12 +627,12 @@
 				3DA388E32251F4CB003A8937 /* OCCT.mm in Sources */,
 				3DE5191D22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift in Sources */,
 				3D48674B224A527200EABD23 /* ARPSweep.swift in Sources */,
-				3D0624F122AC3FB600A1F73C /* ArrangePluginSolidHole.swift in Sources */,
+				3D0624F122AC3FB600A1F73C /* CombinePluginSolidHole.swift in Sources */,
 				3D36C8BA22B8358600166224 /* UserStudyStateManager.swift in Sources */,
 				4A56953720581B4500C8065E /* UserStudyRecord.swift in Sources */,
 				DC28B475200E64B7008B77AB /* ObjectCreationPlugin.swift in Sources */,
 				DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */,
-				3D3AC4352269FAA800331696 /* ArrangePluginFunction.swift in Sources */,
+				3D3AC4352269FAA800331696 /* CombinePluginFunction.swift in Sources */,
 				DC28B440200E4353008B77AB /* AppDelegate.swift in Sources */,
 				DC28B463200E471F008B77AB /* PluginManager.swift in Sources */,
 				3D34508F226617100017DB39 /* ARPLoft.swift in Sources */,

@@ -7,7 +7,7 @@
 //
 import ARKit
 
-class ArrangePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
+class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol {
     
     var penButtons: [Button : UIButton]! {
         didSet {
@@ -20,7 +20,7 @@ class ArrangePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
     var undoButton: UIButton!
 
     var pluginImage : UIImage?// = UIImage.init(named: "PaintPlugin")
-    var pluginIdentifier: String = "Arrange (Solid + Hole)"
+    var pluginIdentifier: String = "Combine (Solid + Hole)"
     
     var currentScene: PenScene?
     var currentView: ARSCNView?

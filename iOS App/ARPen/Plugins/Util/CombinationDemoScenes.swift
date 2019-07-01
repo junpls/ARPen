@@ -21,6 +21,8 @@ class CombinationDemoScenes {
             objects = CombinationDemoScenes.spoonScene(centeredAt: position)
         case "Pen holder":
             objects = CombinationDemoScenes.penHolderScene(centeredAt: position)
+        case "Combine demo":
+            objects = CombinationDemoScenes.demoScene(centeredAt: position)
         default:
             break
         }
@@ -120,5 +122,25 @@ class CombinationDemoScenes {
         smallCylinderInner.name = "smallCylinderInner"
 
         return [bigCylinder, bigCylinderInner, smallCylinder, smallCylinderInner]
+    }
+    
+    static func demoScene(centeredAt positon: SCNVector3) -> [ARPNode] {
+        let sphere = ARPSphere(radius: 0.02)
+        sphere.position = positon + SCNVector3(-0.1, 0.02, 0)
+        sphere.applyTransform()
+        sphere.name = "sphere"
+        
+        let box = ARPBox(width: 0.09, height: 0.03, length: 0.02)
+        box.position = positon + SCNVector3(0, 0.0175, 0)
+        box.applyTransform()
+        box.name = "box"
+        
+        let cylinder = ARPCylinder(radius: 0.005, height: 0.06)
+        cylinder.position = positon + SCNVector3(0.1, 0.005, 0)
+        cylinder.rotation = SCNVector4(0, 0, 1, Float.pi/2)
+        cylinder.applyTransform()
+        cylinder.name = "cylinder"
+        
+        return [sphere, box, cylinder]
     }
 }

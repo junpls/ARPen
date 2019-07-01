@@ -7,7 +7,7 @@
 //
 import ARKit
 
-class ArrangePluginFunction: Plugin, UIButtonPlugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol  {
+class CombinePluginFunction: Plugin, UIButtonPlugin, UserStudyRecordPluginProtocol, UserStudyStatePluginProtocol  {
     
     var penButtons: [Button : UIButton]! {
         didSet {
@@ -20,7 +20,7 @@ class ArrangePluginFunction: Plugin, UIButtonPlugin, UserStudyRecordPluginProtoc
     var undoButton: UIButton!
     
     var pluginImage : UIImage?// = UIImage.init(named: "PaintPlugin")
-    var pluginIdentifier: String = "Arrange (Function)"
+    var pluginIdentifier: String = "Combine (Function)"
     
     var currentScene: PenScene?
     var currentView: ARSCNView?
