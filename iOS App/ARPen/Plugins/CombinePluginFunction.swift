@@ -78,8 +78,8 @@ class CombinePluginFunction: Plugin, UIButtonPlugin, UserStudyRecordPluginProtoc
             break
         case .Button2, .Button3:
             if arranger.selectedTargets.count == 2 {
-                guard let a = arranger.selectedTargets.removeFirst() as? ARPGeomNode,
-                    let b = arranger.selectedTargets.removeFirst() as? ARPGeomNode else {
+                guard let b = arranger.selectedTargets.removeFirst() as? ARPGeomNode,
+                    let a = arranger.selectedTargets.removeFirst() as? ARPGeomNode else {
                         return
                 }
                 
