@@ -55,6 +55,7 @@ class RevolvePluginProfileAndCircle: Plugin, UIButtonPlugin, UserStudyRecordPlug
 
         /// **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        self.taskTimeLogger.reset()
         self.freePaths.removeAll()
         /// ************************
     }

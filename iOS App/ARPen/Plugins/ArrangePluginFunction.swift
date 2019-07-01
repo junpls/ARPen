@@ -53,6 +53,7 @@ class ArrangePluginFunction: Plugin, UIButtonPlugin, UserStudyRecordPluginProtoc
         
         /// **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
+        self.taskTimeLogger.reset()
         CombinationDemoScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: SCNVector3(0, 0, 0))
         /// ************************
     }
