@@ -20,6 +20,12 @@ class ARPPathNode: ARPNode {
         node.geometryNode.geometry?.firstMaterial?.emission.contents = color
     })*/
     
+    static let fixAnimationDuration: Double = 0.3
+    static let fixAnimation = SCNAction.customAction(duration: fixAnimationDuration, action: { (node, elapsedTime) in
+        let scale = 1 + sin((elapsedTime / CGFloat(ARPPathNode.fixAnimationDuration))*CGFloat.pi) * 1.5
+        node.scale = SCNVector3(scale, scale, scale)
+    })
+    
     static let samePointTolerance: Float = 0.001
 
     static let radius: CGFloat = 0.002
@@ -80,16 +86,10 @@ class ARPPathNode: ARPNode {
     }
     
     func updateFixedState() {
-        /// Wanted to highlight the non-fixed point to distinguish it. Just looked distracting though.
-        
         if self.fixed {
             self.active = true
-//            self.removeAction(forKey: "blinking")
-//            self.geometry?.firstMaterial?.emission.contents = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        } else {
-//            self.runAction(SCNAction.repeatForever(ARPPathNode.highlightAnimation), forKey: "blinking")
+            self.geometryNode.runAction(ARPPathNode.fixAnimation)
         }
-        
     }
     
     func updateActiveState() {
@@ -118,6 +118,11 @@ class ARPPathNode: ARPNode {
 }
 
 class ARPPath: ARPGeomNode {
+    
+    static let finalizeAnimationDuration: Double = 0.3
+    static let finalizeAnimation = SCNAction.customAction(duration: finalizeAnimationDuration, action: { (node, elapsedTime) in
+        (node as SCNNode).isHidden = Int((elapsedTime / CGFloat(ARPPath.finalizeAnimationDuration)) * 3).isMultiple(of: 2)
+    })
     
     let color = UIColor.red
     
