@@ -14,7 +14,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate  {
     var userStudyRecordManager: UserStudyRecordManager!
     var userStudyStateManager: UserStudyStateManager!
     
-    private let tasksDataSource = ["Cube", "Phone stand", "Handle", "Flower pot", "Door stopper", "Candle holder", "Spoon", "Pen holder", "Combine demo"]
+    private let tasksDataSource = ["None","Cube", "Phone stand", "Handle", "Flower pot", "Door stopper", "Candle holder", "Spoon", "Pen holder", "Combine demo"]
     
     @IBOutlet weak var penSizeLabel: UILabel!
     @IBOutlet weak var penSizeSlider: UISlider!

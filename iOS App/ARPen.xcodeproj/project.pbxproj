@@ -22,7 +22,7 @@
 		3D34508F226617100017DB39 /* ARPLoft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D34508E2266170F0017DB39 /* ARPLoft.swift */; };
 		3D36C8BA22B8358600166224 /* UserStudyStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8B922B8358600166224 /* UserStudyStateManager.swift */; };
 		3D36C8BC22B836E500166224 /* UserStudyStatePluginProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8BB22B836E500166224 /* UserStudyStatePluginProtocol.swift */; };
-		3D36C8BE22B9144500166224 /* CombinationDemoScenes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8BD22B9144500166224 /* CombinationDemoScenes.swift */; };
+		3D36C8BE22B9144500166224 /* TaskScenes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8BD22B9144500166224 /* TaskScenes.swift */; };
 		3D36C8C022B941CA00166224 /* ARPCylinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D36C8BF22B941CA00166224 /* ARPCylinder.swift */; };
 		3D3AC4352269FAA800331696 /* CombinePluginFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3AC4342269FAA800331696 /* CombinePluginFunction.swift */; };
 		3D486749224959F200EABD23 /* ARPPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D486748224959F200EABD23 /* ARPPath.swift */; };
@@ -135,7 +135,7 @@
 		3D34508E2266170F0017DB39 /* ARPLoft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPLoft.swift; sourceTree = "<group>"; };
 		3D36C8B922B8358600166224 /* UserStudyStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyStateManager.swift; sourceTree = "<group>"; };
 		3D36C8BB22B836E500166224 /* UserStudyStatePluginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyStatePluginProtocol.swift; sourceTree = "<group>"; };
-		3D36C8BD22B9144500166224 /* CombinationDemoScenes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinationDemoScenes.swift; sourceTree = "<group>"; };
+		3D36C8BD22B9144500166224 /* TaskScenes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskScenes.swift; sourceTree = "<group>"; };
 		3D36C8BF22B941CA00166224 /* ARPCylinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARPCylinder.swift; sourceTree = "<group>"; };
 		3D3AC4342269FAA800331696 /* CombinePluginFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinePluginFunction.swift; sourceTree = "<group>"; };
 		3D486748224959F200EABD23 /* ARPPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPPath.swift; sourceTree = "<group>"; };
@@ -269,7 +269,7 @@
 				3D345086226470D30017DB39 /* ButtonEvents.swift */,
 				3D0624EE22AC30FE00A1F73C /* Arranger.swift */,
 				3D0280DD22B4003F00111586 /* TaskTimeLogger.swift */,
-				3D36C8BD22B9144500166224 /* CombinationDemoScenes.swift */,
+				3D36C8BD22B9144500166224 /* TaskScenes.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -645,7 +645,7 @@
 				3D68FCAA226A0F1A00C421AD /* DateExtensions.swift in Sources */,
 				3D883661221AD84300672CEB /* ARPNode.swift in Sources */,
 				3D345087226470D30017DB39 /* ButtonEvents.swift in Sources */,
-				3D36C8BE22B9144500166224 /* CombinationDemoScenes.swift in Sources */,
+				3D36C8BE22B9144500166224 /* TaskScenes.swift in Sources */,
 				3DE5191B22A7DB850005B73B /* SweepPluginTwoProfiles.swift in Sources */,
 				DC28B471200E592C008B77AB /* DegreesToRadians.swift in Sources */,
 			);

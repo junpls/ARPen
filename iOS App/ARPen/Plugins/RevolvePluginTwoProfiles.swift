@@ -57,6 +57,10 @@ class RevolvePluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginPro
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
         self.taskTimeLogger.reset()
         self.freePaths.removeAll()
+        TaskScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: SCNVector3(0, 0, 0))
+        if let profile = scene.drawingNode.childNodes.first as? ARPPath {
+            freePaths.append(profile)
+        }
         /// ************************
     }
     

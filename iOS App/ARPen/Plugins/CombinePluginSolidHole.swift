@@ -54,7 +54,7 @@ class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
         /// **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
         self.taskTimeLogger.reset()
-        CombinationDemoScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: SCNVector3(0, 0, 0))
+        TaskScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: SCNVector3(0, 0, 0))
         /// ************************
     }
     
@@ -118,7 +118,7 @@ class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
                             res.isHole = createHole
                             
                             /// **** For user study ****
-                            if CombinationDemoScenes.isTaskDone(scene: self.currentScene?.drawingNode, task: self.stateManager.task) {
+                            if TaskScenes.isTaskDone(scene: self.currentScene?.drawingNode, task: self.stateManager.task) {
                                 let targetMeasurementDict = self.taskTimeLogger.finish()
                                 self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                             }

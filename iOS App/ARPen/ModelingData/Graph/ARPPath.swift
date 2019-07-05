@@ -60,6 +60,11 @@ class ARPPathNode: ARPNode {
         self.init(SCNVector3(x, y, z), cornerStyle: cornerStyle)
     }
     
+    convenience init(_ x: Float, _ y: Float, _ z: Float, cornerStyle: CornerStyle = CornerStyle.sharp, initFixed: Bool = false) {
+        self.init(SCNVector3(x, y, z), cornerStyle: cornerStyle)
+        self.fixed = initFixed
+    }
+
     init(_ position: SCNVector3, cornerStyle: CornerStyle = CornerStyle.sharp) {
         super.init()
         self.addChildNode(geometryNode)
