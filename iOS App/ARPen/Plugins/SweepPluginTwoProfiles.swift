@@ -157,7 +157,27 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
                 if let sweep = try? ARPSweep(profile: profile1, path: spine) {
                     
                     /// **** For user study ****
-                    let targetMeasurementDict = self.taskTimeLogger.finish()
+                    var targetMeasurementDict = self.taskTimeLogger.finish()
+                    
+                    switch self.stateManager.task {
+                    case "Cube":
+                        let cubeHeight = TaskScenes.cubeSize * TaskScenes.cubeScale
+                        let deviation = TaskScenes.calcExtrusionDeviation(profile: profile1, spine: spine, targetHeight: cubeHeight)
+                        targetMeasurementDict["Deviation"] = String(deviation)
+                    case "Phone stand":
+                        let phoneStandHeight = TaskScenes.phoneStandHeight * TaskScenes.phoneStandScale
+                        let deviation = TaskScenes.calcExtrusionDeviation(profile: profile1, spine: spine, targetHeight: phoneStandHeight)
+                        targetMeasurementDict["Deviation"] = String(deviation)
+                    case "Handle":
+                        let handleWidth = TaskScenes.handleWidth * TaskScenes.handleScale
+                        let target = spine.points.first!.worldPosition + SCNVector3(handleWidth, 0, 0)
+                        let actual = spine.points.last!.worldPosition
+                        let deviation = target.distance(vector: actual) / handleWidth
+                        targetMeasurementDict["Deviation"] = String(deviation)
+                    default:
+                        break
+                    }
+
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                     /// ************************
 

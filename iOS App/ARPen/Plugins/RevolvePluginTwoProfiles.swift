@@ -116,7 +116,25 @@ class RevolvePluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginPro
                 if let revolution = try? ARPRevolution(profile: profile1, axis: axisPath) {
                     
                     /// **** For user study ****
-                    let targetMeasurementDict = self.taskTimeLogger.finish()
+                    var targetMeasurementDict = self.taskTimeLogger.finish()
+                    
+                    switch self.stateManager.task {
+                    case "Door stopper":
+                        let targetRadiusTop = TaskScenes.doorStopperRadiusTop * TaskScenes.doorStopperScale
+                        let targetRadiusBottom = TaskScenes.doorStopperRadiusBottom * TaskScenes.doorStopperScale
+                        targetMeasurementDict["DeviationTop"] = String(abs(revolution.radiusTop - targetRadiusTop) / targetRadiusTop)
+                        targetMeasurementDict["DeviationBottom"] = String(abs(revolution.radiusBottom - targetRadiusBottom) / targetRadiusBottom)
+                        targetMeasurementDict["DeviationAngle"] = String(revolution.angle)
+                    case "Flower pot":
+                        let targetRadiusTop = TaskScenes.flowerPotRadiusTop * TaskScenes.flowerPotScale
+                        let targetRadiusBottom = TaskScenes.flowerPotRadiusBottom * TaskScenes.flowerPotScale
+                        targetMeasurementDict["DeviationTop"] = String(abs(revolution.radiusTop - targetRadiusTop) / targetRadiusTop)
+                        targetMeasurementDict["DeviationBottom"] = String(abs(revolution.radiusBottom - targetRadiusBottom) / targetRadiusBottom)
+                        targetMeasurementDict["DeviationAngle"] = String(revolution.angle)
+                    default:
+                        break
+                    }
+                    
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                     /// ************************
                     

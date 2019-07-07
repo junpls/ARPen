@@ -11,8 +11,15 @@ import Foundation
 
 class ARPRevolution: ARPGeomNode {
     
-    var profile:ARPPath
-    var axis:ARPPath
+    var profile: ARPPath
+    var axis: ARPPath
+    
+    /// **** For user study ****
+    var radiusTop: Float!
+    var radiusBottom: Float!
+    var angle: Float!
+    /// ************************
+
 
     init(profile: ARPPath, axis: ARPPath) throws {
         
@@ -38,8 +45,15 @@ class ARPRevolution: ARPGeomNode {
         var points = profile.points.map({ ARPPathNode($0.worldPosition, cornerStyle: $0.cornerStyle) })
         points.first!.cornerStyle = .sharp
         points.last!.cornerStyle = .sharp
-        let top = ARPPathNode(revAxis.projectOnto(point: profile.points.last!.worldPosition))
-        let bottom = ARPPathNode(revAxis.projectOnto(point: profile.points.first!.worldPosition))
+        let top = ARPPathNode(revAxis.projectOnto(point: points.last!.worldPosition))
+        let bottom = ARPPathNode(revAxis.projectOnto(point: points.first!.worldPosition))
+
+        /// **** For user study ****
+        self.radiusTop = points.last!.worldPosition.distance(vector: top.worldPosition)
+        self.radiusBottom = points.first!.worldPosition.distance(vector: bottom.worldPosition)
+        self.angle = acos(revAxis.direction.y) * 180 / Float.pi
+        /// ************************
+
         points.append(top)
         points.insert(bottom, at: 0)
         

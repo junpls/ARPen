@@ -37,6 +37,7 @@ class SweepPluginProfileAndPath: Plugin, UIButtonPlugin, UserStudyRecordPluginPr
     var recordManager: UserStudyRecordManager!
     var stateManager: UserStudyStateManager!
     private var taskTimeLogger = TaskTimeLogger()
+    private var taskCenter: SCNVector3 = SCNVector3(0, 0, 0)
     /// ************************
 
     init() {
@@ -57,7 +58,7 @@ class SweepPluginProfileAndPath: Plugin, UIButtonPlugin, UserStudyRecordPluginPr
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
         self.taskTimeLogger.reset()
         self.freePaths.removeAll()
-        TaskScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: SCNVector3(0, 0, 0))
+        TaskScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: taskCenter)
         if let profile = scene.drawingNode.childNodes.first as? ARPPath {
             freePaths.append(profile)
         }
@@ -91,7 +92,27 @@ class SweepPluginProfileAndPath: Plugin, UIButtonPlugin, UserStudyRecordPluginPr
                 if let sweep = try? ARPSweep(profile: profile, path: spine) {
                     
                     /// **** For user study ****
-                    let targetMeasurementDict = self.taskTimeLogger.finish()
+                    var targetMeasurementDict = self.taskTimeLogger.finish()
+                    
+                    switch self.stateManager.task {
+                    case "Cube":
+                        let cubeHeight = TaskScenes.cubeSize * TaskScenes.cubeScale
+                        let deviation = TaskScenes.calcExtrusionDeviation(profile: profile, spine: spine, targetHeight: cubeHeight)
+                        targetMeasurementDict["Deviation"] = String(deviation)
+                    case "Phone stand":
+                        let phoneStandHeight = TaskScenes.phoneStandHeight * TaskScenes.phoneStandScale
+                        let deviation = TaskScenes.calcExtrusionDeviation(profile: profile, spine: spine, targetHeight: phoneStandHeight)
+                        targetMeasurementDict["Deviation"] = String(deviation)
+                    case "Handle":
+                        let handleWidth = TaskScenes.handleWidth * TaskScenes.handleScale
+                        let target = spine.points.first!.worldPosition + SCNVector3(handleWidth, 0, 0)
+                        let actual = spine.points.last!.worldPosition
+                        let deviation = target.distance(vector: actual) / handleWidth
+                        targetMeasurementDict["Deviation"] = String(deviation)
+                    default:
+                        break
+                    }
+                    
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                     /// ************************
                     

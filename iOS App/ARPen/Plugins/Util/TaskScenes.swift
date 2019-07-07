@@ -154,9 +154,10 @@ class TaskScenes {
         return [sphere, box, cylinder]
     }
     
+    static let cubeSize: Float = 0.04
     static let cubeScale: Float = 1.5
     static func cubeScene(centeredAt position: SCNVector3) -> [ARPPath] {
-        let d = TaskScenes.cubeScale * 0.04
+        let d = cubeScale * cubeSize
        
         let profile = ARPPath(points: [
             ARPPathNode(position.x - d/2, position.y, position.z - d/2, cornerStyle: .sharp, initFixed: true),
@@ -168,6 +169,7 @@ class TaskScenes {
         return [profile]
     }
     
+    static let phoneStandHeight: Float = 0.07
     static let phoneStandScale: Float = 1
     static func phoneStandScene(centeredAt position: SCNVector3) -> [ARPPath] {
         let s: Float = TaskScenes.phoneStandScale
@@ -183,7 +185,16 @@ class TaskScenes {
         
         return [profile]
     }
+    
+    static func calcExtrusionDeviation(profile: ARPPath, spine: ARPPath, targetHeight: Float) -> Float {
+        let target = spine.points.first!.worldPosition + profile.getPC1() * targetHeight
+        let actual = spine.points.last!.worldPosition
+        let deviation = target.distance(vector: actual) / targetHeight
+        return deviation
+    }
 
+    /// WARNING: In current implementation, handle must not be rotated, otherwise deviation measurements will be incorrect!
+    static let handleWidth: Float = 0.1
     static let handleScale: Float = 1
     static func handleScene(centeredAt position: SCNVector3) -> [ARPPath] {
         let s: Float = TaskScenes.handleScale
@@ -198,6 +209,8 @@ class TaskScenes {
         return [profile]
     }
     
+    static let flowerPotRadiusTop: Float = 0.027
+    static let flowerPotRadiusBottom: Float = 0.018
     static let flowerPotScale: Float = 1
     static func flowerPotScene(centeredAt position: SCNVector3) -> [ARPPath] {
         let s: Float = TaskScenes.flowerPotScale
@@ -207,13 +220,15 @@ class TaskScenes {
             ARPPathNode(position.x - 0.023*s, position.y + 0.005*s, position.z, cornerStyle: .round, initFixed: true),
             ARPPathNode(position.x - 0.018*s, position.y + 0.01*s, position.z, cornerStyle: .sharp, initFixed: true),
             ARPPathNode(position.x - 0.032*s, position.y + 0.022*s, position.z, cornerStyle: .round, initFixed: true),
-            ARPPathNode(position.x - 0.021*s, position.y + 0.064*s, position.z, cornerStyle: .round, initFixed: true),
+            ARPPathNode(position.x - 0.018*s, position.y + 0.07*s, position.z, cornerStyle: .round, initFixed: true),
             ARPPathNode(position.x - 0.027*s, position.y + 0.081*s, position.z, cornerStyle: .sharp, initFixed: true)
             ], closed: false)
         
         return [profile]
     }
     
+    static let doorStopperRadiusTop: Float = 0.03
+    static let doorStopperRadiusBottom: Float = 0.03
     static let doorStopperScale: Float = 1
     static func doorStopperScene(centeredAt position: SCNVector3) -> [ARPPath] {
         let s: Float = TaskScenes.doorStopperScale
