@@ -176,6 +176,10 @@ class ARPGeomNode: ARPNode {
         self.isoLinesNode.isHidden = visited
     }
     
+    func exportStl(filePath: URL) {
+        OCCTAPI.shared.exportStl(handle: occtReference!, filePath: filePath)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -138,6 +138,12 @@ class UserStudyRecordManager : NSObject{
         }
     }
     
+    func saveStl(node: ARPGeomNode, name: String) {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let archiveURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("stl")
+        node.exportStl(filePath: archiveURL)
+    }
+    
     //try to load existing user study data from home directory on the device. If successfull, return the created userStudy Dictionary
     func loadFromFile() -> [Int:[UserStudyRecord]]? {
         //get URL to location where existin user study data would be stored

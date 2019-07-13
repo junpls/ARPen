@@ -32,14 +32,20 @@ class PenScene: SCNScene {
     var markerFound = true
     
     /**
-     Calling this method will convert the whole scene with every nodes in it to an stl file
-     and saves it in the temporary directory as a file
+     This method will convert the first ARPGeomNode into an stl and save it to the
+     temporary directory. If there is none, it will save the entire scene.
      - Returns: An URL to the scene.stl file. Located in the tmp directory of the app
      */
     func share() -> URL {
         let filePath = URL(fileURLWithPath: NSTemporaryDirectory() + "/scene.stl")
-        let asset = MDLAsset(scnScene: self)
-        try! asset.export(to: filePath)
+        
+        if let node = drawingNode.childNodes.first as? ARPGeomNode {
+            node.exportStl(filePath: filePath)
+        } else {
+            let asset = MDLAsset(scnScene: self)
+            try! asset.export(to: filePath)
+        }
+
         return filePath
     }
     

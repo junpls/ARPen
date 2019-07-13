@@ -46,6 +46,9 @@
 #include <GProp_PrincipalProps.hxx>
 #include <math_GaussLeastSquare.hxx>
 #include <BRepPrimAPI_MakeCylinder.hxx>
+#include <StlAPI_Writer.hxx>
+
+#include <OSD_OpenFile.hxx>
 
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
@@ -72,6 +75,7 @@ typedef struct {
 } MyVertex;
 
 double meshDeflection = 0.005;
+double meshDeflectionExport = 0.001;
 double lineDeflection = 0.0003;
 double flatteningTolerance = 0.01;
 
@@ -1060,6 +1064,16 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
     NSLog(@"Conversion took %f", timeInterval);
     
     return geometry;
+}
+
+- (void) stlOf:(const char *) label
+        toFile:(const char *) filename
+{
+    TCollection_AsciiString key = TCollection_AsciiString(label);
+    TopoDS_Shape shape = [self retrieveFromRegistry:key];
+    BRepMesh_IncrementalMesh mesh(shape, meshDeflectionExport);
+    StlAPI_Writer writer = StlAPI_Writer();
+    writer.Write(shape, filename);
 }
 
 @end

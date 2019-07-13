@@ -156,6 +156,17 @@ class OCCTAPI {
         return occt.sceneKitTubes(of: handle)
     }
     
+    func exportStl(handle: OCCTReference, filePath: URL) {
+        var fileName = filePath.absoluteString
+
+        // C function 'fopen' used by OCCT does not work if path starts with "file:///private"
+        if fileName.starts(with: "file:///private") {
+            fileName.removeFirst(15)
+        }
+        
+        occt.stl(of: handle, toFile: fileName.cString(using: String.Encoding.utf8))
+    }
+    
     
     func free(handle: OCCTReference) {
         occt.freeShape(handle)

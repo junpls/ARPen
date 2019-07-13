@@ -72,6 +72,9 @@
 - (SCNGeometry *) sceneKitMeshOf:(const char *) label;
 - (SCNGeometry *) sceneKitLinesOf:(const char *) label;
 - (SCNGeometry *) sceneKitTubesOf:(const char *) label;
+- (void) stlOf:(const char *) label
+        toFile:(const char *) filename;
+
 - (void) freeShape:(const char *) label;
 
 @end
