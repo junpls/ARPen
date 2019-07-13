@@ -93,21 +93,25 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
                     /// **** For user study ****
                     var targetMeasurementDict = self.taskTimeLogger.finish()
                     
+                    var targetRadiusTop, targetRadiusBottom: Float!
+                    
                     switch self.stateManager.task {
                     case "Door stopper":
-                        let targetRadiusTop = TaskScenes.doorStopperRadiusTop * TaskScenes.doorStopperScale
-                        let targetRadiusBottom = TaskScenes.doorStopperRadiusBottom * TaskScenes.doorStopperScale
-                        targetMeasurementDict["DeviationTop"] = String(abs(revolution.radiusTop - targetRadiusTop) / targetRadiusTop)
-                        targetMeasurementDict["DeviationBottom"] = String(abs(revolution.radiusBottom - targetRadiusBottom) / targetRadiusBottom)
-                        targetMeasurementDict["DeviationAngle"] = String(revolution.angle)
+                        targetRadiusTop = TaskScenes.doorStopperRadiusTop * TaskScenes.doorStopperScale
+                        targetRadiusBottom = TaskScenes.doorStopperRadiusBottom * TaskScenes.doorStopperScale
                     case "Flower pot":
-                        let targetRadiusTop = TaskScenes.flowerPotRadiusTop * TaskScenes.flowerPotScale
-                        let targetRadiusBottom = TaskScenes.flowerPotRadiusBottom * TaskScenes.flowerPotScale
-                        targetMeasurementDict["DeviationTop"] = String(abs(revolution.radiusTop - targetRadiusTop) / targetRadiusTop)
-                        targetMeasurementDict["DeviationBottom"] = String(abs(revolution.radiusBottom - targetRadiusBottom) / targetRadiusBottom)
-                        targetMeasurementDict["DeviationAngle"] = String(revolution.angle)
+                        targetRadiusTop = TaskScenes.flowerPotRadiusTop * TaskScenes.flowerPotScale
+                        targetRadiusBottom = TaskScenes.flowerPotRadiusBottom * TaskScenes.flowerPotScale
                     default:
                         break
+                    }
+                    
+                    if ["Door stopper", "Flower pot"].contains(self.stateManager.task) {
+                        let deviationTop = abs(revolution.radiusTop - targetRadiusTop)
+                        let deviationBottom = abs(revolution.radiusBottom - targetRadiusBottom)
+                        let deviation = (deviationTop + deviationBottom) / (targetRadiusTop + targetRadiusBottom)
+                        targetMeasurementDict["DeviationRadius"] = String(deviation)
+                        targetMeasurementDict["DeviationAngle"] = String(revolution.angle)
                     }
 
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
