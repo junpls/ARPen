@@ -147,7 +147,7 @@ class ARPPath: ARPGeomNode {
             self.content.addChildNode(point)
         }
         self.content.isHidden = false
-        self.lineColor = color
+        self.lineColor = self.closed ? UIColor.green : UIColor.red
     }
     
     func appendPoint(_ point:ARPPathNode, at position:Int = -1) {

@@ -141,6 +141,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     
     var fetchSettingsUrlSession: URLSession?
     let fetchSettingsUrl: String = "https://jabens.tools/cthci/settings.json"
+    var previousSettings: String?
     func fetchRemoteSettings(repeatAfter timeout:Int? = nil) {
         if fetchSettingsUrlSession == nil {
             let config = URLSessionConfiguration.default
@@ -157,6 +158,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
                         self.userStudyRecordManager.currentActiveUserID = res.uid
                         self.userStudyRecordManager.isRecording = res.recording
                         self.userStudyStateManager.task = res.task
+
+                        // Refresh scene if something changed
+                        if let jsonString = String(data: data, encoding: .utf8) {
+                            if let prev = self.previousSettings, prev != jsonString {
+                                DispatchQueue.main.async {
+                                    self.resetScene()
+                                }
+                            }
+                            self.previousSettings = jsonString
+                        }
                     } catch let error {
                         print(error)
                     }
@@ -370,13 +381,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             ])
     }
     
-    @IBAction func resetButtonPressed(_ sender: Any) {
+    func resetScene() {
         if let scene = self.arSceneView.scene as? PenScene {
             scene.drawingNode.enumerateChildNodes {(node, pointer) in
                 node.removeFromParentNode()
             }
         }
         self.activatePlugin(withID: self.currentActivePluginID)
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        self.resetScene()
     }
     
     //Software Pen Button Actions
