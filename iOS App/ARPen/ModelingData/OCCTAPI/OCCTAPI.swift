@@ -160,8 +160,11 @@ class OCCTAPI {
         var fileName = filePath.absoluteString
 
         // C function 'fopen' used by OCCT does not work if path starts with "file:///private"
-        if fileName.starts(with: "file:///private") {
-            fileName.removeFirst(15)
+        if fileName.starts(with: "file:///") {
+            fileName.removeFirst(8)
+        }
+        if fileName.starts(with: "private") {
+            fileName.removeFirst(7)
         }
         
         occt.stl(of: handle, toFile: fileName.cString(using: String.Encoding.utf8))

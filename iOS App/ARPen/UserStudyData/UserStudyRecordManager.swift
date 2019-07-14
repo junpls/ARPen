@@ -143,9 +143,14 @@ class UserStudyRecordManager : NSObject{
         if !isRecording {
             return
         }
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let archiveURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("stl")
-        node.exportStl(filePath: archiveURL)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileName = "\(name)_User\(self.currentActiveUserID ?? -1)_\(Date().timeIntervalSince1970.rounded())"
+            let archiveURL = documentsDirectory.appendingPathComponent(fileName).appendingPathExtension("stl")
+            node.exportStl(filePath: archiveURL)
+            print(archiveURL)
+        }
     }
     
     //try to load existing user study data from home directory on the device. If successfull, return the created userStudy Dictionary

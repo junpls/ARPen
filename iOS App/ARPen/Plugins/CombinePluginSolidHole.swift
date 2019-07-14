@@ -121,6 +121,7 @@ class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
                             if TaskScenes.isTaskDone(scene: self.currentScene?.drawingNode, task: self.stateManager.task) {
                                 let targetMeasurementDict = self.taskTimeLogger.finish()
                                 self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                                self.recordManager.saveStl(node: res, name: "CombineSolidHole")
                             }
                             /// **** For user study ****
                         }

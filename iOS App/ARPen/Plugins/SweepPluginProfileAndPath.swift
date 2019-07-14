@@ -114,6 +114,7 @@ class SweepPluginProfileAndPath: Plugin, UIButtonPlugin, UserStudyRecordPluginPr
                     }
                     
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                    self.recordManager.saveStl(node: sweep, name: "SweepProfileAndPath")
                     /// ************************
                     
                     DispatchQueue.main.async {

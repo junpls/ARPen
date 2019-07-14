@@ -115,6 +115,7 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
                     }
 
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
+                    self.recordManager.saveStl(node: revolution, name: "RevolveProfileAndAxis")
                     /// ************************
 
                     DispatchQueue.main.async {
