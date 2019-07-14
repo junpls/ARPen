@@ -10,29 +10,36 @@ import Foundation
 
 class TaskScenes {
     
+    static let shiftXRange: Float = 0
+    static let shiftZRange: Float = 0
+
     static func populateSceneBasedOnTask(scene: SCNNode, task: String, centeredAt position: SCNVector3) {
         
         var objects = [ARPNode]()
         
+        let shiftX = Float.random(in: -shiftXRange/2...shiftXRange/2)
+        let shiftZ = Float.random(in: -shiftZRange/2...shiftZRange/2)
+        let shiftedPosition = position + SCNVector3(shiftX, 0, shiftZ)
+        
         switch task {
         case "Cube":
-            objects = TaskScenes.cubeScene(centeredAt: position)
+            objects = TaskScenes.cubeScene(centeredAt: shiftedPosition)
         case "Phone stand":
-            objects = TaskScenes.phoneStandScene(centeredAt: position)
+            objects = TaskScenes.phoneStandScene(centeredAt: shiftedPosition)
         case "Handle":
-            objects = TaskScenes.handleScene(centeredAt: position)
+            objects = TaskScenes.handleScene(centeredAt: shiftedPosition)
         case "Flower pot":
-            objects = TaskScenes.flowerPotScene(centeredAt: position)
+            objects = TaskScenes.flowerPotScene(centeredAt: shiftedPosition)
         case "Door stopper":
-            objects = TaskScenes.doorStopperScene(centeredAt: position)
+            objects = TaskScenes.doorStopperScene(centeredAt: shiftedPosition)
         case "Candle holder":
-            objects = TaskScenes.candleHolderScene(centeredAt: position)
+            objects = TaskScenes.candleHolderScene(centeredAt: shiftedPosition)
         case "Spoon":
-            objects = TaskScenes.spoonScene(centeredAt: position)
+            objects = TaskScenes.spoonScene(centeredAt: shiftedPosition)
         case "Pen holder":
-            objects = TaskScenes.penHolderScene(centeredAt: position)
+            objects = TaskScenes.penHolderScene(centeredAt: shiftedPosition)
         case "Combine demo":
-            objects = TaskScenes.combinationDemoScene(centeredAt: position)
+            objects = TaskScenes.combinationDemoScene(centeredAt: shiftedPosition)
         default:
             break
         }

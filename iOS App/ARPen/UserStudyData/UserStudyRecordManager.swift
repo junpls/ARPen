@@ -146,7 +146,7 @@ class UserStudyRecordManager : NSObject{
         
         DispatchQueue.global(qos: .userInitiated).async {
             let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let fileName = "\(name)_User\(self.currentActiveUserID ?? -1)_\(Date().timeIntervalSince1970.rounded())"
+            let fileName = "\(name)_User\(self.currentActiveUserID ?? -1)_\(UInt64(Date().timeIntervalSince1970.rounded()))"
             let archiveURL = documentsDirectory.appendingPathComponent(fileName).appendingPathExtension("stl")
             node.exportStl(filePath: archiveURL)
             print(archiveURL)

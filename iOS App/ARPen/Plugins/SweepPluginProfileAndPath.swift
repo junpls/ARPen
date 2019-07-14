@@ -37,7 +37,7 @@ class SweepPluginProfileAndPath: Plugin, UIButtonPlugin, UserStudyRecordPluginPr
     var recordManager: UserStudyRecordManager!
     var stateManager: UserStudyStateManager!
     private var taskTimeLogger = TaskTimeLogger()
-    private var taskCenter: SCNVector3 = SCNVector3(0, 0, 0)
+    private var taskCenter: SCNVector3 = SCNVector3(0, 0, 0.2)
     /// ************************
 
     init() {
