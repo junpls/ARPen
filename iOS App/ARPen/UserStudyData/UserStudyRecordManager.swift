@@ -138,7 +138,11 @@ class UserStudyRecordManager : NSObject{
         }
     }
     
+    /// Convert the node to stl and save it to the documents directory under the given name
     func saveStl(node: ARPGeomNode, name: String) {
+        if !isRecording {
+            return
+        }
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let archiveURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("stl")
         node.exportStl(filePath: archiveURL)

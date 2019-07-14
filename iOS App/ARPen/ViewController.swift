@@ -10,6 +10,12 @@ import UIKit
 import SceneKit
 import ARKit
 
+struct RemoteSettings: Codable {
+    let task: String
+    let uid: Int
+    let recording: Bool
+}
+
 /**
  The "Main" ViewController. This ViewController holds the instance of the PluginManager.
  Furthermore it holds the ARKitView.
@@ -98,6 +104,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
         // Run the view's session
         arSceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        
+        fetchRemoteSettings(repeatAfter: 1)
     }
     
     /**
@@ -129,6 +137,38 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
         // Show navigation bar
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    var fetchSettingsUrlSession: URLSession?
+    let fetchSettingsUrl: String = "https://jabens.tools/cthci/settings.json"
+    func fetchRemoteSettings(repeatAfter timeout:Int? = nil) {
+        if fetchSettingsUrlSession == nil {
+            let config = URLSessionConfiguration.default
+            config.requestCachePolicy = .reloadIgnoringLocalCacheData
+            config.urlCache = nil
+            fetchSettingsUrlSession = URLSession.init(configuration: config)
+        }
+        
+        if let url = URL(string: fetchSettingsUrl) {
+            fetchSettingsUrlSession?.dataTask(with: url) { data, response, error in
+                if let data = data {
+                    do {
+                        let res = try JSONDecoder().decode(RemoteSettings.self, from: data)
+                        self.userStudyRecordManager.currentActiveUserID = res.uid
+                        self.userStudyRecordManager.isRecording = res.recording
+                        self.userStudyStateManager.task = res.task
+                    } catch let error {
+                        print(error)
+                    }
+                }
+                
+                if let t = timeout {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(t), execute: {
+                        self.fetchRemoteSettings(repeatAfter: t)
+                    })
+                }
+            }.resume()
+        }
     }
     
     func setupPluginMenu(){
@@ -328,6 +368,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             .fadeOut(duration: 0.5),
             .removeFromParentNode()
             ])
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        if let scene = self.arSceneView.scene as? PenScene {
+            scene.drawingNode.enumerateChildNodes {(node, pointer) in
+                node.removeFromParentNode()
+            }
+        }
+        self.activatePlugin(withID: self.currentActivePluginID)
     }
     
     //Software Pen Button Actions
