@@ -52,6 +52,7 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentView = view
         self.currentScene = scene
+        self.curveDesigner.reset()
         self.undoButton.addTarget(self, action: #selector(undo), for: .touchUpInside)
 
         /// **** For user study ****
@@ -116,7 +117,7 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
                     }
 
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
-                    self.recordManager.saveStl(node: revolution, name: "RevolveProfileAndAxis")
+                    self.recordManager.saveStl(node: revolution, name: "RevolveProfileAndAxis_\(self.stateManager.task ?? "")")
                     /// ************************
 
                     DispatchQueue.main.async {

@@ -832,7 +832,6 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
                         }
                         vertexIndex += 2;
                     }
-                    NSLog(@"3");
                 }
                 prev = pt;
             }

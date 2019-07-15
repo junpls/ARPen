@@ -52,6 +52,7 @@ class SweepPluginProfileAndPath: Plugin, UIButtonPlugin, UserStudyRecordPluginPr
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
         self.currentView = view
         self.currentScene = scene
+        self.curveDesigner.reset()
         self.undoButton.addTarget(self, action: #selector(undo), for: .touchUpInside)
         
         /// **** For user study ****
@@ -114,7 +115,7 @@ class SweepPluginProfileAndPath: Plugin, UIButtonPlugin, UserStudyRecordPluginPr
                     }
                     
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
-                    self.recordManager.saveStl(node: sweep, name: "SweepProfileAndPath")
+                    self.recordManager.saveStl(node: sweep, name: "SweepProfileAndPath_\(self.stateManager.task ?? "")")
                     /// ************************
                     
                     DispatchQueue.main.async {

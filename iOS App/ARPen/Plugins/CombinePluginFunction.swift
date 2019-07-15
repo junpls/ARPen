@@ -98,7 +98,7 @@ class CombinePluginFunction: Plugin, UIButtonPlugin, UserStudyRecordPluginProtoc
                             if TaskScenes.isTaskDone(scene: self.currentScene?.drawingNode, task: self.stateManager.task) {
                                 let targetMeasurementDict = self.taskTimeLogger.finish()
                                 self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
-                                self.recordManager.saveStl(node: diff, name: "CombineFunction")
+                                self.recordManager.saveStl(node: diff, name: "CombineFunction_\(self.stateManager.task ?? "")")
                             }
                             /// ************************
                         }

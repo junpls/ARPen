@@ -30,6 +30,14 @@ class CurveDesigner {
         buttonEvents = ButtonEvents()
         buttonEvents.didPressButton = self.didPressButton
         buttonEvents.didReleaseButton = self.didReleaseButton
+        self.reset()
+    }
+    
+    func reset() {
+        self.blocked = false
+        self.busy = false
+        self.activePath = nil
+        self.addedThisFrame = false
     }
     
     func update(scene: PenScene, buttons: [Button : Bool]) {

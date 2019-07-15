@@ -226,7 +226,7 @@ class TaskScenes {
             ARPPathNode(position.x - 0.018*s, position.y, position.z, cornerStyle: .sharp, initFixed: true),
             ARPPathNode(position.x - 0.023*s, position.y + 0.005*s, position.z, cornerStyle: .round, initFixed: true),
             ARPPathNode(position.x - 0.018*s, position.y + 0.01*s, position.z, cornerStyle: .sharp, initFixed: true),
-            ARPPathNode(position.x - 0.032*s, position.y + 0.022*s, position.z, cornerStyle: .round, initFixed: true),
+            ARPPathNode(position.x - 0.032*s, position.y + 0.035*s, position.z, cornerStyle: .round, initFixed: true),
             ARPPathNode(position.x - 0.018*s, position.y + 0.07*s, position.z, cornerStyle: .round, initFixed: true),
             ARPPathNode(position.x - 0.027*s, position.y + 0.081*s, position.z, cornerStyle: .sharp, initFixed: true)
             ], closed: false)
