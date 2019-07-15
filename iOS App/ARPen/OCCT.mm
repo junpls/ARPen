@@ -48,8 +48,6 @@
 #include <BRepPrimAPI_MakeCylinder.hxx>
 #include <StlAPI_Writer.hxx>
 
-#include <OSD_OpenFile.hxx>
-
 // For creating the flask (was just a test)
 #include <GC_MakeArcOfCircle.hxx>
 #include <GC_MakeSegment.hxx>
@@ -74,8 +72,11 @@ typedef struct {
 //    float nx, ny, nz; // normal
 } MyVertex;
 
-double meshDeflection = 0.005;
-double meshDeflectionExport = 0.001;
+// OpenCascade uses millimeters internally, while SceneKit uses meters. Objects are scaled by this factor for stl export.
+double scalingFactor = 1000;
+
+double meshDeflection = 0.0005;
+double meshDeflectionExport = 0.0002;
 double lineDeflection = 0.0003;
 double flatteningTolerance = 0.01;
 
@@ -1071,9 +1072,16 @@ NCollection_DataMap<TCollection_AsciiString, gp_Trsf> transformRegistry = NColle
 {
     TCollection_AsciiString key = TCollection_AsciiString(label);
     TopoDS_Shape shape = [self retrieveFromRegistry:key];
-    BRepMesh_IncrementalMesh mesh(shape, meshDeflectionExport);
+    
+    // Scale shape, as OpenCascade uses millimeters internally
+    gp_Trsf trans;
+    trans.SetScaleFactor(scalingFactor);
+    BRepBuilderAPI_Transform trsf(shape, trans);
+    TopoDS_Shape newShape = trsf.Shape();
+    
+    BRepMesh_IncrementalMesh mesh(newShape, meshDeflectionExport*scalingFactor);
     StlAPI_Writer writer = StlAPI_Writer();
-    writer.Write(shape, filename);
+    writer.Write(newShape, filename);
 }
 
 @end
