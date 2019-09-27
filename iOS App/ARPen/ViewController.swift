@@ -62,9 +62,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         super.viewDidLoad()
         
         // Create a new scene
-        let scene = PenScene(named: "art.scnassets/ship.scn")!
-        let ship = scene.rootNode.childNode(withName: "ship", recursively: true)!
-        ship.removeFromParentNode()
+        let scene = PenScene()
         scene.markerBox = MarkerBox()
         self.arSceneView.pointOfView?.addChildNode(scene.markerBox)
         
