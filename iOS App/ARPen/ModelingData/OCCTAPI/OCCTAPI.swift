@@ -84,7 +84,7 @@ class OCCTAPI {
         }
     }
     
-    func sweep(profile: OCCTReference, path: OCCTReference)  throws -> OCCTReference {
+    func sweep(profile: OCCTReference, path: OCCTReference) throws -> OCCTReference {
         if let sum = occt.sweep(profile, along: path) {
             let ref = OCCTReference(cString: sum)
             return ref
@@ -93,7 +93,7 @@ class OCCTAPI {
         }
     }
     
-    func revolve(profile: OCCTReference, aroundAxis: SCNVector3, withDirection: SCNVector3)  throws -> OCCTReference {
+    func revolve(profile: OCCTReference, aroundAxis: SCNVector3, withDirection: SCNVector3) throws -> OCCTReference {
         if let sum = occt.revolve(profile, aroundAxis: aroundAxis, withDirection: withDirection) {
             let ref = OCCTReference(cString: sum)
             return ref
@@ -102,7 +102,7 @@ class OCCTAPI {
         }
     }
     
-    func loft(profiles: [OCCTReference])  throws -> OCCTReference {
+    func loft(profiles: [OCCTReference]) throws -> OCCTReference {
         if let sum = occt.loft(profiles as [Any], length: Int32(profiles.count)) {
             let ref = OCCTReference(cString: sum)
             return ref
