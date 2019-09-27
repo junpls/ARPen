@@ -1,6 +1,6 @@
 //
-//  Header.h
-//  Loop
+//  OCCT.h
+//  ARPen
 //
 //  Created by Jan on 25.01.19.
 //  Copyright © 2019 Jan. All rights reserved.
@@ -14,39 +14,8 @@
 
 @interface OCCT : NSObject
 
-@property (strong, nonatomic) id someProperty;
+- (void) freeShape:(const char *) label;
 
-- (void) someMethod;
-
-- (const char *) createSphere:(double) radius;
-- (const char *) createBox:(double) width
-                    height:(double) height
-                    length:(double) length;
-- (const char *) createCylinder:(double) radius
-                         height:(double) height;
-- (const char *) createPath:(const SCNVector3 []) points
-                     length:(int) length
-                    corners:(const int []) corners
-                     closed:(bool) closed;
-
-
-
-
-- (const char *) sweep:(const char *) profile
-                 along:(const char *) path;
-- (const char *) revolve:(const char *) profile
-              aroundAxis:(SCNVector3) axisPosition
-           withDirection:(SCNVector3) axisDirection;
-- (const char *) loft:(NSArray *) profiles
-               length:(int) length;
-
-
-- (const char *) booleanCut:(const char *) a
-                   subtract:(const char *) b;
-- (const char *) booleanJoin:(const char *) a
-                        with:(const char *) b;
-- (const char *) booleanIntersect:(const char *) a
-                             with:(const char *) b;
 
 
 
@@ -68,15 +37,38 @@
 
 
 
+- (const char *) createSphere:(double) radius;
+- (const char *) createBox:(double) width
+                    height:(double) height
+                    length:(double) length;
+- (const char *) createCylinder:(double) radius
+                         height:(double) height;
+- (const char *) createPath:(const SCNVector3 []) points
+                     length:(int) length
+                    corners:(const int []) corners
+                     closed:(bool) closed;
+
+- (const char *) sweep:(const char *) profile
+                 along:(const char *) path;
+- (const char *) revolve:(const char *) profile
+              aroundAxis:(SCNVector3) axisPosition
+           withDirection:(SCNVector3) axisDirection;
+- (const char *) loft:(NSArray *) profiles
+               length:(int) length;
+
+- (const char *) booleanCut:(const char *) a
+                   subtract:(const char *) b;
+- (const char *) booleanJoin:(const char *) a
+                        with:(const char *) b;
+- (const char *) booleanIntersect:(const char *) a
+                             with:(const char *) b;
+
 
 - (SCNGeometry *) sceneKitMeshOf:(const char *) label;
 - (SCNGeometry *) sceneKitLinesOf:(const char *) label;
 - (SCNGeometry *) sceneKitTubesOf:(const char *) label;
 - (void) stlOf:(const char *) label
         toFile:(const char *) filename;
-
-- (void) freeShape:(const char *) label;
-
 @end
 
 #endif /* OCCT_h */
