@@ -11,17 +11,17 @@
 
 #include "Registry.h"
 
-#include <BRepBuilderAPI_GTransform.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <Bnd_Box.hxx>
-#include <BRepBndLib.hxx>
-#include <Geom_Plane.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <GeomAPI_ProjectPointOnSurf.hxx>
-#include <math_GaussLeastSquare.hxx>
-#include <GProp_PrincipalProps.hxx>
-#include <GProp_PGProps.hxx>
-#include <GProp_PEquation.hxx>
+#include <occt/BRepBuilderAPI_GTransform.hxx>
+#include <occt/BRepBuilderAPI_Transform.hxx>
+#include <occt/Bnd_Box.hxx>
+#include <occt/BRepBndLib.hxx>
+#include <occt/Geom_Plane.hxx>
+#include <occt/GeomAPI_ProjectPointOnSurf.hxx>
+#include <occt/GeomAPI_ProjectPointOnSurf.hxx>
+#include <occt/math_GaussLeastSquare.hxx>
+#include <occt/GProp_PrincipalProps.hxx>
+#include <occt/GProp_PGProps.hxx>
+#include <occt/GProp_PEquation.hxx>
 
 @implementation Helpers : NSObject
 

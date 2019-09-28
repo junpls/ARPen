@@ -10,11 +10,11 @@
 
 #include "Registry.h"
 
-#include <TopoDS_Shape.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <NCollection_DataMap.hxx>
-#include <gp_Trsf.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
+#include <occt/TopoDS_Shape.hxx>
+#include <occt/TCollection_AsciiString.hxx>
+#include <occt/NCollection_DataMap.hxx>
+#include <occt/gp_Trsf.hxx>
+#include <occt/BRepBuilderAPI_Transform.hxx>
 
 @implementation Registry : NSObject
 

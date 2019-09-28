@@ -9,9 +9,9 @@
 #ifndef Registry_h
 #define Registry_h
 
-#include <TopoDS_Shape.hxx>
-#include <TCollection_AsciiString.hxx>
-#include <gp_Trsf.hxx>
+#include <occt/TopoDS_Shape.hxx>
+#include <occt/TCollection_AsciiString.hxx>
+#include <occt/gp_Trsf.hxx>
 
 @interface Registry : NSObject
 

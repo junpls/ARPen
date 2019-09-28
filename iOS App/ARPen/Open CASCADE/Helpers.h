@@ -11,8 +11,8 @@
 
 #include <SceneKit/SceneKit.h>
 
-#include <TColgp_Array1OfPnt.hxx>
-#include <gp_Pln.hxx>
+#include <occt/TColgp_Array1OfPnt.hxx>
+#include <occt/gp_Pln.hxx>
 
 @interface Helpers : NSObject
 

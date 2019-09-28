@@ -12,14 +12,14 @@
 
 #include "Registry.h"
 
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <GCPnts_QuasiUniformDeflection.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <BRepAdaptor_Curve.hxx>
-#include <Poly.hxx>
-#include <StlAPI_Writer.hxx>
+#include <occt/TopExp_Explorer.hxx>
+#include <occt/TopoDS.hxx>
+#include <occt/GCPnts_QuasiUniformDeflection.hxx>
+#include <occt/BRepMesh_IncrementalMesh.hxx>
+#include <occt/BRepBuilderAPI_Transform.hxx>
+#include <occt/BRepAdaptor_Curve.hxx>
+#include <occt/Poly.hxx>
+#include <occt/StlAPI_Writer.hxx>
 
 
 @implementation Meshing : NSObject

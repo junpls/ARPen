@@ -11,28 +11,28 @@
 
 #include "Registry.h"
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-#include <BRepPrimAPI_MakeRevol.hxx>
-#include <BRepBuilderAPI_MakeVertex.hxx>
-#include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepBuilderAPI_MakeWire.hxx>
-#include <BRepBuilderAPI_MakeFace.hxx>
-#include <BRepBuilderAPI_Transform.hxx>
-#include <gp_Trsf.hxx>
-#include <gp_Pnt.hxx>
-#include <TopoDS.hxx>
-#include <TColgp_SequenceOfPnt.hxx>
-#include <TColgp_HArray1OfPnt.hxx>
-#include <Geom_BSplineCurve.hxx>
-#include <GeomAPI_Interpolate.hxx>
-#include <BRepOffsetAPI_MakePipe.hxx>
-#include <BRepOffsetAPI_ThruSections.hxx>
-#include <BRepAlgoAPI_Common.hxx>
-#include <BRepAlgoAPI_Fuse.hxx>
-#include <BRepAlgoAPI_Cut.hxx>
-#include <Standard_ErrorHandler.hxx>
+#include <occt/BRepPrimAPI_MakeBox.hxx>
+#include <occt/BRepPrimAPI_MakeCylinder.hxx>
+#include <occt/BRepPrimAPI_MakeSphere.hxx>
+#include <occt/BRepPrimAPI_MakeRevol.hxx>
+#include <occt/BRepBuilderAPI_MakeVertex.hxx>
+#include <occt/BRepBuilderAPI_MakeEdge.hxx>
+#include <occt/BRepBuilderAPI_MakeWire.hxx>
+#include <occt/BRepBuilderAPI_MakeFace.hxx>
+#include <occt/BRepBuilderAPI_Transform.hxx>
+#include <occt/gp_Trsf.hxx>
+#include <occt/gp_Pnt.hxx>
+#include <occt/TopoDS.hxx>
+#include <occt/TColgp_SequenceOfPnt.hxx>
+#include <occt/TColgp_HArray1OfPnt.hxx>
+#include <occt/Geom_BSplineCurve.hxx>
+#include <occt/GeomAPI_Interpolate.hxx>
+#include <occt/BRepOffsetAPI_MakePipe.hxx>
+#include <occt/BRepOffsetAPI_ThruSections.hxx>
+#include <occt/BRepAlgoAPI_Common.hxx>
+#include <occt/BRepAlgoAPI_Fuse.hxx>
+#include <occt/BRepAlgoAPI_Cut.hxx>
+#include <occt/Standard_ErrorHandler.hxx>
 
 
 @implementation Builders : NSObject

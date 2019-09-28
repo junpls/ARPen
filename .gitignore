@@ -5,6 +5,8 @@
 ## Build generated
 build/
 DerivedData/
+# Open CASCADE framework
+/iOS\ App/occt.framework
 
 ## Various settings
 *.pbxuser
