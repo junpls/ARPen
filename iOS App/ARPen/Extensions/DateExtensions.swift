@@ -2,7 +2,7 @@
 //  DateExtensions.swift
 //  ARPen
 //
-//  Created by Jan on 19.04.19.
+//  Created by Jan Benscheid on 19.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
