@@ -2,12 +2,15 @@
 //  ARPLoft.swift
 //  ARPen
 //
-//  Created by Jan on 16.04.19.
+//  Created by Jan Benscheid on 16.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
 import Foundation
 
+/**
+ Node for creating a lofted solid.
+ */
 class ARPLoft: ARPGeomNode {
     
     var profiles: [ARPPath]
@@ -38,7 +41,7 @@ class ARPLoft: ARPGeomNode {
         let ref = try? OCCTAPI.shared.loft(profiles: profiles.map({ $0.occtReference! }))
         
         if let r = ref {
-            OCCTAPI.shared.pivot(handle: r, pivot: pivotChild.worldTransform)
+            OCCTAPI.shared.setPivotOf(handle: r, pivot: pivotChild.worldTransform)
         }
         
         return ref ?? ""

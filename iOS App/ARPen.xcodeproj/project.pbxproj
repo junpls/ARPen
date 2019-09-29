@@ -258,17 +258,17 @@
 			path = "Open CASCADE";
 			sourceTree = "<group>";
 		};
-		3D883656221AD84300672CEB /* ModelingData */ = {
+		3D883656221AD84300672CEB /* Modeling */ = {
 			isa = PBXGroup;
 			children = (
-				3D883657221AD84300672CEB /* Graph */,
+				3D883657221AD84300672CEB /* GeometryNodes */,
 				3D88365C221AD84300672CEB /* Util.swift */,
 				3D88365D221AD84300672CEB /* OCCTAPI */,
 			);
-			path = ModelingData;
+			path = Modeling;
 			sourceTree = "<group>";
 		};
-		3D883657221AD84300672CEB /* Graph */ = {
+		3D883657221AD84300672CEB /* GeometryNodes */ = {
 			isa = PBXGroup;
 			children = (
 				3D883658221AD84300672CEB /* ARPSphere.swift */,
@@ -282,7 +282,7 @@
 				3D3450812261F5650017DB39 /* ARPRevolution.swift */,
 				3D34508E2266170F0017DB39 /* ARPLoft.swift */,
 			);
-			path = Graph;
+			path = GeometryNodes;
 			sourceTree = "<group>";
 		};
 		3D88365D221AD84300672CEB /* OCCTAPI */ = {
@@ -358,7 +358,7 @@
 		DC28B43E200E4353008B77AB /* ARPen */ = {
 			isa = PBXGroup;
 			children = (
-				3D883656221AD84300672CEB /* ModelingData */,
+				3D883656221AD84300672CEB /* Modeling */,
 				DC28B43F200E4353008B77AB /* AppDelegate.swift */,
 				DC28B443200E4353008B77AB /* ViewController.swift */,
 				4A4B7F1B205817A200331810 /* SettingsViewControllers */,

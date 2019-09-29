@@ -1,21 +1,29 @@
 //
 //  ARPGeomNode.swift
-//  Loop
+//  ARPen
 //
-//  Created by Jan on 15.02.19.
-//  Copyright © 2019 Jan. All rights reserved.
+//  Created by Jan Benscheid on 15.02.19.
+//  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
 import Foundation
 
+/**
+ This is the base class for all Nodes which have an underlying representation in Open CASCADE (OCCT).
+ */
 class ARPGeomNode: ARPNode {
     
+    /// Reference to the underlying shape in OCCT
     var occtReference:OCCTReference?
     
+    /// Contains the content of the node down the hierarchy, e.g. in case of a boolean operation between A and B, A and B will be placed here
     var content: SCNNode = SCNNode()
+    /// Node for the main geometry.
     var geometryNode: SCNNode = SCNNode()
+    /// Node for the "outlines" of the objects
     var isoLinesNode: SCNNode = SCNNode()
 
+    /// The child, which is supposed to be the pivot of the object
     var pivotChild: SCNNode
 
     var geometryColor = UIColor.init(hue: CGFloat(Float.random(in: 0...1)), saturation: 0.3, brightness: 0.9, alpha: 1)
@@ -24,7 +32,7 @@ class ARPGeomNode: ARPNode {
     var highlightColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
     var selectedColor = UIColor.white
 
-
+    /// For boolean operations via "Boolean Solid/Hole"
     var isHole: Bool = false {
         didSet {
             self.geometryColor = geometryColor.withAlphaComponent(isHole ? 0.5 : 1)
@@ -32,6 +40,7 @@ class ARPGeomNode: ARPNode {
         }
     }
     
+    /// This function is blocking and should be called asynchronous.
     override init() {
         self.pivotChild = SCNNode()
         super.init()
@@ -41,6 +50,7 @@ class ARPGeomNode: ARPNode {
         rebuild()
     }
     
+    /// Initialize and define a child to be the pivot. This function is blocking and should be called asynchronous.
     init(pivotChild:SCNNode) {
         self.pivotChild = pivotChild
         super.init()
@@ -56,19 +66,14 @@ class ARPGeomNode: ARPNode {
         self.addChildNode(isoLinesNode)
     }
 
+    /// Request a re-triangulation of the geometry from OCCT. This function is blocking and should be called asynchronous.
     final func updateView() {
         
         let geom  = OCCTAPI.shared.triangulate(handle: occtReference!)
-        if self is ARPBoolNode {
-            print("non")
-        }
         let lines = OCCTAPI.shared.tubeframe(handle: occtReference!)
-        if self is ARPBoolNode {
-            print("non")
-        }
 
-        /// The node may have been transformed between the geometry's generation and the actual attachment in DispatchQueue.main.async
-        /// transformDelta is used to capture this difference
+        // The node may have been transformed between the geometry's generation and the actual attachment in DispatchQueue.main.async
+        // transformDelta is used to capture this difference
         
         /*
         let transformDelta = SCNNode()
@@ -91,7 +96,7 @@ class ARPGeomNode: ARPNode {
             //self.isoLinesNode.geometry?.firstMaterial?.readsFromDepthBuffer = false
             //self.geometryNode.renderingOrder = -1
             
-            /// This is necessary for world coordinates
+            // This is necessary if you use world coordinates
             //self.geometryNode.setWorldTransform(transformDelta.worldTransform)
             //self.isoLinesNode.setWorldTransform(transformDelta.worldTransform)
             //transformDelta.removeFromParentNode()
@@ -108,10 +113,10 @@ class ARPGeomNode: ARPNode {
     }
     
     private final func applyTransform_() {
-        /// This was necessary for local coordinates
+        // This was necessary for local coordinates
         //OCCTAPI.shared.transform(handle: occtReference!, transformation: self.transform)
         
-        /// This is necessary for world coordinates
+        // This is necessary for world coordinates
         OCCTAPI.shared.transform(handle: occtReference!, transformation: self.worldTransform)
         for c in content.childNodes {
             if let geom = c as? ARPGeomNode {
@@ -125,6 +130,7 @@ class ARPGeomNode: ARPNode {
         fatalError("Must Override")
     }
     
+    /// Needs to be called when properties of an object change, which influence its appearance, e.g. when a node moved in a path. This function is blocking and should be called asynchronous.
     final func rebuild() {
         if let ref = occtReference {
             OCCTAPI.shared.free(handle: ref)
@@ -139,6 +145,7 @@ class ARPGeomNode: ARPNode {
         }
     }
     
+    /// Updates the pivot to be where the `pivotChild` is.
     final func pivotToChild() {
         /*
         /// Changing the pivot in SceneKit has two oddities:
@@ -176,6 +183,7 @@ class ARPGeomNode: ARPNode {
         self.isoLinesNode.isHidden = visited
     }
     
+    /// Saves the object as an stl under the given file path.
     func exportStl(filePath: URL) {
         OCCTAPI.shared.exportStl(handle: occtReference!, filePath: filePath)
     }

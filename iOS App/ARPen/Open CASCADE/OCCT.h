@@ -2,8 +2,8 @@
 //  OCCT.h
 //  ARPen
 //
-//  Created by Jan on 25.01.19.
-//  Copyright © 2019 Jan. All rights reserved.
+//  Created by Jan Benscheid on 25.01.19.
+//  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
 #ifndef OCCT_h

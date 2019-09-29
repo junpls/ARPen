@@ -1,9 +1,9 @@
 //
 //  OCCTAPI.swift
-//  Loop
+//  ARPen
 //
-//  Created by Jan on 08.02.19.
-//  Copyright © 2019 Jan. All rights reserved.
+//  Created by Jan Benscheid on 08.02.19.
+//  Copyright © 2019 Jan Benscheid. All rights reserved.
 //
 
 import Foundation
@@ -15,6 +15,10 @@ enum OCCTError: Error {
     case couldNotCreateGeometry
 }
 
+/**
+ This class is the Swift API to the low-level geometry manipulation code. Its main purpose is to convert between C types and Swift types.
+ Unless a new functionality is needed, I suggest to use the functions provided in this class for all geometry manipulations.
+ */
 class OCCTAPI {
     
     static let shared = OCCTAPI()
@@ -93,8 +97,8 @@ class OCCTAPI {
         }
     }
     
-    func revolve(profile: OCCTReference, aroundAxis: SCNVector3, withDirection: SCNVector3) throws -> OCCTReference {
-        if let sum = occt.revolve(profile, aroundAxis: aroundAxis, withDirection: withDirection) {
+    func revolve(profile: OCCTReference, aroundAxis: Axis) throws -> OCCTReference {
+        if let sum = occt.revolve(profile, aroundAxis: aroundAxis.position, withDirection: aroundAxis.direction) {
             let ref = OCCTReference(cString: sum)
             return ref
         } else {
@@ -115,14 +119,16 @@ class OCCTAPI {
         occt.setTransformOf(handle, transformation: transformation)
     }
     
-    func pivot(handle: OCCTReference, pivot: SCNMatrix4) {
+    func setPivotOf(handle: OCCTReference, pivot: SCNMatrix4) {
         occt.setPivotOf(handle, pivot: pivot)
     }
     
+    /// Calculates a new pivot point for shape based on the center of its bounding box, moves it there, and returns the coordinates.
     func center(handle: OCCTReference) -> SCNVector3 {
         return occt.center(handle);
     }
     
+    /// Returns the input points, projected onto a distance-minimizing common plane.
     func flattened(_ of: [SCNVector3]) -> [SCNVector3] {
         var array = [SCNVector3]()
         let res = occt.flattened(of, ofLength: Int32(of.count))
@@ -132,30 +138,37 @@ class OCCTAPI {
         return array
     }
     
+    /// Returns the normal vector of the plane fitted through the points (or in other words, the first principal component).
     func pc1(_ of: [SCNVector3]) -> SCNVector3 {
         return occt.pc1(of: of, ofLength: Int32(of.count))
     }
     
+    /// Calculates a least-squares fitting circle for the points and returns its center.
     func circleCenter(_ of: [SCNVector3]) -> SCNVector3 {
         return occt.circleCenter(of: of, ofLength: Int32(of.count))
     }
     
+    /// Returns 0 of the points are at the same location, 1 if they are on the same line, 2 if they are on the same plane, 3 otherwise, given a certain tolerance.
     func conincidentDimensions(_ of: [SCNVector3]) -> Int {
         return Int(occt.coincidentDimensions(of: of, ofLength: Int32(of.count)))
     }    
     
+    /// Returns a triangulated version of the shape as an `SCNGeometry` object.
     func triangulate(handle: OCCTReference) -> SCNGeometry {
         return occt.sceneKitMesh(of: handle)
     }
     
+    /// Returns the lines of the shape as an `SCNGeometry` object.
     func wireframe(handle: OCCTReference) -> SCNGeometry {
         return occt.sceneKitLines(of: handle)
     }
     
+    /// Returns the lines of the shape as an `SCNGeometry` object in the shape of cylindrical segments.
     func tubeframe(handle: OCCTReference) -> SCNGeometry {
         return occt.sceneKitTubes(of: handle)
     }
     
+    /// Exports a shape to stl under the given `filePath`.
     func exportStl(handle: OCCTReference, filePath: URL) {
         var fileName = filePath.absoluteString
 
@@ -170,7 +183,7 @@ class OCCTAPI {
         occt.stl(of: handle, toFile: fileName.cString(using: String.Encoding.utf8))
     }
     
-    
+    /// Effectively deletes a shape's representation.
     func free(handle: OCCTReference) {
         occt.freeShape(handle)
     }

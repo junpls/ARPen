@@ -1,9 +1,9 @@
 //
-//  File.swift
-//  Loop
+//  ARPBoolNode.swift
+//  ARPen
 //
-//  Created by Jan on 15.02.19.
-//  Copyright © 2019 Jan. All rights reserved.
+//  Created by Jan Benscheid on 15.02.19.
+//  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
 import Foundation
@@ -16,14 +16,17 @@ enum BooleanError: Error {
     case operationUnknown
 }
 
+/**
+ Node for Boolean operations
+ */
 class ARPBoolNode: ARPGeomNode {
     
-    var a:ARPGeomNode
-    var b:ARPGeomNode
+    var a: ARPGeomNode
+    var b: ARPGeomNode
     
-    let operation:BooleanOperation
+    let operation: BooleanOperation
     
-    init(a:ARPGeomNode, b:ARPGeomNode, operation op:BooleanOperation) throws {
+    init(a: ARPGeomNode, b: ARPGeomNode, operation op: BooleanOperation) {
         self.a = a
         self.b = b
         self.operation = op
@@ -33,7 +36,6 @@ class ARPBoolNode: ARPGeomNode {
 
         self.content.addChildNode(a)
         self.content.addChildNode(b)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,6 +45,8 @@ class ARPBoolNode: ARPGeomNode {
     override func build() throws -> OCCTReference {
         
         let ref: OCCTReference?
+        
+        // The name assignment was needed for the user study.
         switch self.operation {
         case .cut:
             ref = try? OCCTAPI.shared.boolean(from: a.occtReference!, cut: b.occtReference!)
@@ -64,7 +68,7 @@ class ARPBoolNode: ARPGeomNode {
         }
         
         if let r = ref {
-            OCCTAPI.shared.pivot(handle: r, pivot: pivotChild.worldTransform)
+            OCCTAPI.shared.setPivotOf(handle: r, pivot: pivotChild.worldTransform)
         }
         
         return ref ?? ""

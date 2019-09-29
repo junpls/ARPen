@@ -2,23 +2,23 @@
 //  ARPCube.swift
 //  ARPen
 //
-//  Created by Jan on 18.02.19.
+//  Created by Jan Benscheid on 18.02.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
 import Foundation
 
-class ARPBox:ARPGeomNode {
+class ARPBox: ARPGeomNode {
     
-    var width:Double = 1
-    var height:Double = 1
-    var length:Double = 1
+    var width: Double = 1
+    var height: Double = 1
+    var length: Double = 1
     
     override init() {
         super.init()
     }
     
-    init(width:Double, height:Double, length:Double) {
+    init(width: Double, height: Double, length: Double) {
         self.width = width
         self.height = height
         self.length = length

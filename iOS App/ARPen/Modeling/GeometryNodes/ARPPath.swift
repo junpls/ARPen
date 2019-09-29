@@ -2,7 +2,7 @@
 //  ARPPath.swift
 //  ARPen
 //
-//  Created by Jan on 25.03.19.
+//  Created by Jan Benscheid on 25.03.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
@@ -12,6 +12,9 @@ enum CornerStyle: Int32 {
     case sharp = 1, round = 2
 }
 
+/**
+ A node of the path
+ */
 class ARPPathNode: ARPNode {
     /*
     static let highlightAnimation = SCNAction.customAction(duration: 2*Double.pi, action: { (node, elapsedTime) in
@@ -26,6 +29,7 @@ class ARPPathNode: ARPNode {
         node.scale = SCNVector3(scale, scale, scale)
     })
     
+    /// If points are this close to another, they will be considered the same point.
     static let samePointTolerance: Float = 0.001
 
     static let radius: CGFloat = 0.002
@@ -44,12 +48,14 @@ class ARPPathNode: ARPNode {
         }
     }
     
+    /// `active` is false if the node is not yet fixed and the pen is not detected.
     var active = true {
         didSet {
             updateActiveState()
         }
     }
     
+    /// `fixed` is false if the node is the one which is currently not yet placed.
     var fixed = false {
         didSet {
             updateFixedState()
@@ -69,6 +75,7 @@ class ARPPathNode: ARPNode {
         super.init()
         self.addChildNode(geometryNode)
         self.geometryNode.geometry = SCNSphere(radius: ARPPathNode.radius)
+        // Don't shade path nodes. This was just a design decision.
         self.geometryNode.geometry?.firstMaterial?.lightingModel = .constant
         self.geometryNode.geometry?.firstMaterial?.emission.contents = ARPPathNode.highlightColor
         self.geometryNode.geometry?.firstMaterial?.emission.intensity = 0
@@ -122,19 +129,23 @@ class ARPPathNode: ARPNode {
     }
 }
 
+/**
+ A path which can be used e.g. as a profile for all types of extrusions (if closed) or as as spine for sweeps.
+ */
 class ARPPath: ARPGeomNode {
     
     static let finalizeAnimationDuration: Double = 0.3
+    /// Blinking when a path is finished
     static let finalizeAnimation = SCNAction.customAction(duration: finalizeAnimationDuration, action: { (node, elapsedTime) in
         (node as SCNNode).isHidden = Int((elapsedTime / CGFloat(ARPPath.finalizeAnimationDuration)) * 3).isMultiple(of: 2)
     })
     
     let color = UIColor.red
     
-    var points:[ARPPathNode] = [ARPPathNode]()
-    var closed:Bool = false
+    var points: [ARPPathNode] = [ARPPathNode]()
+    var closed: Bool = false
     
-    init(points:[ARPPathNode], closed:Bool) {
+    init(points: [ARPPathNode], closed: Bool) {
         self.closed = closed
         
         for point in points {
@@ -150,7 +161,7 @@ class ARPPath: ARPGeomNode {
         self.lineColor = self.closed ? UIColor.green : UIColor.red
     }
     
-    func appendPoint(_ point:ARPPathNode, at position:Int = -1) {
+    func appendPoint(_ point: ARPPathNode, at position: Int = -1) {
         if position >= 0 {
             self.points.insert(point, at: position)
         } else {
@@ -164,10 +175,12 @@ class ARPPath: ARPGeomNode {
         removed.removeFromParentNode()
     }
     
+    /// Returns 0 of the points are at the same location, 1 if they are on the same line, 2 if they are on the same plane, 3 otherwise, given a certain tolerance.
     func coincidentDimensions() -> Int {
         return OCCTAPI.shared.conincidentDimensions(getPointsAsVectors())
     }
     
+    /// Projects all points of the path onto a best fitting plane.
     func flatten() {
         for (old, new) in zip(points, OCCTAPI.shared.flattened(getPointsAsVectors())) {
             old.worldPosition = new
@@ -193,6 +206,7 @@ class ARPPath: ARPGeomNode {
         return sum / Float(points.count)
     }
     
+    /// Perform SVD on the points in the path and return the first principal component.
     func getPC1() -> SCNVector3 {
         return OCCTAPI.shared.pc1(getPointsAsVectors())
     }
@@ -214,7 +228,7 @@ class ARPPath: ARPGeomNode {
         
         let ref = try? OCCTAPI.shared.createPath(points: positions, corners: corners, closed: calcClosed)
         if let r = ref {
-            OCCTAPI.shared.pivot(handle: r, pivot: pivotChild.worldTransform)
+            OCCTAPI.shared.setPivotOf(handle: r, pivot: pivotChild.worldTransform)
         }
         
         self.lineColor = calcClosed ? UIColor.green : UIColor.red

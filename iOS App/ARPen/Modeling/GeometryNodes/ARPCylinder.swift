@@ -2,7 +2,7 @@
 //  ARPCube.swift
 //  ARPen
 //
-//  Created by Jan on 18.02.19.
+//  Created by Jan Benscheid on 18.02.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
@@ -10,14 +10,14 @@ import Foundation
 
 class ARPCylinder: ARPGeomNode {
     
-    var radius:Double = 1
-    var height:Double = 1
+    var radius: Double = 1
+    var height: Double = 1
     
     override init() {
         super.init()
     }
     
-    init(radius:Double, height:Double) {
+    init(radius: Double, height: Double) {
         self.radius = radius
         self.height = height
         
