@@ -103,7 +103,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         // Run the view's session
         arSceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
         
-        fetchRemoteSettings(repeatAfter: 1)
+        // fetchRemoteSettings(repeatAfter: 1)
     }
     
     /**
@@ -137,8 +137,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    /*
     var fetchSettingsUrlSession: URLSession?
-    let fetchSettingsUrl: String = "https://jabens.tools/cthci/settings.json"
+    let fetchSettingsUrl: String = "https://my.url/with/settings.json"
     var previousSettings: String?
     func fetchRemoteSettings(repeatAfter timeout:Int? = nil) {
         if fetchSettingsUrlSession == nil {
@@ -179,6 +180,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             }.resume()
         }
     }
+    */
     
     func setupPluginMenu(){
         //define target height and width for the scrollview to hold all buttons
