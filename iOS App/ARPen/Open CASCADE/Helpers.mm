@@ -25,8 +25,10 @@
 
 @implementation Helpers : NSObject
 
+/// Describes the tolerance for considering a set of points co-planar/co-linear/the same.
 static const double flatteningTolerance = 0.01;
 
+/// For transformations which include scaling. Warning: As scaling was not possible for the user, this function has not been tested since early in the development and might contain errors.
 + (void) setGTransformOf:(const char *) label
                   affine:(SCNMatrix4) affine
              translation:(SCNVector3) translation {
@@ -36,12 +38,6 @@ static const double flatteningTolerance = 0.01;
     gp_Mat affineMat(affine.m11, affine.m13, affine.m12, affine.m21, affine.m23, affine.m22, affine.m31, affine.m33, affine.m32);
     gp_XYZ transVec(translation.x, translation.z, translation.y);
     gp_GTrsf trans(affineMat, transVec);
-
-    /*
-    gp_Trsf move;
-    move.SetTranslation(gp_Vec(transform.x, transform.z, transform.y));
-     */
-    //shape.Location(TopLoc_Location(move));
     
     BRepBuilderAPI_GTransform builder(shape, trans, Standard_True);
     TopoDS_Shape newShape = builder.ModifiedShape(shape);
@@ -74,13 +70,11 @@ static const double flatteningTolerance = 0.01;
     [Registry storeInTransformRegistry:trans withKey:key];
 }
 
+/// Calculates a new pivot point for shape based on the center of its bounding box, moves it there, and returns the coordinates.
 + (SCNVector3) center:(const char *) label {
     
     TCollection_AsciiString key = TCollection_AsciiString(label);
     TopoDS_Shape shape = [Registry retrieveFromRegistry: key];
-    
-    /// Update the incremental mesh
-    // BRepMesh_IncrementalMesh mesh(shape, linearDeflection);
     
     Bnd_Box B;
     BRepBndLib::Add(shape, B, Standard_False);
@@ -100,12 +94,13 @@ static const double flatteningTolerance = 0.01;
     return newCenter;
 }
 
+/// Returns the input points, projected onto a distance-minimizing common plane.
 + (const SCNVector3 *) flattened:(const SCNVector3 []) points
                         ofLength:(int) length
 {
     TColgp_Array1OfPnt ocPoints = [self convertPoints:points ofLength:length];
     
-    gp_Pln pln = [self projectOntoPlane:ocPoints];
+    gp_Pln pln = [self getFittingPlane:ocPoints];
     Handle(Geom_Plane) plane = new Geom_Plane(pln);
     
     for (int i = 1; i <= length; i++) {
@@ -122,12 +117,13 @@ static const double flatteningTolerance = 0.01;
     return res;
 }
 
+/// Calculates a least-squares fitting circle for the points and returns its center.
 + (SCNVector3) circleCenterOf:(const SCNVector3 []) points
                      ofLength:(int) length
 {
     TColgp_Array1OfPnt ocPoints = [self convertPoints:points ofLength:length];
     
-    gp_Pln pln = [self projectOntoPlane:ocPoints];
+    gp_Pln pln = [self getFittingPlane:ocPoints];
     Handle(Geom_Plane) plane = new Geom_Plane(pln);
     
     math_Matrix M = math_Matrix(1, length, 1, 3);
@@ -163,18 +159,20 @@ static const double flatteningTolerance = 0.01;
     return res;
 }
 
+/// Returns the normal vector of the plane fitted through the points (or in other words, the first principal component).
 + (SCNVector3) pc1Of:(const SCNVector3 []) points
             ofLength:(int) length
 {
     TColgp_Array1OfPnt ocPoints = [self convertPoints:points ofLength:length];
-    gp_Pln pln = [self projectOntoPlane:ocPoints];
+    gp_Pln pln = [self getFittingPlane:ocPoints];
     gp_Ax1 axis = pln.Axis();
     gp_Dir dir = axis.Direction();
     
     return {(float)dir.X(), (float)dir.Y(), (float)dir.Z()};
 }
 
-+ (gp_Pln) projectOntoPlane:(const TColgp_Array1OfPnt&) ocPoints {
+/// Calculates a distance-minimizing common plane for the input points.
++ (gp_Pln) getFittingPlane:(const TColgp_Array1OfPnt&) ocPoints {
     GProp_PGProps Pmat(ocPoints);
     gp_Pnt g = Pmat.CentreOfMass();
     Standard_Real Xg,Yg,Zg;
@@ -186,6 +184,7 @@ static const double flatteningTolerance = 0.01;
     return pln;
 }
 
+/// Convert points from SCNVector3 to gp_Pnt.
 + (TColgp_Array1OfPnt) convertPoints:(const SCNVector3 []) points
                             ofLength:(int) length
 {
@@ -198,6 +197,7 @@ static const double flatteningTolerance = 0.01;
     return ocPoints;
 }
 
+/// Returns 0 of the points are at the same location, 1 if they are on the same line, 2 if they are on the same plane, 3 otherwise, given a certain tolerance.
 + (int) coincidentDimensionsOf:(const SCNVector3 [])points
                       ofLength:(int)length
 {

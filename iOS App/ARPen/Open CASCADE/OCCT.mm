@@ -14,6 +14,7 @@
 #include "Builders.h"
 #include "Meshing.h"
 
+/// This class just forwards function calls. I did not find a more elegant way on how to achieve Swift-compatibility on the spot, but probably there is.
 @implementation OCCT : NSObject
 
 // Registry

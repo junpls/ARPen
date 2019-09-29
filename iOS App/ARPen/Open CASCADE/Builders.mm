@@ -45,7 +45,7 @@
     TopoDS_Shape aBox = BRepPrimAPI_MakeBox(corner, width, height, length);
     TCollection_AsciiString key = [Registry storeInRegistry:aBox];
     
-    return [Registry toHeapString:key];
+    return [Registry toHeapCString:key];
 }
 
 + (const char *) createCylinder:(double) radius
@@ -61,11 +61,12 @@
     
     BRepBuilderAPI_Transform shiftTransform = BRepBuilderAPI_Transform(aCylinder, shift, Standard_True);
     TopoDS_Shape aShiftedCylinder = shiftTransform.Shape();
+    // Y and Z are swapped in OCCT, therefore we rotate the cylinder.
     BRepBuilderAPI_Transform rotateTransform = BRepBuilderAPI_Transform(aShiftedCylinder, rotate, Standard_True);
     TopoDS_Shape aRotatedCylinder = rotateTransform.Shape();
     TCollection_AsciiString key = [Registry storeInRegistry:aRotatedCylinder];
     
-    return [Registry toHeapString:key];
+    return [Registry toHeapCString:key];
 }
 
 + (const char *) createSphere:(double) radius
@@ -73,7 +74,7 @@
     TopoDS_Shape aSphere = BRepPrimAPI_MakeSphere(radius);
     TCollection_AsciiString key = [Registry storeInRegistry:aSphere];
     
-    return [Registry toHeapString:key];
+    return [Registry toHeapCString:key];
 }
 
 + (const char *) createPath:(const SCNVector3 []) points
@@ -89,9 +90,9 @@
     bool onlyRoundCorners = true;
     
     if (closed) {
-        /// A little trick to make curvature continuity at the start/endpoint easier:
-        /// Find out if the path consists purely of round corners. In that case OCCT can handle this for us.
-        /// Otherwise, choose a sharp corner to start with, so that there is no round corner at the seam.
+        // A little trick to make curvature continuity at the start/endpoint easier:
+        // Find out if the path consists purely of round corners. In that case OCCT can handle this for us.
+        // Otherwise, choose a sharp corner to start with, so that there is no round corner at the seam.
         for (int i = 0; i < length; i++) {
             if (corners[i] == 1) {
                 onlyRoundCorners = false;
@@ -101,8 +102,8 @@
         }
     }
     
-    /// If the path is closed and there is a sharp corner at the seam, we need to make one additional step to add the closing edge.
-    /// Remember that we always start/end at a sharp corner if there is one.
+    // If the path is closed and there is a sharp corner at the seam, we need to make one additional step to add the closing edge.
+    // Remember that we always start/end at a sharp corner if there is one.
     int overshoot = (closed && !onlyRoundCorners) ? 1 : 0;
 
     bool curveMode = false;
@@ -155,9 +156,7 @@
                 BRepBuilderAPI_MakeEdge makeEdge = BRepBuilderAPI_MakeEdge(curve);
                 TopoDS_Edge edge = makeEdge.Edge();
                 makeWire.Add(edge);
-            } catch (...) {
-                
-            }
+            } catch (...) {}
         }
     }
     
@@ -177,7 +176,7 @@
 
     TCollection_AsciiString key = [Registry storeInRegistry:wire];
 
-    return [Registry toHeapString:key];
+    return [Registry toHeapCString:key];
 }
 
 + (const char *) sweep:(const char *) profile
