@@ -2,12 +2,15 @@
 //  ButtonEvents.swift
 //  ARPen
 //
-//  Created by Jan on 15.04.19.
+//  Created by Jan Benscheid on 15.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
 import Foundation
 
+/**
+This class adds some convenient functionality to the pen's hardware buttons.
+*/
 class ButtonEvents {
     
     static let doubleClickMaxDuration = 0.5

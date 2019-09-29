@@ -26,7 +26,7 @@ class ARPBoolNode: ARPGeomNode {
     
     let operation: BooleanOperation
     
-    init(a: ARPGeomNode, b: ARPGeomNode, operation op: BooleanOperation) {
+    init(a: ARPGeomNode, b: ARPGeomNode, operation op: BooleanOperation) throws {
         self.a = a
         self.b = b
         self.operation = op

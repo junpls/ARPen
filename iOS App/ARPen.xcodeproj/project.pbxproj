@@ -44,6 +44,8 @@
 		3DE5191B22A7DB850005B73B /* SweepPluginTwoProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE5191A22A7DB850005B73B /* SweepPluginTwoProfiles.swift */; };
 		3DE5191D22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE5191C22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift */; };
 		3DFA7125233FC1D800BF5AAB /* occt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DFA7124233FC1D800BF5AAB /* occt.framework */; };
+		3DFA71582341586500BF5AAB /* SweepPluginTutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA71572341586500BF5AAB /* SweepPluginTutorial.swift */; };
+		3DFA715A234162E100BF5AAB /* CombinePluginTutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFA7159234162E100BF5AAB /* CombinePluginTutorial.swift */; };
 		4A56952F2058186800C8065E /* aruco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A56952D2058186800C8065E /* aruco.framework */; };
 		4A5695302058186800C8065E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A56952E2058186800C8065E /* opencv2.framework */; };
 		4A5695322058192B00C8065E /* UserStudyIDListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5695312058192B00C8065E /* UserStudyIDListTableViewController.swift */; };
@@ -153,6 +155,8 @@
 		3DE5191A22A7DB850005B73B /* SweepPluginTwoProfiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweepPluginTwoProfiles.swift; sourceTree = "<group>"; };
 		3DE5191C22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevolvePluginProfileAndCircle.swift; sourceTree = "<group>"; };
 		3DFA7124233FC1D800BF5AAB /* occt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = occt.framework; sourceTree = "<group>"; };
+		3DFA71572341586500BF5AAB /* SweepPluginTutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweepPluginTutorial.swift; sourceTree = "<group>"; };
+		3DFA7159234162E100BF5AAB /* CombinePluginTutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinePluginTutorial.swift; sourceTree = "<group>"; };
 		4A56952D2058186800C8065E /* aruco.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = aruco.framework; sourceTree = "<group>"; };
 		4A56952E2058186800C8065E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		4A5695312058192B00C8065E /* UserStudyIDListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStudyIDListTableViewController.swift; sourceTree = "<group>"; };
@@ -404,6 +408,8 @@
 				DC28B474200E64B7008B77AB /* ObjectCreationPlugin.swift */,
 				4A895F092052791100CC2C8E /* CubeByDraggingPlugin.swift */,
 				4A895F0B2052D46000CC2C8E /* CubeByExtractionPlugin.swift */,
+				3DFA71572341586500BF5AAB /* SweepPluginTutorial.swift */,
+				3DFA7159234162E100BF5AAB /* CombinePluginTutorial.swift */,
 				3D26154D22569CB200D9F0F8 /* SweepPluginProfileAndPath.swift */,
 				3DE5191A22A7DB850005B73B /* SweepPluginTwoProfiles.swift */,
 				3D34508822647C7F0017DB39 /* RevolvePluginProfileAndAxis.swift */,
@@ -582,6 +588,7 @@
 				DC28B47A200E7E8A008B77AB /* MarkerBox.m in Sources */,
 				4A5695342058195200C8065E /* UserStudyRecordsListTableViewController.swift in Sources */,
 				3D3450822261F5650017DB39 /* ARPRevolution.swift in Sources */,
+				3DFA715A234162E100BF5AAB /* CombinePluginTutorial.swift in Sources */,
 				3D36C8C022B941CA00166224 /* ARPCylinder.swift in Sources */,
 				3D883664221AD84300672CEB /* OCCTAPI.swift in Sources */,
 				DC28B45F200E4561008B77AB /* PenManager.swift in Sources */,
@@ -599,6 +606,7 @@
 				DC28B46D200E4E6E008B77AB /* MarkerBox.swift in Sources */,
 				DC28B469200E4C43008B77AB /* CylinderLine.swift in Sources */,
 				3D883662221AD84300672CEB /* ARPBoolNode.swift in Sources */,
+				3DFA71582341586500BF5AAB /* SweepPluginTutorial.swift in Sources */,
 				AA93510A224245CE002AEB00 /* ARMenusPlugin.swift in Sources */,
 				4A59BA1E2244E66D00EA23E7 /* TranslationDemoPlugin.swift in Sources */,
 				3D2BEC6922BC110C0027AB0C /* UIButtonPlugin.swift in Sources */,

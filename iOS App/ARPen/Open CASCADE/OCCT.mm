@@ -48,6 +48,12 @@
     return [Helpers coincidentDimensionsOf:points ofLength:length];
 }
 
+- (void) setGTransformOf:(const char *) label
+                  affine:(SCNMatrix4) affine
+             translation:(SCNVector3) translation {
+    return [Helpers setGTransformOf:label affine:affine translation:translation];
+}
+
 - (void) setTransformOf:(const char *) label
          transformation:(SCNMatrix4) mat {
     return [Helpers setTransformOf:label transformation:mat];

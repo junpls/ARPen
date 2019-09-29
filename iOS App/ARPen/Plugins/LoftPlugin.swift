@@ -2,7 +2,7 @@
 //  LoftPlugin.swift
 //  ARPen
 //
-//  Created by Jan on 16.04.19.
+//  Created by Jan Benscheid on 16.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
@@ -24,10 +24,6 @@ class LoftPlugin: Plugin, UIButtonPlugin {
     
     var currentScene: PenScene?
     var currentView: ARSCNView?
-    /**
-     The previous point is the point of the pencil one frame before.
-     If this var is nil, there was no last point
-     */
     
     private var freePaths: [ARPPath] = [ARPPath]()
     private var loft: ARPLoft?

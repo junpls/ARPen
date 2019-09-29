@@ -2,7 +2,7 @@
 //  UserStudyStatePluginProtocol.swift
 //  ARPen
 //
-//  Created by Jan on 17.06.19.
+//  Created by Jan Benscheid on 17.06.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 

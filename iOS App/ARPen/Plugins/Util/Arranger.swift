@@ -2,25 +2,27 @@
 //  Arranger.swift
 //  ARPen
 //
-//  Created by Jan on 08.06.19.
+//  Created by Jan Benscheid on 08.06.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
 import Foundation
 import ARKit
 
+/**
+This class handles the selecting and arranging and "visiting" of objects, as this functionality is shared across multiple plugins. An examplary usage can be seen in `CombinePluginTutorial.swift`.
+To "visit" means to march down the hierarchy of a node, e.g. to rearrange the object which form a Boolean operation.
+*/
 class Arranger {
     
     var currentScene: PenScene?
     var currentView: ARSCNView?
-    /**
-     The previous point is the point of the pencil one frame before.
-     If this var is nil, there was no last point
-     */
     
-    
+    /// The time (in seconds) after which holding the main button on an object results in dragging it.
     static let timeTillDrag: Double = 1
+    /// The minimum distance to move the pen starting at an object while holding the main button which results in dragging it.
     static let maxDistanceTillDrag: Float = 0.015
+    /// Move the object with its center to the pen tip when dragging starts.
     static let snapWhenDragging: Bool = true
     
     var hoverTarget: ARPNode? {
@@ -78,12 +80,12 @@ class Arranger {
             hoverTarget = nil
         }
         
+        // Start dragging when either the button has been held for long enough or pen has moved a certain distance.
         if (buttons[.Button1] ?? false) &&
             ((Date() - (lastClickTime ?? Date())) > Arranger.timeTillDrag
                 || (lastPenPosition?.distance(vector: scene.pencilPoint.position) ?? 0) > Arranger.maxDistanceTillDrag) {
             dragging = true
          
-            /// Snap targets to pen position
             if Arranger.snapWhenDragging {
                 let center = selectedTargets.reduce(SCNVector3(0,0,0), { $0 + $1.position }) / Float(selectedTargets.count)
                 let shift = scene.pencilPoint.position - center
@@ -129,7 +131,7 @@ class Arranger {
             if dragging {
                 for target in selectedTargets {
                     DispatchQueue.global(qos: .userInitiated).async {
-                        /// Do this in the background, as it may cause a rebuild in the parent object
+                        // Do this in the background, as it may cause a time-intensive rebuild in the parent object
                         target.applyTransform()
                     }
                 }
@@ -163,6 +165,7 @@ class Arranger {
         }
     }
     
+    
     func visitTarget(_ target: ARPGeomNode) {
         unselectTarget(target)
         target.visited = true
@@ -181,6 +184,7 @@ class Arranger {
         }
     }
     
+    
     func selectTarget(_ target: ARPNode) {
         target.selected = true
         selectedTargets.append(target)
@@ -198,7 +202,7 @@ class Arranger {
         let projectedPencilPosition = sceneView.projectPoint(pointerPosition)
         let projectedCGPoint = CGPoint(x: CGFloat(projectedPencilPosition.x), y: CGFloat(projectedPencilPosition.y))
         
-        //cast a ray from that position and find the first ARPenNode
+        // Cast a ray from that position and find the first ARPenNode
         let hitResults = sceneView.hitTest(projectedCGPoint, options: [SCNHitTestOption.searchMode : SCNHitTestSearchMode.all.rawValue])
                 
         return hitResults.filter( { $0.node != currentScene?.pencilPoint } ).first?.node.parent as? ARPNode

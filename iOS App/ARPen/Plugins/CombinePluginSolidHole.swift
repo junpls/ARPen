@@ -1,8 +1,8 @@
 //
-//  ArrangePlugin.swift
+//  CombinePluginSolidHole.swift
 //  ARPen
 //
-//  Created by Jan on 19.04.19.
+//  Created by Jan Benscheid on 19.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 import ARKit
@@ -24,20 +24,16 @@ class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
     
     var currentScene: PenScene?
     var currentView: ARSCNView?
-    /**
-     The previous point is the point of the pencil one frame before.
-     If this var is nil, there was no last point
-     */
-    
+
     private var buttonEvents: ButtonEvents
     private var arranger: Arranger
     
-    /// **** For user study ****
+    // **** For user study ****
     var recordManager: UserStudyRecordManager!
     var stateManager: UserStudyStateManager!
     private var taskTimeLogger = TaskTimeLogger()
     private var taskCenter: SCNVector3 = SCNVector3(0, 0, 0.2)
-    /// ************************
+    // ************************
     
     init() {
         arranger = Arranger()
@@ -52,11 +48,11 @@ class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
         self.currentScene = scene
         self.arranger.activate(withScene: scene, andView: view)
         
-        /// **** For user study ****
+        // **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
         self.taskTimeLogger.reset()
         TaskScenes.populateSceneBasedOnTask(scene: scene.drawingNode, task: stateManager.task ?? "", centeredAt: taskCenter)
-        /// ************************
+        // ************************
     }
     
     func deactivatePlugin() {
@@ -70,9 +66,9 @@ class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
     
     func didPressButton(_ button: Button) {
         
-        /// **** For user study ****
+        // **** For user study ****
         self.taskTimeLogger.startUnlessRunning()
-        /// ************************
+        // ************************
         
         switch button {
         case .Button1:
@@ -107,9 +103,9 @@ class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
                     tool = b.isHole ? b : a
                 }
                 
-                /// **** For user study ****
+                // **** For user study ****
                 self.taskTimeLogger.pause()
-                /// ************************
+                // ************************
                 
                 DispatchQueue.global(qos: .userInitiated).async {
                     if let res = try? ARPBoolNode(a: target, b: tool, operation: operation) {
@@ -118,13 +114,13 @@ class CombinePluginSolidHole: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
                             self.currentScene?.drawingNode.addChildNode(res)
                             res.isHole = createHole
                             
-                            /// **** For user study ****
+                            // **** For user study ****
                             if TaskScenes.isTaskDone(scene: self.currentScene?.drawingNode, task: self.stateManager.task) {
                                 let targetMeasurementDict = self.taskTimeLogger.finish()
                                 self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                                 self.recordManager.saveStl(node: res, name: "CombineSolidHole_\(self.stateManager.task ?? "")")
                             }
-                            /// **** For user study ****
+                            // **** For user study ****
                         }
                     }
                 }

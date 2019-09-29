@@ -73,7 +73,7 @@ class UserStudyRecordManager : NSObject{
         dataRecordsOfCurrentUser?.append(newRecord)
         self.userStudyData[currentActiveUserID] = dataRecordsOfCurrentUser
         
-        /// Prevent data loss if app crashes
+        // Prevent data loss if app crashes
         self.saveToFile()
     }
     
@@ -82,7 +82,7 @@ class UserStudyRecordManager : NSObject{
         self.userStudyData = [:]
         currentActiveUserID = nil
         
-        /// Prevent data loss if app crashes
+        // Prevent data loss if app crashes
         self.saveToFile()
     }
     
@@ -107,7 +107,7 @@ class UserStudyRecordManager : NSObject{
         dataRecordsOfCurrentUser?.append(newRecord)
         self.userStudyData[currentActiveUserID] = dataRecordsOfCurrentUser
         
-        /// Prevent data loss if app crashes
+        // Prevent data loss if app crashes
         self.saveToFile()
     }
     
@@ -138,7 +138,7 @@ class UserStudyRecordManager : NSObject{
         }
     }
     
-    /// Convert the node to stl and save it to the documents directory under the given name
+    // Convert the node to stl and save it to the documents directory under the given name
     func saveStl(node: ARPGeomNode, name: String) {
         if !isRecording {
             return

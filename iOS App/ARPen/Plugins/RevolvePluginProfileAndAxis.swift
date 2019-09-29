@@ -1,8 +1,8 @@
 //
-//  RevolvePlugin.swift
+//  RevolvePluginProfileAndAxis.swift
 //  ARPen
 //
-//  Created by Jan on 15.04.19.
+//  Created by Jan Benscheid on 15.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
@@ -23,30 +23,26 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
     var pluginIdentifier: String = "Revolve (Profile + Axis)"
     var currentScene: PenScene?
     var currentView: ARSCNView?
-    /**
-     The previous point is the point of the pencil one frame before.
-     If this var is nil, there was no last point
-     */
     
     private var freePaths: [ARPPath] = [ARPPath]()
     private var busy: Bool = false
     
     private var curveDesigner: CurveDesigner
     
-    /// **** For user study ****
+    // **** For user study ****
     var recordManager: UserStudyRecordManager!
     var stateManager: UserStudyStateManager!
     private var taskTimeLogger = TaskTimeLogger()
     private var taskCenter: SCNVector3 = SCNVector3(0, 0, 0.2)
-    /// ************************
+    // ************************
 
     init() {
         curveDesigner = CurveDesigner()
         curveDesigner.didCompletePath = self.didCompletePath
         
-        /// **** For user study ****
+        // **** For user study ****
         curveDesigner.didStartPath = { _ in self.taskTimeLogger.startUnlessRunning() }
-        /// ************************
+        // ************************
     }
     
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
@@ -55,7 +51,7 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
         self.curveDesigner.reset()
         self.undoButton.addTarget(self, action: #selector(undo), for: .touchUpInside)
 
-        /// **** For user study ****
+        // **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
         self.taskTimeLogger.reset()
         self.freePaths.removeAll()
@@ -63,7 +59,7 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
         if let profile = scene.drawingNode.childNodes.first as? ARPPath {
             freePaths.append(profile)
         }
-        /// ************************
+        // ************************
     }
     
     func deactivatePlugin() {
@@ -86,13 +82,13 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
             DispatchQueue.global(qos: .userInitiated).async {
                 profile.flatten()
                 
-                /// **** For user study ****
+                // **** For user study ****
                 self.taskTimeLogger.pause()
-                /// ************************
+                // ************************
                 
                 if let revolution = try? ARPRevolution(profile: profile, axis: axisPath) {
                     
-                    /// **** For user study ****
+                    // **** For user study ****
                     var targetMeasurementDict = self.taskTimeLogger.finish()
                     
                     var targetRadiusTop, targetRadiusBottom: Float!
@@ -118,7 +114,7 @@ class RevolvePluginProfileAndAxis: Plugin, UIButtonPlugin, UserStudyRecordPlugin
 
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                     self.recordManager.saveStl(node: revolution, name: "RevolveProfileAndAxis_\(self.stateManager.task ?? "")")
-                    /// ************************
+                    // ************************
 
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(revolution)

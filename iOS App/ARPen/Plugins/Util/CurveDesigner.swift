@@ -2,28 +2,39 @@
 //  CurveDesigner.swift
 //  ARPen
 //
-//  Created by Jan on 15.04.19.
+//  Created by Jan Benscheid on 15.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
 import Foundation
 
+/**
+ This class handles the interactive creation of ARPPaths, as this functionality is shared across multiple plugins. An examplary usage can be seen in `SweepPluginTutorial.swift`.
+ */
 class CurveDesigner {
     
+    /// Snapping distance for closing a path
     static let snappingDistance: Float = 0.01
+    /// When pressing and holding the button, this is the regular interval in which new nodes are created
     static let minNextPointDistance: Float = 0.02
     
+    /// Function called when a new path is started
     var didStartPath: ((ARPPath) -> Void)?
+    /// Function called when a new path is finished
     var didCompletePath: ((ARPPath) -> Void)?
 
+    /// The currently edited path
     var activePath: ARPPath? = nil
     
+    /// true, if the user just switched between round and sharp corners
     private var blocked: Bool = false
+    /// true, if the path is currently being calculated in parallel in the backend, to reduce redundant calculations
     private var busy: Bool = false
     private var scene: PenScene!
     
     private var buttonEvents: ButtonEvents
     
+    /// Guard to avoid inserting multiple nodes in one frame
     private var addedThisFrame: Bool = false
 
     init() {
@@ -106,6 +117,7 @@ class CurveDesigner {
         }*/
     }
     
+    /// Add a node to either the currently active path, or create a new path if none is active (unless `noNewPath`is set).
     private func addNode(noNewPath: Bool = false) {
         if addedThisFrame {
             return

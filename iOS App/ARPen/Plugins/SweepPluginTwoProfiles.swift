@@ -1,8 +1,8 @@
 //
-//  LinePlugin.swift
+//  SweepPluginTwoProfiles.swift
 //  ARPen
 //
-//  Created by Jan on 04.04.19.
+//  Created by Jan Benscheid on 04.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
@@ -23,30 +23,26 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
     var pluginIdentifier: String = "Sweep (Two Profiles)"
     var currentScene: PenScene?
     var currentView: ARSCNView?
-    /**
-     The previous point is the point of the pencil one frame before.
-     If this var is nil, there was no last point
-     */
-    
+
     private var freePaths: [ARPPath] = [ARPPath]()
     private var busy: Bool = false
     
     private var curveDesigner: CurveDesigner
     
-    /// **** For user study ****
+    // **** For user study ****
     var recordManager: UserStudyRecordManager!
     var stateManager: UserStudyStateManager!
     private var taskTimeLogger = TaskTimeLogger()
     private var taskCenter: SCNVector3 = SCNVector3(0, 0, 0.2)
-    /// ************************
+    // ************************
     
     init() {
         curveDesigner = CurveDesigner()
         curveDesigner.didCompletePath = self.didCompletePath;
         
-        /// **** For user study ****
+        // **** For user study ****
         curveDesigner.didStartPath = { _ in self.taskTimeLogger.startUnlessRunning() }
-        /// ************************
+        // ************************
     }
     
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
@@ -55,7 +51,7 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
         self.curveDesigner.reset()
         self.undoButton.addTarget(self, action: #selector(undo), for: .touchUpInside)
 
-        /// **** For user study ****
+        // **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
         self.taskTimeLogger.reset()
         self.freePaths.removeAll()
@@ -63,7 +59,7 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
         if let profile = scene.drawingNode.childNodes.first as? ARPPath {
             freePaths.append(profile)
         }
-        /// ************************
+        // ************************
     }
     
     func deactivatePlugin() {
@@ -103,7 +99,7 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
 
             let pathScale = center1.distance(vector: center2) / 4
             
-            /// Find the slinky direction with the least amount of bending
+            // Find the slinky direction with the least amount of bending
             var minBending = Float.greatestFiniteMagnitude
             for d1 in [-1.0, 1.0] {
                 for d2 in [-1.0, 1.0] {
@@ -111,7 +107,7 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
                     var n1 = pc1 * Float(d1)
                     var n2 = pc2 * Float(d2)
                     
-                    /// Edge case 1: If the resulting normals are very similar, orient them upwards (slinky-behaviour).
+                    // Edge case 1: If the resulting normals are very similar, orient them upwards (slinky-behaviour).
                     if n1.dot(vector: n2) > 0.8 && n1.y < 0 {
                         n1 *= -1
                         n2 *= -1
@@ -138,7 +134,7 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
                 }
             }
 
-            /// Edge case 2: If both normals are almost aligned with the center line between the profiles, don't add additional points s.t. the spine is just a straight line.
+            // Edge case 2: If both normals are almost aligned with the center line between the profiles, don't add additional points s.t. the spine is just a straight line.
             if !((center2 - center1).normalized().dot(vector: normal1) > 0.8 &&
                 (center1 - center2).normalized().dot(vector: normal2) > 0.8) {
                 points.append(ARPPathNode(midpoint1, cornerStyle: .round))
@@ -152,13 +148,13 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
             
             DispatchQueue.global(qos: .userInitiated).async {
                 
-                /// **** For user study ****
+                // **** For user study ****
                 self.taskTimeLogger.pause()
-                /// ************************
+                // ************************
                 
                 if let sweep = try? ARPSweep(profile: profile1, path: spine) {
                     
-                    /// **** For user study ****
+                    // **** For user study ****
                     var targetMeasurementDict = self.taskTimeLogger.finish()
                     
                     switch self.stateManager.task {
@@ -182,7 +178,7 @@ class SweepPluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginProto
 
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                     self.recordManager.saveStl(node: sweep, name: "SweepTwoProfiles_\(self.stateManager.task ?? "")")
-                    /// ************************
+                    // ************************
 
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(sweep)

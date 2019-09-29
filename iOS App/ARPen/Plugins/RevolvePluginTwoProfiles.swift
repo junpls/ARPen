@@ -1,8 +1,8 @@
 //
-//  RevolvePlugin.swift
+//  RevolvePluginTwoProfiles.swift
 //  ARPen
 //
-//  Created by Jan on 15.04.19.
+//  Created by Jan Benscheid on 15.04.19.
 //  Copyright © 2019 RWTH Aachen. All rights reserved.
 //
 
@@ -33,20 +33,20 @@ class RevolvePluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginPro
     
     private var curveDesigner: CurveDesigner
     
-    /// **** For user study ****
+    // **** For user study ****
     var recordManager: UserStudyRecordManager!
     var stateManager: UserStudyStateManager!
     private var taskTimeLogger = TaskTimeLogger()
     private var taskCenter: SCNVector3 = SCNVector3(0, 0, 0.2)
-    /// ************************
+    // ************************
     
     init() {
         curveDesigner = CurveDesigner()
         curveDesigner.didCompletePath = self.didCompletePath
         
-        /// **** For user study ****
+        // **** For user study ****
         curveDesigner.didStartPath = { _ in self.taskTimeLogger.startUnlessRunning() }
-        /// ************************
+        // ************************
     }
     
     func activatePlugin(withScene scene: PenScene, andView view: ARSCNView) {
@@ -55,7 +55,7 @@ class RevolvePluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginPro
         self.curveDesigner.reset()
         self.undoButton.addTarget(self, action: #selector(undo), for: .touchUpInside)
 
-        /// **** For user study ****
+        // **** For user study ****
         self.taskTimeLogger.defaultDict = ["Model": stateManager.task ?? ""]
         self.taskTimeLogger.reset()
         self.freePaths.removeAll()
@@ -63,7 +63,7 @@ class RevolvePluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginPro
         if let profile = scene.drawingNode.childNodes.first as? ARPPath {
             freePaths.append(profile)
         }
-        /// ************************
+        // ************************
     }
     
     func deactivatePlugin() {
@@ -93,6 +93,7 @@ class RevolvePluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginPro
                 let profile2Start = profile2.points.first!.worldPosition
                 let profile2End = profile2.points.last!.worldPosition
                 
+                // The following lines determine which start- and endpoints of the profiles belong to each other, in case one profile was drawn e.g. top to bottom, and the other bottom to top.
                 let centerStart, centerEnd: SCNVector3!
                 let distanceParallel = profile1Start.distance(vector: profile2Start) + profile1End.distance(vector: profile2End)
                 let distanceCross = profile1Start.distance(vector: profile2End) + profile1End.distance(vector: profile2Start)
@@ -111,13 +112,13 @@ class RevolvePluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginPro
                     ], closed: false);
                 
                 
-                /// **** For user study ****
+                // **** For user study ****
                 self.taskTimeLogger.pause()
-                /// ************************
+                // ************************
                 
                 if let revolution = try? ARPRevolution(profile: profile1, axis: axisPath) {
                     
-                    /// **** For user study ****
+                    // **** For user study ****
                     var targetMeasurementDict = self.taskTimeLogger.finish()
                     
                     var targetRadiusTop, targetRadiusBottom: Float!
@@ -143,7 +144,7 @@ class RevolvePluginTwoProfiles: Plugin, UIButtonPlugin, UserStudyRecordPluginPro
                     
                     self.recordManager.addNewRecord(withIdentifier: self.pluginIdentifier, andData: targetMeasurementDict)
                     self.recordManager.saveStl(node: revolution, name: "RevolveTwoProfiles_\(self.stateManager.task ?? "")")
-                    /// ************************
+                    // ************************
                     
                     DispatchQueue.main.async {
                         self.currentScene?.drawingNode.addChildNode(revolution)
