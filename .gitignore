@@ -70,3 +70,5 @@ fastlane/screenshots
 fastlane/test_output
 Carthage/Checkouts
 IDEWorkspaceChecks.plist
+
+.DS_Store
