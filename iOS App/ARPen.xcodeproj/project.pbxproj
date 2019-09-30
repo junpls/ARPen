@@ -560,7 +560,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ ! -d \"${PROJECT_DIR}/occt.framework\" ]; then\n    unzip \"${PROJECT_DIR}/occt.framework.zip\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ ! -d \"${PROJECT_DIR}/occt.framework\" ]; then\n    # Re-assemble the split zip archive\n    for i in `ls \"${PROJECT_DIR}/Open CASCADE\" | sort -V`; do cat \"${PROJECT_DIR}/Open CASCADE/$i\" >> \"${PROJECT_DIR}/occt.framework.zip\"; done;\n    # Unzip\n    unzip \"${PROJECT_DIR}/occt.framework.zip\"\n    # Remove assembled version\n    rm \"${PROJECT_DIR}/occt.framework.zip\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
