@@ -40,7 +40,6 @@
 		3D883664221AD84300672CEB /* OCCTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D88365E221AD84300672CEB /* OCCTAPI.swift */; };
 		3D883669221B457C00672CEB /* ARPBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D883668221B457C00672CEB /* ARPBox.swift */; };
 		3DA388E32251F4CB003A8937 /* OCCT.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3DA388E22251F4CB003A8937 /* OCCT.mm */; };
-		3DA388EB2252A431003A8937 /* ARPenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA388EA2252A431003A8937 /* ARPenTests.swift */; };
 		3DE5191B22A7DB850005B73B /* SweepPluginTwoProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE5191A22A7DB850005B73B /* SweepPluginTwoProfiles.swift */; };
 		3DE5191D22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE5191C22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift */; };
 		3DFA7125233FC1D800BF5AAB /* occt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DFA7124233FC1D800BF5AAB /* occt.framework */; };
@@ -150,8 +149,6 @@
 		3DA388E12251F4CB003A8937 /* OCCT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCCT.h; sourceTree = "<group>"; };
 		3DA388E22251F4CB003A8937 /* OCCT.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OCCT.mm; sourceTree = "<group>"; };
 		3DA388E82252A431003A8937 /* ARPenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARPenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3DA388EA2252A431003A8937 /* ARPenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPenTests.swift; sourceTree = "<group>"; };
-		3DA388EC2252A431003A8937 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DE5191A22A7DB850005B73B /* SweepPluginTwoProfiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweepPluginTwoProfiles.swift; sourceTree = "<group>"; };
 		3DE5191C22A9540C0005B73B /* RevolvePluginProfileAndCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevolvePluginProfileAndCircle.swift; sourceTree = "<group>"; };
 		3DFA7124233FC1D800BF5AAB /* occt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = occt.framework; sourceTree = "<group>"; };
@@ -297,15 +294,6 @@
 			path = OCCTAPI;
 			sourceTree = "<group>";
 		};
-		3DA388E92252A431003A8937 /* ARPenTests */ = {
-			isa = PBXGroup;
-			children = (
-				3DA388EA2252A431003A8937 /* ARPenTests.swift */,
-				3DA388EC2252A431003A8937 /* Info.plist */,
-			);
-			path = ARPenTests;
-			sourceTree = "<group>";
-		};
 		4A4B7F1B205817A200331810 /* SettingsViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,7 +332,6 @@
 			children = (
 				DCE5A37E202F504B005F4186 /* README.md */,
 				DC28B43E200E4353008B77AB /* ARPen */,
-				3DA388E92252A431003A8937 /* ARPenTests */,
 				DC28B43D200E4353008B77AB /* Products */,
 				DC18B2B820237A7200884920 /* Frameworks */,
 			);
@@ -569,7 +556,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DA388EB2252A431003A8937 /* ARPenTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
